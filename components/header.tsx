@@ -9,8 +9,8 @@ const IndependenceDayHeader = () => {
   return (
     <header className="bg-green-700 text-white shadow-lg">
       {/* Top Banner */}
-      <div className="bg-green-800 text-center py-1 text-sm tracking-wide">
-        🎉 14th August — Celebrating Pakistan's Independence Day! 🇵🇰
+      <div className="bg-green-800 text-center py-1 text-sm tracking-wide px-2">
+        🎉 14th August — Celebrating Pakistan's Independence Day! 14% discount till the end of August
       </div>
 
       {/* Main Header */}
@@ -20,7 +20,7 @@ const IndependenceDayHeader = () => {
           href="/"
           className="flex items-center gap-2 font-extrabold text-2xl"
         >
-          <span className="text-white">🇵🇰 PakShop</span>
+          <span className="text-white">PakShop</span>
         </Link>
 
         {/* Desktop Navigation */}

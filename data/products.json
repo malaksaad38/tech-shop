@@ -31,28 +31,28 @@
     "id": 5,
     "name": "Laptop Backpack",
     "price": 49.99,
-    "image": "https://images.unsplash.com/photo-1551028719-00167b94e79b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1667411424771-cadd97150827?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "A sleek, durable backpack designed with multiple compartments to safely carry your laptop and essentials."
   },
   {
     "id": 6,
     "name": "Gaming Mouse",
     "price": 29.99,
-    "image": "https://images.unsplash.com/photo-1592905562494-38efea4a26d4?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1613141412501-9012977f1969?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Enhance your gaming performance with this ergonomic mouse featuring precision sensors and customizable buttons."
   },
   {
     "id": 7,
     "name": "Fitness Tracker",
     "price": 69.99,
-    "image": "https://images.unsplash.com/photo-1598515217396-b3b7b4d6417b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://plus.unsplash.com/premium_photo-1681433383783-661b519b154a?q=80&w=1160&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Monitor your daily steps, calories, heart rate, and sleep with this lightweight fitness tracker."
   },
   {
     "id": 8,
     "name": "Portable Charger",
     "price": 24.99,
-    "image": "https://images.unsplash.com/photo-1616369665731-41f29301b4e0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1745888323445-ab1650f0c4d6?q=80&w=773&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Keep your devices powered all day with this high-capacity portable charger. Slim and travel-friendly."
   },
   {
@@ -78,8 +78,8 @@
   },
   {
     "id": 12,
-    "name": "Tablet Stand",
-    "price": 19.99,
+    "name": "Tablet",
+    "price": 199.99,
     "image": "https://images.unsplash.com/photo-1587033411391-5d9e51cce126?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "A sturdy, adjustable stand for your tablet. Great for reading, video calls, or hands-free streaming."
   },
@@ -87,49 +87,49 @@
     "id": 13,
     "name": "Action Camera",
     "price": 149.99,
-    "image": "https://images.unsplash.com/photo-1545218199-1a1c50b89439?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1677172954692-90cf8bdc91e6?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Record your adventures in stunning HD with this waterproof, durable action camera."
   },
   {
     "id": 14,
     "name": "Drone",
     "price": 299.99,
-    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://plus.unsplash.com/premium_photo-1714618849685-89cad85746b1?q=80&w=988&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Take your photography to the skies! This drone offers stable flight, HD camera, and easy controls."
   },
   {
     "id": 15,
     "name": "Coffee Maker",
     "price": 89.99,
-    "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://plus.unsplash.com/premium_photo-1661722983090-11783531c332?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Brew barista-style coffee at home with this easy-to-use coffee maker. Start your mornings right."
   },
   {
     "id": 16,
     "name": "Electric Kettle",
     "price": 34.99,
-    "image": "https://images.unsplash.com/photo-1587049352851-8d4e89133924?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1738520420652-0c47cea3922b?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Quickly boil water with this sleek, energy-efficient electric kettle. Perfect for tea, coffee, and more."
   },
   {
     "id": 17,
     "name": "Air Purifier",
     "price": 129.99,
-    "image": "https://images.unsplash.com/photo-1593246049226-ded77bf90326?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1634585605949-8f1e029af923?q=80&w=928&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Breathe cleaner air with this modern air purifier. Reduces dust, smoke, and allergens."
   },
   {
     "id": 18,
     "name": "Gaming Chair",
     "price": 179.99,
-    "image": "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1598550473359-433795503a0f?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Game or work in comfort with this ergonomic chair featuring adjustable support and premium cushioning."
   },
   {
     "id": 19,
     "name": "External Hard Drive",
     "price": 59.99,
-    "image": "https://images.unsplash.com/photo-1599144065777-ea8b8d2bbeea?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "image": "https://images.unsplash.com/photo-1674303440321-707bb3047ec8?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     "description": "Store all your files safely with this high-capacity external hard drive. Fast and reliable."
   },
   {

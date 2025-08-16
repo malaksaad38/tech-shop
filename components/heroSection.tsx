@@ -16,7 +16,7 @@ const IndependenceDayHeroWithProducts = () => {
         {/* Content */}
         <div className="relative container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 flex items-center justify-center gap-2">
-            🇵🇰 Happy Independence Day Pakistan!
+            Happy Independence Day Pakistan!
           </h1>
           <p className="text-lg md:text-xl text-green-100 max-w-2xl mx-auto mb-8">
             Celebrating freedom, unity, and pride since 14th August 1947.

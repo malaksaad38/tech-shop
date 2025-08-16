@@ -11,7 +11,7 @@ const SpecialOffer = () => {
     <div className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 p-6">
       {/* Independence Day Offer Banner */}
       <div className="bg-green-700 text-white text-center py-6 shadow-md rounded-lg mb-8">
-        <h1 className="text-3xl font-extrabold">🎉 Independence Day Special Offer 🇵🇰</h1>
+        <h1 className="text-3xl font-extrabold">🎉 Independence Day Special Offer</h1>
         <p className="mt-2 text-lg">Get 20% OFF on all products — Today Only!</p>
         <div className="mt-4 bg-white text-green-700 px-6 py-2 rounded-lg inline-block font-bold text-xl">
           Use Code: <span className="text-green-800">PAK20</span>

@@ -30,7 +30,7 @@ const Contact = () => {
       {/* Banner */}
       <div className="bg-green-700 text-white text-center py-8 shadow-md">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-2">
-          🇵🇰 Contact Us
+          Contact Us
         </h1>
         <p className="text-sm mt-2">We’d love to hear from you on WhatsApp!</p>
       </div>

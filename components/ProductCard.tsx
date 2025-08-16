@@ -25,8 +25,8 @@ const formatPrice = (price: number) => price.toFixed(2);
 
 const ProductCard: React.FC<ProductCardProps> = ({
                                                    product,
-                                                   discount = false,
-                                                   discountTitle = "Friday SALE",
+                                                   discount = true,
+                                                   discountTitle = "14% SALE",
                                                    discountRate = 0.14, // default 14% off
                                                    showFavorite = true,
                                                    showBuyNow = true,
@@ -61,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         >
           {product.name}
         </Link>
-        
+
 
         {/* Price */}
         <div className="flex items-center justify-between mb-4">

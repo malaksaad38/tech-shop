@@ -7,7 +7,7 @@ const About = () => {
       {/* Banner */}
       <div className="bg-green-700 text-white text-center py-8 shadow-md">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-2">
-          🇵🇰 About Pakistan Independence Day
+          About Pakistan Independence Day
         </h1>
         <p className="text-sm mt-2">Celebrating Freedom Since 14th August 1947</p>
       </div>

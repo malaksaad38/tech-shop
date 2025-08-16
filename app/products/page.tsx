@@ -62,9 +62,9 @@ const Products = () => {
     <div className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50">
 
       {/* Independence Day Banner */}
-      <div className="bg-green-700 text-white text-center py-4 shadow-md">
+      <div className="bg-green-700 text-white text-center p-4 shadow-md">
         <h1 className="text-2xl font-extrabold flex items-center justify-center gap-2">
-          🇵🇰 Happy Independence Day Pakistan! 🎉
+          Happy Independence Day Pakistan! 🎉
         </h1>
         <p className="text-sm mt-1">Celebrating Freedom Since 1947</p>
         <div className="mt-2">
@@ -142,7 +142,7 @@ const Products = () => {
       {/* Products Grid */}
       <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 container mx-auto mt-6">
         {shown.map((product) =>
-          <ProductCard product={product} discount={true} showFavorite={true}/>
+          <ProductCard product={product}/>
         )}
       </div>
 

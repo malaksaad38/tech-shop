@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PakShop | Celebrate Independence Day 🇵🇰",
+  title: "PakShop | Celebrate Independence Day",
   description:
     "PakShop — A special Independence Day project showcasing products, offers, and a learning journey in Next.js and Tailwind CSS. 🎉",
   keywords: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   ],
   authors: [{name: "PakShop Team"}],
   openGraph: {
-    title: "PakShop | Celebrate Independence Day 🇵🇰",
+    title: "PakShop | Celebrate Independence Day",
     description:
       "Explore PakShop — A fun learning project built with Next.js to celebrate Pakistan's Independence Day.",
     url: "https://your-domain.com", // 👈 replace with your real domain
