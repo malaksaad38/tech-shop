@@ -7,7 +7,7 @@ export function sendWhatsAppMessage(product: any) {
 *Price:* $${product.price}
 *Description:* ${product.description || "No description available."}
 
-📦 View Product: https://192.168.183.114:3000/products/${product.id}
+📦 View Product: https://pak-shop.vercel.app/products/${product.id}
 
 Please confirm availability. ✅
 `;
