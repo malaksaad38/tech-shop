@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {useParams} from 'next/navigation'
 import axios from 'axios'
 import ProductForm from '@/components/form/ProductForm'
+import AdminControl from "@/components/AdminControl";
 
 type Product = {
   _id: string
@@ -40,9 +41,11 @@ const Edit = () => {
   }
 
   return (
-    <div className="p-6">
-      <ProductForm product={product}/>
-    </div>
+    <AdminControl>
+      <div className="p-6">
+        <ProductForm product={product}/>
+      </div>
+    </AdminControl>
   )
 }
 

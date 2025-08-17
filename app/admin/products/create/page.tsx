@@ -1,11 +1,12 @@
 import React from 'react';
 import ProductForm from "@/components/form/ProductForm";
+import AdminControl from "@/components/AdminControl";
 
 const Create = () => {
   return (
-    <div>
+    <AdminControl>
       <ProductForm/>
-    </div>
+    </AdminControl>
   );
 };
 

@@ -32,7 +32,9 @@ const IndependenceDayHeader = () => {
         </nav>
 
         {/* Action Button (Desktop) */}
-        <div className="hidden md:block">
+        <div className="hidden md:block space-x-2">
+          <Link href="/admin"
+                className="bg-black/70 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-black transition">Admin</Link>
           <Link
             href="/special-offers"
             className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition"
@@ -60,13 +62,16 @@ const IndependenceDayHeader = () => {
                 onClick={() => setMenuOpen(false)}>About</Link>
           <Link href="/contact" className="hover:text-yellow-300 transition"
                 onClick={() => setMenuOpen(false)}>Contact</Link>
-          <Link
-            href="/special-offers"
-            className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition text-center"
-            onClick={() => setMenuOpen(false)}
-          >
-            Special Offers 🎁
-          </Link>
+          <div className="space-x-2 w-full">
+            <Link href="/admin"
+                  className="bg-black/70 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-black transition">Admin</Link>
+            <Link
+              href="/special-offers"
+              className="bg-yellow-400 w-full text-green-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition"
+            >
+              Special Offers 🎁
+            </Link>
+          </div>
         </div>
       )}
     </header>
