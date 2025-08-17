@@ -3,21 +3,21 @@ import ProductCard from "@/components/ProductCard";
 import {connectDB} from "@/lib/mongodb";
 import Product from "@/models/Product";
 
+export const revalidate = 60; // Revalidate every 60s
+
 export default async function IndependenceDayHeroWithProducts() {
-  // Fetch 4 featured products from DB
   await connectDB();
-  const featuredProducts = await Product.find().sort({createdAt: -1, _id: -1}).limit(4).lean();
+  const featuredProducts = await Product.find()
+    .sort({createdAt: -1, _id: -1})
+    .limit(4)
+    .lean();
 
   return (
     <div className="bg-gradient-to-b from-green-50 to-white min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-green-700 to-green-900 text-white py-20">
-        {/* Background Pattern */}
         <div
-          className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"
-        ></div>
-
-        {/* Content */}
+          className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"></div>
         <div className="relative container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 flex items-center justify-center gap-2">
             Happy Independence Day Pakistan! 🇵🇰
@@ -26,19 +26,13 @@ export default async function IndependenceDayHeroWithProducts() {
             Celebrating freedom, unity, and pride since 14th August 1947.
             Shop our exclusive Independence Day deals and spread the green love!
           </p>
-
-          {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/products"
-              className="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-green-100 transition"
-            >
+            <Link href="/products"
+                  className="bg-white text-green-700 px-6 py-3 rounded-lg font-bold hover:bg-green-100 transition">
               🛍️ Shop Now
             </Link>
-            <Link
-              href="/about"
-              className="bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-400 transition"
-            >
+            <Link href="/about"
+                  className="bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-400 transition">
               📜 Learn More
             </Link>
           </div>
