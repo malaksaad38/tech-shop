@@ -6,9 +6,13 @@ import Product from "@/models/Product";
 // Getting all item from the target schema
 export async function GET() {
   await connectDB();
-  const products = await Product.find();
+  const products = await Product.find().sort({
+    createdAt: -1,  // newest first
+    _id: -1         // fallback for docs without createdAt
+  });
   return NextResponse.json(products);
 }
+
 
 // Creating new item
 export async function POST(req: NextRequest) {

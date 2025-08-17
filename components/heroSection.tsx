@@ -6,7 +6,7 @@ import Product from "@/models/Product";
 export default async function IndependenceDayHeroWithProducts() {
   // Fetch 4 featured products from DB
   await connectDB();
-  const featuredProducts = await Product.find().limit(4).lean();
+  const featuredProducts = await Product.find().sort({createdAt: -1, _id: -1}).limit(4).lean();
 
   return (
     <div className="bg-gradient-to-b from-green-50 to-white min-h-screen">

@@ -6,7 +6,7 @@ import Product from "@/models/Product";
 export default async function SpecialOffer() {
   // Connect to DB & fetch top 4 products
   await connectDB();
-  const offerProducts = await Product.find().limit(4).lean();
+  const offerProducts = await Product.find().sort({createdAt: -1, _id: -1}).limit(4).lean();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 p-6">

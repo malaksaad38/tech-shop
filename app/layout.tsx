@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "PakShop",
     images: [
       {
-        url: "https://your-domain.com/og-image.png", // 👈 add an OG image
+        url: "https://your-domain.com/og-image.png", // 👈 create an OG image
         width: 1200,
         height: 630,
         alt: "PakShop Independence Day",
