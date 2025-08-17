@@ -1,11 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import products from '@/data/products.json';
+import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import {connectDB} from "@/lib/mongodb";
+import Product from "@/models/Product";
 
-const SpecialOffer = () => {
-  // Select top 4 products for the offer
-  const offerProducts = products.slice(0, 4);
+export default async function SpecialOffer() {
+  // Connect to DB & fetch top 4 products
+  await connectDB();
+  const offerProducts = await Product.find().limit(4).lean();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 p-6">
@@ -20,8 +21,8 @@ const SpecialOffer = () => {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 container mx-auto">
-        {offerProducts.map((product) => (
-          <ProductCard product={product}/>
+        {offerProducts.map((product: any) => (
+          <ProductCard key={product._id.toString()} product={JSON.parse(JSON.stringify(product))}/>
         ))}
       </div>
 
@@ -36,6 +37,4 @@ const SpecialOffer = () => {
       </div>
     </div>
   );
-};
-
-export default SpecialOffer;
+}

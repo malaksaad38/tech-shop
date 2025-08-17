@@ -4,7 +4,7 @@ import {sendWhatsAppMessage} from "../utils/whatsapp";
 import Favorite from "@/components/favorite";
 
 type Product = {
-  id: string | number;
+  _id: string | number;
   name: string;
   price: number;
   image: string;

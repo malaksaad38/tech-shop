@@ -4,16 +4,9 @@ import Link from "next/link";
 import {sendWhatsAppMessage} from "../utils/whatsapp";
 import Favorite from "@/components/favorite";
 
-type Product = {
-  id: string | number;
-  name: string;
-  price: number;
-  image: string;
-  description?: string;
-};
 
 interface ProductCardProps {
-  product: Product;
+  product: any;
   discount?: boolean; // 🎉 show sale ribbon + discount
   discountTitle?: string; // 🎉 show sale ribbon + discount
   discountRate?: number; // e.g. 0.14 = 14% off
@@ -37,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      key={product.id}
+      key={product._id}
       className="relative w-full max-w-md bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-green-400 transition duration-300 border border-green-200 hover:-translate-y-1">
       {/* Ribbon for 14 Aug */}
       {discount && (
@@ -56,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       <div className="p-6">
         <Link
-          href={`/products/${product.id}`}
+          href={`/products/${product._id}`}
           className="text-xl font-bold text-green-700 mb-2 block hover:underline hover:text-blue-600"
         >
           {product.name}

@@ -1,22 +1,26 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import products from '@/data/products.json';
+import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import {connectDB} from "@/lib/mongodb";
+import Product from "@/models/Product";
 
-const IndependenceDayHeroWithProducts = () => {
+export default async function IndependenceDayHeroWithProducts() {
+  // Fetch 4 featured products from DB
+  await connectDB();
+  const featuredProducts = await Product.find().limit(4).lean();
+
   return (
     <div className="bg-gradient-to-b from-green-50 to-white min-h-screen">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-b from-green-700 to-green-900 text-white py-20">
         {/* Background Pattern */}
         <div
-          className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"></div>
+          className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"
+        ></div>
 
         {/* Content */}
         <div className="relative container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 flex items-center justify-center gap-2">
-            Happy Independence Day Pakistan!
+            Happy Independence Day Pakistan! 🇵🇰
           </h1>
           <p className="text-lg md:text-xl text-green-100 max-w-2xl mx-auto mb-8">
             Celebrating freedom, unity, and pride since 14th August 1947.
@@ -48,14 +52,14 @@ const IndependenceDayHeroWithProducts = () => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {products.slice(0, 4).map((product) => (
-            <ProductCard product={product}/>
+          {featuredProducts.map((product: any) => (
+            <ProductCard
+              key={product._id.toString()}
+              product={JSON.parse(JSON.stringify(product))}
+            />
           ))}
-
         </div>
       </section>
     </div>
   );
-};
-
-export default IndependenceDayHeroWithProducts;
+}
