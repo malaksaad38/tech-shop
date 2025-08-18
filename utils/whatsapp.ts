@@ -3,11 +3,10 @@ export function sendWhatsAppMessage(product: any) {
   const message = `
 *🛍️ New Order Request*
 
-*Product:* ${product.name}
-*Price:* $${product.price}
-*Description:* ${product.description || "No description available."}
+*Product:*      ${product.name}
+*Price:*          $${product.price}
 
-📦 View Product: https://pak-shop.vercel.app/products/${product.id}
+📦 View Product: https://pak-shop.vercel.app/products/${product._id}
 
 Please confirm availability. ✅
 `;

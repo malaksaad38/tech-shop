@@ -12,7 +12,7 @@ const Favorite = () => {
     <div>
       <button
         onClick={toggleFavorite}
-        className={`p-2 rounded-lg transition border border-green-300 hover:bg-green-50`}
+        className={`p-3 rounded-lg transition border border-green-300 hover:bg-green-50`}
       >
         {isFavorite ? '❤️' : '🤍'}
       </button>

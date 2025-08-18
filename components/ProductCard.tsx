@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Product Image */}
       <img
-        src={product.image}
+        src={`${product.image ? product.image : "/imageIcon.jpg"}`}
         alt={product.name}
         className="w-full h-48 object-cover border-b border-green-200"
         loading="lazy"

@@ -3,6 +3,7 @@ import React from "react";
 import {sendWhatsAppMessage} from "../utils/whatsapp";
 import Favorite from "@/components/favorite";
 
+
 type Product = {
   _id: string | number;
   name: string;
@@ -19,7 +20,6 @@ interface ProductDetailsCardProps {
 }
 
 const formatPrice = (price: number) => price.toFixed(2);
-
 const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({
                                                                  product,
                                                                  discount = false,
@@ -30,8 +30,9 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({
     ? product.price * (1 - discountRate)
     : product.price;
 
+
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border border-green-200">
+    <div className="max-w-fit mx-auto bg-white shadow-lg overflow-hidden border border-green-200">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Product Image */}
         <div className="relative">
@@ -41,14 +42,14 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({
             </span>
           )}
           <img
-            src={product.image}
+            src={`${product.image ? product.image : "/imageIcon.jpg"}`}
             alt={product.name}
-            className="w-full h-full object-cover rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none"
+            className="w-fit h-fit object-cover"
           />
         </div>
 
         {/* Product Info */}
-        <div className="p-6 flex flex-col justify-between">
+        <div className="p-6 flex flex-col justify-around">
           <div>
             <h1 className="text-3xl font-bold text-green-800 mb-3">
               {product.name}
@@ -62,11 +63,11 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({
 
           {/* Price */}
           <div className="mb-4">
-            <span className="text-4xl font-extrabold text-green-700">
+            <span className="text-3xl font-bold text-green-700 ">
               ${formatPrice(discounted)}
             </span>
             {discount && (
-              <span className="ml-3 text-lg line-through text-green-600/70">
+              <span className="ml-3 line-through text-green-600/70">
                 ${formatPrice(product.price)}
               </span>
             )}
