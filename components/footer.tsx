@@ -24,7 +24,7 @@ const IndependenceDayFooter = () => {
             <CardTitle className="text-lg font-bold">PakShop</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <p className="text-sm text-green-100">
+            <p className="text-sm text-foreground">
               Bringing you the best products with love for Pakistan. Let&apos;s
               celebrate our freedom with style and pride!
             </p>

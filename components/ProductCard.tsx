@@ -4,7 +4,7 @@ import Link from "next/link";
 import {sendWhatsAppMessage} from "../utils/whatsapp";
 import Favorite from "@/components/favorite";
 import {Button} from "@/components/ui/button";
-import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
+import {Card, CardContent, CardFooter,} from "@/components/ui/card";
 import {ImageIcon} from "lucide-react";
 
 interface ProductCardProps {
@@ -56,32 +56,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       </div>
 
-      <CardHeader>
-        <CardTitle>
-          <Link
-            href={`/products/${product._id}`}
-            className="text-lg font-bold text-foreground hover:underline hover:text-primary"
-          >
-            {product.name}
-          </Link>
-        </CardTitle>
-      </CardHeader>
 
       <CardContent>
+        <Link
+          href={`/products/${product._id}`}
+          className="text-lg font-bold text-foreground hover:underline hover:text-primary "
+        >
+          {product.name}
+        </Link>
         {/* Price */}
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-extrabold">
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-2xl font-extrabold text-primary/80">
             ${formatPrice(discounted)}
           </span>
           {discount && (
-            <span className="text-sm line-through text-primary">
+            <span className="text-sm font-bold line-through text-muted-foreground">
               ${formatPrice(product.price)}
             </span>
           )}
         </div>
       </CardContent>
 
-      <CardFooter className="flex justify-between gap-3">
+      <CardFooter className="flex justify-between gap-3 ">
         {showBuyNow && (
           <Button
             className="flex-1"

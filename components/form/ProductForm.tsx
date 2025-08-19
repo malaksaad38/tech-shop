@@ -203,7 +203,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
                 Reset
               </Button>
               {form.formState.isSubmitSuccessful && (
-                <span className="text-sm text-green-600">
+                <span className="text-sm text-foreground">
                   {product ? "Updated!" : "Saved!"}
                 </span>
               )}

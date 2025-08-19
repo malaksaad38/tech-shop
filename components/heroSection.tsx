@@ -15,9 +15,9 @@ export default async function IndependenceDayHeroWithProducts() {
     .lean();
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white min-h-screen">
+    <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-foreground from-green-700 to-green-900 text-white py-20">
+      <section className="relative bg-foreground py-20">
         {/* Background Pattern */}
         <div
           className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"
@@ -32,7 +32,7 @@ export default async function IndependenceDayHeroWithProducts() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg md:text-xl text-green-100 max-w-2xl mx-auto mb-8">
+              <p className="text-lg md:text-xl text-foreground max-w-2xl mx-auto mb-8">
                 Celebrating freedom, unity, and pride since 14th August 1947.
                 Shop our exclusive Independence Day deals and spread the green love!
               </p>
@@ -60,7 +60,7 @@ export default async function IndependenceDayHeroWithProducts() {
       {/* Products Section */}
       <section className="container mx-auto px-6 py-12">
         <h2 className="text-3xl font-bold text-primary mb-6">
-          Featured Products <ShoppingCartIcon className={"inline text-primary"}/>
+          <ShoppingCartIcon className={"inline size-8 mr-2 text-primary"}/> Featured Products
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
