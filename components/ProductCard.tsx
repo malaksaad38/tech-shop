@@ -5,6 +5,7 @@ import {sendWhatsAppMessage} from "../utils/whatsapp";
 import Favorite from "@/components/favorite";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle,} from "@/components/ui/card";
+import {ImageIcon} from "lucide-react";
 
 interface ProductCardProps {
   product: any;
@@ -41,12 +42,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Product Image */}
       <div className="w-full h-48 overflow-hidden border-b ">
-        <img
-          src={product.image || "/imageIcon.jpg"}
-          alt={product.name}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
+        {product.image ?
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          /> :
+          <div className={"flex justify-center items-center h-48 flex-col"}><ImageIcon className={"size-20"}/> No Image
+          </div>
+        }
+
+
       </div>
 
       <CardHeader>
