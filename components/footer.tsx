@@ -11,10 +11,10 @@ const IndependenceDayFooter = () => {
     <footer className="bg-foreground text-white">
       {/* Celebration Banner */}
       <div className="bg-primary py-2 text-center text-sm font-medium">
-        14th August — Celebrating Pakistan&apos;s Independence Day since 1947 🎉
+        14th August — Celebrating Pakistan&apos;s Independence Day since 1947
       </div>
 
-      <Separator className="bg-green-600"/>
+      <Separator className={"bg-primary"}/>
 
       {/* Footer Content */}
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-8 px-4">
@@ -72,7 +72,8 @@ const IndependenceDayFooter = () => {
 
       {/* Bottom Bar */}
       <div className="bg-foreground py-3 text-center text-sm ">
-        &copy; {new Date().getFullYear()} PakShop. Made with <HeartIcon className={"inline text-primary"}/> by
+        &copy; {new Date().getFullYear()} PakShop. Made with <HeartIcon
+        className={"inline text-primary size-4 mx-0.5"}/> by
         dragondevs.
       </div>
     </footer>

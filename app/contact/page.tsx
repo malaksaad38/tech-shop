@@ -32,7 +32,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-muted/20">
       {/* Banner */}
-      <section className="bg-primary text-primary-foreground text-center py-12 shadow-sm">
+      <section className="bg-primary text-primary-foreground text-center py-12 shadow-sm ">
         <h1 className="text-4xl font-extrabold tracking-tight">Contact Us</h1>
         <p className="text-base mt-2 opacity-90">
           We’d love to hear from you on WhatsApp!
@@ -40,7 +40,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <div className="container mx-auto py-12 max-w-3xl">
+      <div className="container mx-auto py-12 max-w-3xl px-4">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

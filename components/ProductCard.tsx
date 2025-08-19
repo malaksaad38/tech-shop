@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <Card key={product._id}
-          className="relative overflow-hidden md:pb-6 p-0 transition hover:border hover:border-primary">
+          className="relative overflow-hidden md:pb-6 pb-6 px-0 pt-0 transition hover:border hover:border-primary">
       {/* Ribbon */}
       {discount && (
         <div className="absolute -right-10 top-4 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary">

@@ -1,112 +1,114 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {HandCoinsIcon, Menu} from "lucide-react";
+import {HandCoinsIcon, Home, Info, Menu, Package, Phone, Shield} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import {Sheet, SheetClose, SheetContent, SheetTrigger,} from "@/components/ui/sheet";
+import {Sheet, SheetClose, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
+import {usePathname} from "next/navigation";
+import {cn} from "@/lib/utils"; // ✅ shadcn utility for conditional classes
+
+const navLinks = [
+  {href: "/", label: "Home", icon: Home},
+  {href: "/products", label: "Products", icon: Package},
+  {href: "/about", label: "About", icon: Info},
+  {href: "/contact", label: "Contact", icon: Phone},
+];
 
 const IndependenceDayHeader = () => {
+  const pathname = usePathname();
+
   return (
-    <header className="bg-foreground text-white shadow-lg">
+    <header className="bg-foreground text-white shadow-md">
       {/* 🎉 Top Banner */}
-      <div className="bg-primary text-center py-1 text-sm tracking-wide px-2">
-        🎉 14th August — Celebrating Pakistan&apos;s Independence Day! 14% discount till the end of August
+      <div className="bg-primary text-center py-1 text-xs sm:text-sm px-2">
+        14th August — Celebrating Pakistan&apos;s Independence Day! Enjoy 14% OFF till end of August
       </div>
 
       {/* Main Header */}
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
+      <div className="container mx-auto flex items-center justify-between py-3 px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-extrabold text-2xl">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-extrabold text-xl sm:text-2xl"
+        >
           <span className="text-primary">PakShop</span>
         </Link>
 
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-6 text-white font-medium">
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/">
-                  Home
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/products">
-                  Products
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/about">
-                  About
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/contact">
-                  Contact
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+          <NavigationMenuList className="gap-6 font-medium">
+            {navLinks.map(({href, label, icon: Icon}) => (
+              <NavigationMenuItem key={href}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={href}
+                    className={cn(
+                      "transition hover:text-primary hover:underline hover:underline-offset-4",
+                      pathname === href ? "text-primary underline underline-offset-4" : "text-white"
+                    )}
+                  >
+                    <div className="flex justify-center items-center gap-2"><Icon size={18}/> {label}</div>
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Action Buttons (Desktop) */}
+        {/* Desktop Action Buttons */}
         <div className="hidden md:flex gap-2">
           <Button asChild variant="destructive">
-            <Link href="/admin">Admin</Link>
+            <Link href="/admin">
+              <Shield className="h-4 w-4"/> Admin
+            </Link>
           </Button>
           <Button asChild>
-            <Link href="/special-offers">Special Offers <HandCoinsIcon/></Link>
+            <Link href="/special-offers">
+              <HandCoinsIcon className="h-4 w-4"/> Special Offers
+            </Link>
           </Button>
         </div>
 
-        {/* Mobile Menu (Sheet) */}
+        {/* Mobile Menu */}
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon" className="md:hidden text-white">
-              <Menu size={28}/>
+              <Menu size={26}/>
             </Button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-green-800 text-white">
-            <nav className="flex flex-col gap-4 mt-6">
-              <SheetClose asChild>
-                <Link href="/" className="hover:text-yellow-300 transition">
-                  Home
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link href="/products" className="hover:text-yellow-300 transition">
-                  Products
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link href="/about" className="hover:text-yellow-300 transition">
-                  About
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link href="/contact" className="hover:text-yellow-300 transition">
-                  Contact
-                </Link>
-              </SheetClose>
+          <SheetContent side="right" className="p-6">
+            <nav className="flex flex-col gap-5 mt-4">
+              {navLinks.map(({href, label, icon: Icon}) => (
+                <SheetClose asChild key={href}>
+                  <Link
+                    href={href}
+                    className={cn(
+                      "flex items-center gap-2 text-lg transition-colors",
+                      pathname === href ? "text-primary underline" : "text-foreground hover:text-primary"
+                    )}
+                  >
+                    <Icon size={18}/> {label}
+                  </Link>
+                </SheetClose>
+              ))}
 
               {/* Mobile Buttons */}
-              <div className="flex flex-col gap-3 mt-4">
-                <Button asChild variant="secondary" className="bg-black/70 text-red-500 hover:bg-black">
-                  <Link href="/admin">Admin</Link>
+              <div className="flex flex-col gap-3 mt-6">
+                <Button asChild variant="destructive" className="w-full">
+                  <Link href="/admin">
+                    <Shield className="h-4 w-4"/> Admin
+                  </Link>
                 </Button>
-                <Button asChild className="bg-yellow-400 text-green-900 hover:bg-yellow-500">
-                  <Link href="/special-offers">Special Offers 🎁</Link>
+                <Button asChild>
+                  <Link href="/special-offers">
+                    <HandCoinsIcon className="h-4 w-4"/> Special Offers
+                  </Link>
                 </Button>
               </div>
             </nav>

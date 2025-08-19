@@ -20,7 +20,7 @@ const About = () => {
       </section>
 
       {/* Content */}
-      <div className="container mx-auto py-16 max-w-4xl space-y-10">
+      <div className="container mx-auto py-16 max-w-4xl space-y-10 px-4">
         {/* Our Story */}
         <Card>
           <CardContent className="p-8 space-y-4">

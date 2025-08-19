@@ -5,7 +5,7 @@ import Product from "@/models/Product"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
-import {ArrowLeft, Gift} from "lucide-react"
+import {ArrowLeft} from "lucide-react"
 
 export default async function SpecialOffer() {
   // Connect to DB & fetch top 4 products
@@ -16,13 +16,12 @@ export default async function SpecialOffer() {
     .lean()
 
   return (
-    <div className="min-h-screen bg-muted/30 py-10">
+    <div className="min-h-screen bg-muted/30 py-10 px-4">
       {/* Independence Day Offer Banner */}
       <div className="container mx-auto mb-10">
         <Card className="bg-primary text-primary-foreground shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2 text-3xl font-extrabold">
-              <Gift className="h-7 w-7"/>
               Independence Day Special Offer
             </CardTitle>
             <CardDescription className="text-lg text-primary-foreground/90 mt-2">
@@ -49,7 +48,7 @@ export default async function SpecialOffer() {
 
       {/* Back to Home */}
       <div className="mt-10 text-center">
-        <Button asChild variant="secondary" size="lg">
+        <Button asChild>
           <Link href="/">
             <ArrowLeft className="mr-2 h-4 w-4"/>
             Back to Home

@@ -1,16 +1,16 @@
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
-import { cva } from "class-variance-authority"
-import { ChevronDownIcon } from "lucide-react"
+import {cva} from "class-variance-authority"
+import {ChevronDownIcon} from "lucide-react"
 
-import { cn } from "@/lib/utils"
+import {cn} from "@/lib/utils"
 
 function NavigationMenu({
-  className,
-  children,
-  viewport = true,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
+                          className,
+                          children,
+                          viewport = true,
+                          ...props
+                        }: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
   viewport?: boolean
 }) {
   return (
@@ -24,15 +24,15 @@ function NavigationMenu({
       {...props}
     >
       {children}
-      {viewport && <NavigationMenuViewport />}
+      {viewport && <NavigationMenuViewport/>}
     </NavigationMenuPrimitive.Root>
   )
 }
 
 function NavigationMenuList({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.List>) {
+                              className,
+                              ...props
+                            }: React.ComponentProps<typeof NavigationMenuPrimitive.List>) {
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
@@ -46,9 +46,9 @@ function NavigationMenuList({
 }
 
 function NavigationMenuItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Item>) {
+                              className,
+                              ...props
+                            }: React.ComponentProps<typeof NavigationMenuPrimitive.Item>) {
   return (
     <NavigationMenuPrimitive.Item
       data-slot="navigation-menu-item"
@@ -63,10 +63,10 @@ const navigationMenuTriggerStyle = cva(
 )
 
 function NavigationMenuTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {
+                                 className,
+                                 children,
+                                 ...props
+                               }: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="navigation-menu-trigger"
@@ -83,9 +83,9 @@ function NavigationMenuTrigger({
 }
 
 function NavigationMenuContent({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Content>) {
+                                 className,
+                                 ...props
+                               }: React.ComponentProps<typeof NavigationMenuPrimitive.Content>) {
   return (
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
@@ -100,9 +100,9 @@ function NavigationMenuContent({
 }
 
 function NavigationMenuViewport({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) {
+                                  className,
+                                  ...props
+                                }: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) {
   return (
     <div
       className={cn(
@@ -122,25 +122,40 @@ function NavigationMenuViewport({
 }
 
 function NavigationMenuLink({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
+                              className,
+                              ...props
+                            }: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+        // Active state → underline + primary text
+        "data-[active=true]:text-primary data-[active=true]:underline",
+
+        // Hover state → primary text only
+        "hover:text-primary",
+
+        // Focus accessibility → keep ring, but no bg
+        "focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
+
+        // Layout + transition
+        "flex flex-col gap-1 rounded-sm p-2 text-sm transition-colors outline-none",
+
+        // Icons sizing
+        "[&_svg:not([class*='size-'])]:size-4",
+
         className
       )}
+
       {...props}
     />
   )
 }
 
 function NavigationMenuIndicator({
-  className,
-  ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) {
+                                   className,
+                                   ...props
+                                 }: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) {
   return (
     <NavigationMenuPrimitive.Indicator
       data-slot="navigation-menu-indicator"
@@ -150,7 +165,7 @@ function NavigationMenuIndicator({
       )}
       {...props}
     >
-      <div className="bg-border relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm shadow-md" />
+      <div className="bg-border relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm shadow-md"/>
     </NavigationMenuPrimitive.Indicator>
   )
 }

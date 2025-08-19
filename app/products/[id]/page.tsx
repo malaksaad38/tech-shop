@@ -1,20 +1,30 @@
-'use client'
+"use client"
 
-import React, {use, useEffect, useState} from 'react'
-import Link from 'next/link'
-import ProductDetailCard from '@/components/ProductDetailCard'
-import axios from 'axios'
+import React, {use, useEffect, useState} from "react"
+import Link from "next/link"
+import axios from "axios"
+import ProductDetailCard from "@/components/ProductDetailCard"
+
+import {Button} from "@/components/ui/button"
+import {Card} from "@/components/ui/card"
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
+import {Skeleton} from "@/components/ui/skeleton"
+import {ArrowLeft, Flag} from "lucide-react"
 
 const DISCOUNT_RATE = 0.2
 
 const isIndependenceDayPK = () => {
   const nowPk = new Date(
-    new Date().toLocaleString('en-US', {timeZone: 'Asia/Karachi'})
+    new Date().toLocaleString("en-US", {timeZone: "Asia/Karachi"})
   )
   return nowPk.getMonth() === 7 && nowPk.getDate() === 14
 }
 
-export default function ProductItem({params}: { params: Promise<{ id: string }> }) {
+export default function ProductItem({
+                                      params,
+                                    }: {
+  params: Promise<{ id: string }>
+}) {
   const {id} = use(params) // ✅ unwrap Promise params
 
   const independenceDay = isIndependenceDayPK()
@@ -28,7 +38,7 @@ export default function ProductItem({params}: { params: Promise<{ id: string }> 
         const res = await axios.get(`/api/products/${id}`)
         setProduct(res.data)
       } catch (err) {
-        console.error('Error fetching product:', err)
+        console.error("Error fetching product:", err)
       } finally {
         setLoading(false)
       }
@@ -37,35 +47,70 @@ export default function ProductItem({params}: { params: Promise<{ id: string }> 
   }, [id])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-100 via-white to-green-50 p-6">
+    <div className="min-h-screen bg-background p-6">
+      {/* 🎉 Independence Day Banner */}
       {independenceDay && (
-        <div className="bg-green-700 text-white text-center py-4 shadow-md rounded-lg mb-6">
-          <h1 className="text-2xl font-extrabold flex items-center justify-center gap-2">
-            Happy Independence Day Pakistan! 🎉
-          </h1>
-          <p className="text-sm mt-1">
+        <Alert className="mb-6 ">
+          <Flag className="h-5 w-5"/>
+          <AlertTitle className="font-extrabold">
+            Happy Independence Day Pakistan!
+          </AlertTitle>
+          <AlertDescription>
             Celebrating Freedom Since 1947 – Enjoy {DISCOUNT_RATE * 100}% OFF!
-          </p>
-        </div>
+          </AlertDescription>
+        </Alert>
       )}
 
+      {/* Back Button */}
       <div className="mb-4">
-        <Link
-          href="/products"
-          className="inline-block bg-green-700 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-800 transition"
-        >
-          ← Back to Products
-        </Link>
+        <Button variant="default" asChild>
+          <Link href="/products">
+            <ArrowLeft className="h-4 w-4"/>
+            Back to Products
+          </Link>
+        </Button>
       </div>
 
+      {/* Product Section */}
       <div className="flex items-center justify-center">
         {loading ? (
-          <p className="text-green-700">Loading product...</p>
+          <Card className="w-full max-w-4xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Image Skeleton */}
+              <div className="p-6 flex items-center justify-center">
+                <Skeleton className="h-64 w-64 rounded-lg"/>
+              </div>
+
+              {/* Details Skeleton */}
+              <div className="p-6 flex flex-col justify-between">
+                <div>
+                  <Skeleton className="h-8 w-2/3 mb-4"/> {/* Title */}
+                  <Skeleton className="h-4 w-full mb-2"/> {/* Line 1 */}
+                  <Skeleton className="h-4 w-5/6 mb-2"/> {/* Line 2 */}
+                  <Skeleton className="h-4 w-2/3 mb-4"/> {/* Line 3 */}
+                </div>
+
+                <div>
+                  <Skeleton className="h-8 w-32 mb-4"/> {/* Price */}
+                  <div className="flex gap-4">
+                    <Skeleton className="h-12 w-40 rounded-lg"/> {/* Buy button */}
+                    <Skeleton className="h-12 w-12 rounded-full"/> {/* Favorite */}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
         ) : product ? (
           <ProductDetailCard product={product}/>
         ) : (
-          <p className="text-red-600">Product not found.</p>
+          <Alert variant="destructive" className="max-w-md">
+            <AlertTitle>Product not found</AlertTitle>
+            <AlertDescription>
+              The product you are looking for does not exist.
+            </AlertDescription>
+          </Alert>
         )}
+
       </div>
     </div>
   )

@@ -1,94 +1,99 @@
-"use client";
-import React from "react";
-import {sendWhatsAppMessage} from "../utils/whatsapp";
-import Favorite from "@/components/favorite";
+"use client"
 
+import React from "react"
+import {sendWhatsAppMessage} from "../utils/whatsapp"
+import Favorite from "@/components/favorite"
+
+import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {Badge} from "@/components/ui/badge"
 
 type Product = {
-  _id: string | number;
-  name: string;
-  price: number;
-  image: string;
-  description?: string;
-};
-
-interface ProductDetailsCardProps {
-  product: Product;
-  discount?: boolean;
-  discountTitle?: string;
-  discountRate?: number;
+  _id: string | number
+  name: string
+  price: number
+  image: string
+  description?: string
 }
 
-const formatPrice = (price: number) => price.toFixed(2);
+interface ProductDetailsCardProps {
+  product: Product
+  discount?: boolean
+  discountTitle?: string
+  discountRate?: number
+}
+
+const formatPrice = (price: number) => price.toFixed(2)
+
 const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({
                                                                  product,
                                                                  discount = false,
                                                                  discountTitle = "Special Offer",
                                                                  discountRate = 0.14,
                                                                }) => {
-  const discounted = discount
-    ? product.price * (1 - discountRate)
-    : product.price;
-
+  const discounted = discount ? product.price * (1 - discountRate) : product.price
 
   return (
-    <div className="max-w-fit mx-auto bg-white shadow-lg overflow-hidden border border-green-200">
+    <Card className="max-w-4xl mx-auto overflow-hidden py-0">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Product Image */}
         <div className="relative">
           {discount && (
-            <span className="absolute top-4 left-4 bg-green-700 text-white text-xs font-bold px-4 py-1 rounded shadow">
+            <Badge className="absolute top-4 left-4  shadow">
               {discountTitle}
-            </span>
+            </Badge>
           )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`${product.image ? product.image : "/imageIcon.jpg"}`}
+            src={product.image || "/imageIcon.jpg"}
             alt={product.name}
-            className="w-fit h-fit object-cover"
+            className="w-full h-full object-cover"
           />
         </div>
 
         {/* Product Info */}
-        <div className="p-6 flex flex-col justify-around">
+        <CardContent className="flex flex-col justify-between p-6">
           <div>
-            <h1 className="text-3xl font-bold text-green-800 mb-3">
-              {product.name}
-            </h1>
-            {product.description && (
-              <p className="text-gray-700 text-base leading-relaxed mb-4">
-                {product.description}
-              </p>
-            )}
-          </div>
+            <CardHeader className="p-0 mb-3">
+              <CardTitle className="text-3xl font-bold ">
+                {product.name}
+              </CardTitle>
+              {product.description && (
+                <CardDescription className="text-base leading-relaxed ">
+                  {product.description}
+                </CardDescription>
+              )}
+            </CardHeader>
 
-          {/* Price */}
-          <div className="mb-4">
-            <span className="text-3xl font-bold text-green-700 ">
-              ${formatPrice(discounted)}
-            </span>
-            {discount && (
-              <span className="ml-3 line-through text-green-600/70">
-                ${formatPrice(product.price)}
+            {/* Price */}
+            <div className="mb-4">
+              <span className="text-3xl font-bold t">
+                ${formatPrice(discounted)}
               </span>
-            )}
+              {discount && (
+                <span className="ml-3 line-through ">
+                  ${formatPrice(product.price)}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-4">
-            <button
+            <Button
+              className="flex-1"
               onClick={() =>
                 sendWhatsAppMessage({...product, price: discounted})
               }
-              className="flex-1 bg-green-700 text-white py-3 rounded-lg font-semibold text-lg hover:bg-green-800 transition"
             >
               Buy Now
-            </button>
+            </Button>
             <Favorite/>
           </div>
-        </div>
+        </CardContent>
       </div>
-    </div>
-  );
-};
+    </Card>
+  )
+}
 
-export default ProductDetailsCard;
+export default ProductDetailsCard

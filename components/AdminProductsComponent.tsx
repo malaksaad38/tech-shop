@@ -75,11 +75,7 @@ const AdminProductsComponent = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Manage Products</CardTitle>
-          <Link href="/admin/products/create">
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4"/> Create New
-            </Button>
-          </Link>
+
         </CardHeader>
 
         <CardContent>
@@ -91,8 +87,13 @@ const AdminProductsComponent = () => {
               onChange={(e) => setSearch(e.target.value)}
               className="max-w-sm"
             />
-            <div className="text-sm text-muted-foreground">
-              {products?.length} Items
+            <div className="text-sm text-muted-foreground flex justify-center items-center gap-6">
+              <span>{products?.length} Items</span>
+              <Link href="/admin/products/create">
+                <Button>
+                  <PlusCircle className="mr-2 h-4 w-4"/> Create New
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -109,7 +110,7 @@ const AdminProductsComponent = () => {
                     <TableHead>Name</TableHead>
                     <TableHead>Price</TableHead>
                     <TableHead>Created At</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead className="text-right"></TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
