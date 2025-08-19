@@ -1,79 +1,118 @@
-'use client'
-import React, {useState} from "react";
+"use client";
+import React from "react";
 import Link from "next/link";
-import {Menu, X} from "lucide-react"; // icons for hamburger
+import {HandCoinsIcon, Menu} from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import {Sheet, SheetClose, SheetContent, SheetTrigger,} from "@/components/ui/sheet";
+import {Button} from "@/components/ui/button";
 
 const IndependenceDayHeader = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
-    <header className="bg-green-700 text-white shadow-lg">
-      {/* Top Banner */}
-      <div className="bg-green-800 text-center py-1 text-sm tracking-wide px-2">
-        🎉 14th August — Celebrating Pakistan's Independence Day! 14% discount till the end of August
+    <header className="bg-foreground text-white shadow-lg">
+      {/* 🎉 Top Banner */}
+      <div className="bg-primary text-center py-1 text-sm tracking-wide px-2">
+        🎉 14th August — Celebrating Pakistan&apos;s Independence Day! 14% discount till the end of August
       </div>
 
       {/* Main Header */}
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-extrabold text-2xl"
-        >
-          <span className="text-white">PakShop</span>
+        <Link href="/" className="flex items-center gap-2 font-extrabold text-2xl">
+          <span className="text-primary">PakShop</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 text-white font-medium">
-          <Link href="/" className="hover:text-yellow-300 transition">Home</Link>
-          <Link href="/products" className="hover:text-yellow-300 transition">Products</Link>
-          <Link href="/about" className="hover:text-yellow-300 transition">About</Link>
-          <Link href="/contact" className="hover:text-yellow-300 transition">Contact</Link>
-        </nav>
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList className="gap-6 text-white font-medium">
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/">
+                  Home
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/products">
+                  Products
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/about">
+                  About
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link href="/contact">
+                  Contact
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
-        {/* Action Button (Desktop) */}
-        <div className="hidden md:block space-x-2">
-          <Link href="/admin"
-                className="bg-black/70 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-black transition">Admin</Link>
-          <Link
-            href="/special-offers"
-            className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition"
-          >
-            Special Offers 🎁
-          </Link>
+        {/* Action Buttons (Desktop) */}
+        <div className="hidden md:flex gap-2">
+          <Button asChild variant="destructive">
+            <Link href="/admin">Admin</Link>
+          </Button>
+          <Button asChild>
+            <Link href="/special-offers">Special Offers <HandCoinsIcon/></Link>
+          </Button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={28}/> : <Menu size={28}/>}
-        </button>
+        {/* Mobile Menu (Sheet) */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden text-white">
+              <Menu size={28}/>
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="bg-green-800 text-white">
+            <nav className="flex flex-col gap-4 mt-6">
+              <SheetClose asChild>
+                <Link href="/" className="hover:text-yellow-300 transition">
+                  Home
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/products" className="hover:text-yellow-300 transition">
+                  Products
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/about" className="hover:text-yellow-300 transition">
+                  About
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link href="/contact" className="hover:text-yellow-300 transition">
+                  Contact
+                </Link>
+              </SheetClose>
+
+              {/* Mobile Buttons */}
+              <div className="flex flex-col gap-3 mt-4">
+                <Button asChild variant="secondary" className="bg-black/70 text-red-500 hover:bg-black">
+                  <Link href="/admin">Admin</Link>
+                </Button>
+                <Button asChild className="bg-yellow-400 text-green-900 hover:bg-yellow-500">
+                  <Link href="/special-offers">Special Offers 🎁</Link>
+                </Button>
+              </div>
+            </nav>
+          </SheetContent>
+        </Sheet>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {menuOpen && (
-        <div className="md:hidden bg-green-800 text-white flex flex-col gap-4 px-6 py-4 absolute z-20 w-full">
-          <Link href="/" className="hover:text-yellow-300 transition" onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link href="/products" className="hover:text-yellow-300 transition"
-                onClick={() => setMenuOpen(false)}>Products</Link>
-          <Link href="/about" className="hover:text-yellow-300 transition"
-                onClick={() => setMenuOpen(false)}>About</Link>
-          <Link href="/contact" className="hover:text-yellow-300 transition"
-                onClick={() => setMenuOpen(false)}>Contact</Link>
-          <div className="space-x-2 w-full">
-            <Link href="/admin"
-                  className="bg-black/70 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-black transition">Admin</Link>
-            <Link
-              href="/special-offers"
-              className="bg-yellow-400 w-full text-green-900 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-yellow-500 transition"
-            >
-              Special Offers 🎁
-            </Link>
-          </div>
-        </div>
-      )}
     </header>
   );
 };

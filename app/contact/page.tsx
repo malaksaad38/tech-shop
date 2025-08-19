@@ -1,111 +1,127 @@
-"use client";
-import React, {useState} from "react";
-import Link from "next/link";
+"use client"
+
+import React, {useState} from "react"
+import Link from "next/link"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import {Input} from "@/components/ui/input"
+import {Textarea} from "@/components/ui/textarea"
+import {Label} from "@/components/ui/label"
+import {Button} from "@/components/ui/button"
+import {ArrowLeft, Mail, MessageCircle, MessageSquare, User} from "lucide-react"
 
 const Contact = () => {
-  const [form, setForm] = useState({name: "", email: "", message: ""});
+  const [form, setForm] = useState({name: "", email: "", message: ""})
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setForm({...form, [e.target.id]: e.target.value});
-  };
+    setForm({...form, [e.target.id]: e.target.value})
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const phoneNumber = "923015488577"; // 👈 your WhatsApp number (with country code, no + sign)
-    const text = `📩 New Contact Message\n\n👤 Name: ${form.name}\n📧 Email: ${form.email}\n💬 Message: ${form.message}`;
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+    const phoneNumber = "923015488577" // 👈 your WhatsApp number
+    const text = `📩 New Contact Message\n\n👤 Name: ${form.name}\n📧 Email: ${form.email}\n💬 Message: ${form.message}`
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`
 
-    // open WhatsApp chat
-    window.open(url, "_blank");
-
-    // optional: reset form
-    setForm({name: "", email: "", message: ""});
-  };
+    window.open(url, "_blank")
+    setForm({name: "", email: "", message: ""})
+  }
 
   return (
-    <div className="bg-gradient-to-b from-green-100 via-white to-green-50 min-h-screen text-gray-800">
+    <div className="min-h-screen bg-muted/20">
       {/* Banner */}
-      <div className="bg-green-700 text-white text-center py-8 shadow-md">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-2">
-          Contact Us
-        </h1>
-        <p className="text-sm mt-2">We’d love to hear from you on WhatsApp!</p>
-      </div>
+      <section className="bg-primary text-primary-foreground text-center py-12 shadow-sm">
+        <h1 className="text-4xl font-extrabold tracking-tight">Contact Us</h1>
+        <p className="text-base mt-2 opacity-90">
+          We’d love to hear from you on WhatsApp!
+        </p>
+      </section>
 
-      {/* Contact Section */}
-      <div className="container mx-auto px-6 py-12 max-w-3xl">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-gray-900 text-white shadow-lg rounded-lg p-8 border border-green-600"
-        >
-          <div className="mb-6">
-            <label htmlFor="name" className="block text-green-400 font-semibold mb-2">
-              Your Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-              required
-              className="w-full border border-green-600 bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
+      {/* Contact Form */}
+      <div className="container mx-auto py-12 max-w-3xl">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <MessageCircle className="h-6 w-6 text-primary"/>
+              Get in Touch
+            </CardTitle>
+            <CardDescription>
+              Fill out the form below and we’ll connect with you on WhatsApp.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Name */}
+              <div className="space-y-2">
+                <Label htmlFor="name" className="flex items-center gap-2">
+                  <User className="h-4 w-4 text-muted-foreground"/>
+                  Your Name
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  required
+                />
+              </div>
 
-          <div className="mb-6">
-            <label htmlFor="email" className="block text-green-400 font-semibold mb-2">
-              Your Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              required
-              className="w-full border border-green-600 bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
+              {/* Email */}
+              <div className="space-y-2">
+                <Label htmlFor="email" className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-muted-foreground"/>
+                  Your Email
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
 
-          <div className="mb-6">
-            <label htmlFor="message" className="block text-green-400 font-semibold mb-2">
-              Your Message
-            </label>
-            <textarea
-              id="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Write your message..."
-              rows={5}
-              required
-              className="w-full border border-green-600 bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            ></textarea>
-          </div>
+              {/* Message */}
+              <div className="space-y-2">
+                <Label htmlFor="message" className="flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4 text-muted-foreground"/>
+                  Your Message
+                </Label>
+                <Textarea
+                  id="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Write your message..."
+                  rows={5}
+                  required
+                />
+              </div>
 
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
-          >
-            Send via WhatsApp
-          </button>
-        </form>
+              {/* Submit */}
+              <Button type="submit" className="w-full" size="lg" variant="default">
+                <MessageCircle className="mr-2 h-5 w-5"/>
+                Send via WhatsApp
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
         {/* Back to Home */}
         <div className="mt-6 text-center">
-          <Link
-            href="/"
-            className="inline-block bg-green-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition"
-          >
-            ← Back to Home
-          </Link>
+          <Button asChild variant={"default"}>
+            <Link href="/">
+              <ArrowLeft className="mr-2 h-4 w-4"/>
+              Back to Home
+            </Link>
+          </Button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact

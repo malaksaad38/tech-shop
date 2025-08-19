@@ -1,52 +1,84 @@
-import React from 'react';
-import Link from 'next/link';
+"use client"
+
+import React from "react"
+import Link from "next/link"
+import {Card, CardContent} from "@/components/ui/card"
+import {Button} from "@/components/ui/button"
+import {BookOpen, Flag, Target} from "lucide-react"
 
 const About = () => {
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white min-h-screen">
-      {/* Banner */}
-      <div className="bg-green-700 text-white text-center py-8 shadow-md">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-2">
+    <div className="min-h-screen">
+      {/* Hero Banner */}
+      <section className="bg-primary text-primary-foreground text-center py-16 shadow-sm">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
           About Pakistan Independence Day
         </h1>
-        <p className="text-sm mt-2">Celebrating Freedom Since 14th August 1947</p>
-      </div>
+        <p className="text-base md:text-lg mt-3 opacity-90">
+          Celebrating Freedom Since 14th August 1947
+        </p>
+      </section>
 
       {/* Content */}
-      <div className="container mx-auto px-6 py-12 max-w-4xl text-gray-700">
-        <h2 className="text-2xl font-bold text-green-800 mb-4">Our Story</h2>
-        <p className="mb-6 leading-relaxed">
-          On 14th August 1947, Pakistan emerged as an independent nation, marking the end of British colonial
-          rule and the creation of a homeland for Muslims of the Indian subcontinent. This day symbolizes
-          freedom, unity, and the vision of our founding fathers. Every year, Pakistanis across the globe
-          celebrate this day with pride and honor.
-        </p>
+      <div className="container mx-auto py-16 max-w-4xl space-y-10">
+        {/* Our Story */}
+        <Card>
+          <CardContent className="p-8 space-y-4">
+            <div className="flex items-center gap-3">
+              <BookOpen className="h-6 w-6 text-primary"/>
+              <h2 className="text-2xl font-bold text-primary">Our Story</h2>
+            </div>
+            <p className="leading-relaxed text-muted-foreground">
+              On 14th August 1947, Pakistan emerged as an independent nation,
+              marking the end of British colonial rule and the creation of a
+              homeland for Muslims of the Indian subcontinent. This day
+              symbolizes freedom, unity, and the vision of our founding fathers.
+              Every year, Pakistanis across the globe celebrate this day with
+              pride and honor.
+            </p>
+          </CardContent>
+        </Card>
 
-        <h2 className="text-2xl font-bold text-green-800 mb-4">Why We Celebrate</h2>
-        <p className="mb-6 leading-relaxed">
-          Independence Day is a reminder of the sacrifices made by countless individuals for the sake of our
-          freedom. It’s a time to reflect on our achievements, cherish our culture, and strengthen our
-          commitment to making Pakistan a prosperous nation.
-        </p>
+        {/* Why We Celebrate */}
+        <Card>
+          <CardContent className="p-8 space-y-4">
+            <div className="flex items-center gap-3">
+              <Flag className="h-6 w-6 text-primary"/>
+              <h2 className="text-2xl font-bold text-primary">Why We Celebrate</h2>
+            </div>
+            <p className="leading-relaxed text-muted-foreground">
+              Independence Day is a reminder of the sacrifices made by countless
+              individuals for the sake of our freedom. It’s a time to reflect on
+              our achievements, cherish our culture, and strengthen our
+              commitment to making Pakistan a prosperous nation.
+            </p>
+          </CardContent>
+        </Card>
 
-        <h2 className="text-2xl font-bold text-green-800 mb-4">Our Mission</h2>
-        <p className="mb-6 leading-relaxed">
-          Our mission is to promote patriotism, celebrate Pakistan’s rich heritage, and inspire future
-          generations to contribute positively to our beloved country.
-        </p>
+        {/* Our Mission */}
+        <Card>
+          <CardContent className="p-8 space-y-4">
+            <div className="flex items-center gap-3">
+              <Target className="h-6 w-6 text-primary"/>
+              <h2 className="text-2xl font-bold text-primary">Our Mission</h2>
+            </div>
+            <p className="leading-relaxed text-muted-foreground">
+              Our mission is to promote patriotism, celebrate Pakistan’s rich
+              heritage, and inspire future generations to contribute positively
+              to our beloved country.
+            </p>
+          </CardContent>
+        </Card>
 
-        {/* Back to Home Button */}
-        <div className="mt-8">
-          <Link
-            href="/"
-            className="bg-green-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-800 transition"
-          >
-            ← Back to Home
-          </Link>
+        {/* Back to Home */}
+        <div className="flex justify-center pt-6">
+          <Button asChild size="lg">
+            <Link href="/">← Back to Home</Link>
+          </Button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About

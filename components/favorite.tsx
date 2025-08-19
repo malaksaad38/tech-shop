@@ -1,5 +1,7 @@
 "use client"
 import React, {useState} from 'react';
+import {Button} from "@/components/ui/button";
+import {HeartIcon, HeartPlusIcon} from "lucide-react";
 
 const Favorite = () => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -10,12 +12,14 @@ const Favorite = () => {
 
   return (
     <div>
-      <button
+      <Button
         onClick={toggleFavorite}
-        className={`p-3 rounded-lg transition border border-green-300 hover:bg-green-50`}
+        size={"icon"}
+        variant="outline"
+        className="min-w-9"
       >
-        {isFavorite ? '❤️' : '🤍'}
-      </button>
+        {isFavorite ? <HeartPlusIcon/> : <HeartIcon/>}
+      </Button>
     </div>
   );
 };
