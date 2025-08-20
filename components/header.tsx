@@ -28,7 +28,7 @@ const IndependenceDayHeader = () => {
     <header className="bg-card text-foreground border-b shadow-md">
       {/* 🎉 Top Banner */}
       <div className="bg-primary text-center py-1 text-xs sm:text-sm px-2">
-        14th August — Celebrating Pakistan&apos;s Independence Day! Enjoy 14% OFF till end of August
+        14th August — Celebrating Pakistan&apos;s Independence Day!
       </div>
 
       {/* Main Header */}
@@ -82,15 +82,21 @@ const IndependenceDayHeader = () => {
 
         {/* Mobile Menu */}
         <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden text-foreground">
-              <Menu size={26}/>
-            </Button>
-          </SheetTrigger>
+          <div className={"space-x-2 block md:hidden"}>
+            <ModeToggle/>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden text-foreground">
+                <Menu size={26}/>
+              </Button>
+            </SheetTrigger>
+          </div>
+
           <SheetContent side="right" className="p-6">
             <nav className="flex flex-col gap-5 mt-4">
+
               {navLinks.map(({href, label, icon: Icon}) => (
                 <SheetClose asChild key={href}>
+
                   <Link
                     href={href}
                     className={cn(

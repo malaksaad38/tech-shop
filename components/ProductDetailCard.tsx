@@ -38,7 +38,7 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
         {/* Product Image */}
         <div className="relative">
           {hasDiscount && (
-            <Badge className="absolute top-4 left-4 shadow">
+            <Badge className="absolute top-4 left-4 shadow text-white ">
               SALE {product.percentage}% OFF
             </Badge>
           )}

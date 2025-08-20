@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       {/* Ribbon */}
       {hasDiscount && (
         <div
-          className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-foreground">
+          className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-white">
           SALE {product.percentage}% OFF
         </div>
       )}
