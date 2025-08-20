@@ -5,7 +5,9 @@ import AdminControl from "@/components/AdminControl";
 const Create = () => {
   return (
     <AdminControl>
-      <ProductForm/>
+      <div className={"px-4"}>
+        <ProductForm/>
+      </div>
     </AdminControl>
   );
 };

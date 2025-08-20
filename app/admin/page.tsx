@@ -4,7 +4,7 @@ import AdminControl from "@/components/AdminControl";
 export default function AdminPage() {
   return (
     <AdminControl>
-      <div className={"container mx-auto"}>
+      <div className={"container mx-auto px-4"}>
         <h1 className={"text-3xl font-bold pt-6"}>Admin Dashboard</h1>
         <AdminProductsComponent/>
       </div>

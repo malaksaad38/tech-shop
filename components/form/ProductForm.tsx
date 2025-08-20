@@ -12,6 +12,7 @@ import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import {Switch} from "@/components/ui/switch"
 
 const ProductSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -25,6 +26,11 @@ const ProductSchema = z.object({
     .optional()
     .or(z.literal("")),
   image: z.string().url("Please enter a valid image URL").optional().or(z.literal("")),
+  special: z.boolean().optional().default(false),
+  percentage: z.preprocess(
+    (val) => (val === "" ? 0 : Number(val)),
+    z.number().min(0).max(100).default(0)
+  ),
 })
 
 type ProductFormValues = z.infer<typeof ProductSchema>
@@ -36,6 +42,8 @@ type ProductFormProps = {
     price: number
     description?: string
     image?: string
+    special?: boolean
+    percentage?: number
   }
 }
 
@@ -48,6 +56,8 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
       price: undefined as unknown as number,
       description: "",
       image: "",
+      special: false,
+      percentage: 0,
     },
   })
 
@@ -65,27 +75,28 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
         price: product.price,
         description: product.description || "",
         image: product.image || "",
+        special: product.special || false,
+        percentage: product.percentage || 0,
       })
     }
   }, [product, form])
 
   const onSubmit = async (values: ProductFormValues) => {
     try {
+      const payload = {
+        name: values.name.trim(),
+        price: Number(values.price),
+        description: values.description?.trim() || undefined,
+        image: values.image?.trim() || undefined,
+        special: values.special || false,
+        percentage: values.percentage || 0,
+      }
+
       if (product?._id) {
-        await axios.put(`/api/products/${product._id}`, {
-          name: values.name.trim(),
-          price: Number(values.price),
-          description: values.description?.trim() || undefined,
-          image: values.image?.trim() || undefined,
-        })
+        await axios.put(`/api/products/${product._id}`, payload)
         router.push("/admin")
       } else {
-        await axios.post("/api/products", {
-          name: values.name.trim(),
-          price: Number(values.price),
-          description: values.description?.trim() || undefined,
-          image: values.image?.trim() || undefined,
-        })
+        await axios.post("/api/products", payload)
         form.reset()
         router.push("/admin")
       }
@@ -183,6 +194,52 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
                 </FormItem>
               )}
             />
+
+            {/* Special Offer Toggle */}
+            <FormField
+              control={form.control}
+              name="special"
+              render={({field}) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div>
+                    <FormLabel>Special Offer</FormLabel>
+                    <FormDescription>
+                      Enable if this product has a discount.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch checked={field.value} onCheckedChange={field.onChange}/>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {/* Percentage Discount */}
+            {form.watch("special") && (
+              <FormField
+                control={form.control}
+                name="percentage"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Discount Percentage (%)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        step="1"
+                        min="0"
+                        max="100"
+                        placeholder="e.g. 20"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Enter discount percentage (0–100).
+                    </FormDescription>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+            )}
 
             {/* Actions */}
             <div className="flex items-center gap-3 pt-2">

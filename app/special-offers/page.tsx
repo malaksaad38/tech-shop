@@ -2,35 +2,35 @@ import Link from "next/link"
 import ProductCard from "@/components/ProductCard"
 import {connectDB} from "@/lib/mongodb"
 import Product from "@/models/Product"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
-import {ArrowLeft} from "lucide-react"
+import {ArrowLeft, PartyPopperIcon} from "lucide-react"
 
 export default async function SpecialOffer() {
-  // Connect to DB & fetch top 4 products
+  // Connect to DB & fetch products with special = true
   await connectDB()
-  const offerProducts = await Product.find()
+  const offerProducts = await Product.find({special: true})
     .sort({createdAt: -1, _id: -1})
-    .limit(4)
+    .limit(12) // you can change how many to show
     .lean()
 
   return (
     <div className="min-h-screen bg-muted/30 py-10 px-4">
-      {/* Independence Day Offer Banner */}
+      {/* Special Offer Banner */}
       <div className="container mx-auto mb-10">
         <Card className="bg-primary text-foreground shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2 text-3xl font-extrabold">
-              Independence Day Special Offer
+              <PartyPopperIcon/> Special Offers <PartyPopperIcon/>
             </CardTitle>
             <CardDescription className="text-lg text-foreground/90 mt-2">
-              Get <span className="font-semibold">20% OFF</span> on all products — Today Only!
+              Discover our exclusive discounted products!
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
             <Badge variant="secondary" className="text-xl px-6 py-2 font-bold">
-              Use Code: <span className="ml-2 text-primary">PAK20</span>
+              Limited Time Only!
             </Badge>
           </CardContent>
         </Card>
@@ -38,12 +38,18 @@ export default async function SpecialOffer() {
 
       {/* Product Grid */}
       <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {offerProducts.map((product: any) => (
-          <ProductCard
-            key={product._id.toString()}
-            product={JSON.parse(JSON.stringify(product))}
-          />
-        ))}
+        {offerProducts.length > 0 ? (
+          offerProducts.map((product: any) => (
+            <ProductCard
+              key={product._id.toString()}
+              product={JSON.parse(JSON.stringify(product))}
+            />
+          ))
+        ) : (
+          <p className="col-span-full text-center text-muted-foreground text-lg">
+            No special offers available right now. Check back later!
+          </p>
+        )}
       </div>
 
       {/* Back to Home */}
