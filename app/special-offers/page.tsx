@@ -14,7 +14,7 @@ export default async function SpecialOffer() {
     .sort({createdAt: -1, _id: -1})
     .limit(12) // you can change how many to show
     .lean()
-
+  
   return (
     <div className="min-h-screen bg-muted/30 py-10 px-4">
       {/* Special Offer Banner */}

@@ -100,6 +100,8 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
         form.reset()
         router.push("/admin")
       }
+      router.refresh();
+      
     } catch (err: any) {
       console.error(err)
       alert(err?.response?.data?.message || "Failed to save product")

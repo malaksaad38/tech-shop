@@ -2,6 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {connectDB} from "@/lib/mongodb";
 import Product from "@/models/Product";
 import mongoose from "mongoose";
+import {revalidatePath} from "next/cache";
 
 type Params = { params: { id: string } };
 
@@ -29,6 +30,10 @@ export async function PUT(req: NextRequest, {params}: Params) {
 
   const body = await req.json();
   const updated = await Product.findByIdAndUpdate(params.id, body, {new: true});
+
+  revalidatePath('/');
+  revalidatePath('/special-offers');
+
   if (!updated) return NextResponse.json({error: "Not found"}, {status: 404});
 
   return NextResponse.json(updated);
@@ -43,5 +48,9 @@ export async function DELETE(_req: NextRequest, {params}: Params) {
   }
 
   await Product.findByIdAndDelete(params.id);
+
+  revalidatePath('/');
+  revalidatePath('/special-offers');
+  
   return NextResponse.json({message: "Deleted"});
 }
