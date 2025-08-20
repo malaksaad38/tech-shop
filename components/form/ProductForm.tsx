@@ -29,7 +29,7 @@ const ProductSchema = z.object({
   special: z.boolean().optional().default(false),
   percentage: z.preprocess(
     (val) => (val === "" ? 0 : Number(val)),
-    z.number().min(0).max(100).default(0)
+    z.number().min(1).max(100).default(0)
   ),
 })
 
@@ -57,7 +57,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
       description: "",
       image: "",
       special: false,
-      percentage: 0,
+      percentage: 1,
     },
   })
 

@@ -16,7 +16,7 @@ const IndependenceDayFooter = () => {
 
 
       {/* Footer Content */}
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-8 px-4">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 py-8 px-4">
         {/* About Section */}
         <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0">

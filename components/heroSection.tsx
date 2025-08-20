@@ -59,8 +59,8 @@ export default async function IndependenceDayHeroWithProducts() {
 
       {/* Products Section */}
       <section className="container mx-auto px-6 py-12">
-        <h2 className="text-3xl font-bold text-primary mb-6">
-          <ShoppingCartIcon className={"inline size-8 mr-2 text-primary"}/> Featured Products
+        <h2 className="text-2xl font-bold text-primary mb-6">
+          <ShoppingCartIcon className={"inline size-6 mr-2 text-primary"}/> Featured Products
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
