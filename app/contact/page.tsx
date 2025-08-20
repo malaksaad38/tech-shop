@@ -32,8 +32,8 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-muted/20">
       {/* Banner */}
-      <section className="bg-primary text-primary-foreground text-center py-12 shadow-sm ">
-        <h1 className="text-4xl font-extrabold tracking-tight">Contact Us</h1>
+      <section className="bg-primary text-foreground text-center py-14 shadow-sm ">
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">Contact Us</h1>
         <p className="text-base mt-2 opacity-90">
           We’d love to hear from you on WhatsApp!
         </p>

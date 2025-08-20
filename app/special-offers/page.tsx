@@ -19,12 +19,12 @@ export default async function SpecialOffer() {
     <div className="min-h-screen bg-muted/30 py-10 px-4">
       {/* Independence Day Offer Banner */}
       <div className="container mx-auto mb-10">
-        <Card className="bg-primary text-primary-foreground shadow-lg">
+        <Card className="bg-primary text-foreground shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2 text-3xl font-extrabold">
               Independence Day Special Offer
             </CardTitle>
-            <CardDescription className="text-lg text-primary-foreground/90 mt-2">
+            <CardDescription className="text-lg text-foreground/90 mt-2">
               Get <span className="font-semibold">20% OFF</span> on all products — Today Only!
             </CardDescription>
           </CardHeader>

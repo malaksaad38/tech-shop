@@ -17,7 +17,7 @@ export default async function IndependenceDayHeroWithProducts() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-foreground py-20">
+      <section className="relative bg-background py-20">
         {/* Background Pattern */}
         <div
           className="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/2560px-Flag_of_Pakistan.svg.png')] bg-cover bg-center opacity-10"
@@ -25,7 +25,7 @@ export default async function IndependenceDayHeroWithProducts() {
 
         {/* Content */}
         <div className="relative container mx-auto px-6 text-center">
-          <Card className="bg-white/10 backdrop-blur-md border-0 text-white shadow-xl">
+          <Card className="bg-background/20 backdrop-blur-md border-0 text-foreground shadow-xl">
             <CardHeader>
               <CardTitle className="text-4xl md:text-6xl font-extrabold flex items-center justify-center gap-2">
                 Happy Independence Day Pakistan!

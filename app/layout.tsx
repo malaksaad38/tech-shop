@@ -3,6 +3,7 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import IndependenceDayHeader from "@/components/header";
 import IndependenceDayFooter from "@/components/footer";
+import {ThemeProvider} from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,9 +57,16 @@ export default function RootLayout({
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
-    <IndependenceDayHeader/>
-    {children}
-    <IndependenceDayFooter/>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <IndependenceDayHeader/>
+      {children}
+      <IndependenceDayFooter/>
+    </ThemeProvider>
     </body>
     </html>
   );

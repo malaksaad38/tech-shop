@@ -11,7 +11,8 @@ import {
 import {Sheet, SheetClose, SheetContent, SheetTrigger} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
 import {usePathname} from "next/navigation";
-import {cn} from "@/lib/utils"; // ✅ shadcn utility for conditional classes
+import {cn} from "@/lib/utils";
+import {ModeToggle} from "@/components/ModeToggle";
 
 const navLinks = [
   {href: "/", label: "Home", icon: Home},
@@ -24,7 +25,7 @@ const IndependenceDayHeader = () => {
   const pathname = usePathname();
 
   return (
-    <header className="bg-foreground text-white shadow-md">
+    <header className="bg-card text-foreground border-b shadow-md">
       {/* 🎉 Top Banner */}
       <div className="bg-primary text-center py-1 text-xs sm:text-sm px-2">
         14th August — Celebrating Pakistan&apos;s Independence Day! Enjoy 14% OFF till end of August
@@ -50,7 +51,7 @@ const IndependenceDayHeader = () => {
                     href={href}
                     className={cn(
                       "transition hover:text-primary hover:underline hover:underline-offset-4",
-                      pathname === href ? "text-primary underline underline-offset-4" : "text-white"
+                      pathname === href ? "text-primary underline underline-offset-4" : "text-foreground"
                     )}
                   >
                     <div className="flex justify-center items-center gap-2"><Icon size={18}/> {label}</div>
@@ -63,11 +64,14 @@ const IndependenceDayHeader = () => {
 
         {/* Desktop Action Buttons */}
         <div className="hidden md:flex gap-2">
+          <ModeToggle/>
           <Button asChild variant="destructive">
             <Link href="/admin">
               <Shield className="h-4 w-4"/> Admin
             </Link>
+
           </Button>
+
           <Button asChild>
             <Link href="/special-offers">
               <HandCoinsIcon className="h-4 w-4"/> Special Offers
@@ -75,10 +79,11 @@ const IndependenceDayHeader = () => {
           </Button>
         </div>
 
+
         {/* Mobile Menu */}
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden text-white">
+            <Button variant="ghost" size="icon" className="md:hidden text-foreground">
               <Menu size={26}/>
             </Button>
           </SheetTrigger>

@@ -8,23 +8,22 @@ import {FacebookIcon, GithubIcon, HeartIcon, InstagramIcon, TwitterIcon} from "l
 
 const IndependenceDayFooter = () => {
   return (
-    <footer className="bg-foreground text-white">
+    <footer className="bg-background text-foreground">
       {/* Celebration Banner */}
       <div className="bg-primary py-2 text-center text-sm font-medium">
         14th August — Celebrating Pakistan&apos;s Independence Day since 1947
       </div>
 
-      <Separator className={"bg-primary"}/>
 
       {/* Footer Content */}
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 py-8 px-4">
         {/* About Section */}
-        <Card className="bg-transparent border-0 shadow-none text-white">
+        <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0">
             <CardTitle className="text-lg font-bold">PakShop</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <p className="text-sm text-foreground">
+            <p className="text-sm">
               Bringing you the best products with love for Pakistan. Let&apos;s
               celebrate our freedom with style and pride!
             </p>
@@ -32,28 +31,28 @@ const IndependenceDayFooter = () => {
         </Card>
 
         {/* Links */}
-        <Card className="bg-transparent border-0 shadow-none text-white">
+        <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0">
             <CardTitle className="text-lg font-bold">Quick Links</CardTitle>
           </CardHeader>
           <CardContent className="p-0 flex flex-col space-y-1">
-            <Button asChild variant="link" className="p-0 h-auto text-white hover:text-primary justify-start">
+            <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary justify-start">
               <Link href="/">Home</Link>
             </Button>
-            <Button asChild variant="link" className="p-0 h-auto text-white hover:text-primary justify-start">
+            <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary justify-start">
               <Link href="/products">Products</Link>
             </Button>
-            <Button asChild variant="link" className="p-0 h-auto text-white hover:text-primary justify-start">
+            <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary justify-start">
               <Link href="/about">About</Link>
             </Button>
-            <Button asChild variant="link" className="p-0 h-auto text-white hover:text-primary justify-start">
+            <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary justify-start">
               <Link href="/contact">Contact</Link>
             </Button>
           </CardContent>
         </Card>
 
         {/* Social */}
-        <Card className="bg-transparent border-0 shadow-none text-white">
+        <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0">
             <CardTitle className="text-lg font-bold">Follow Us</CardTitle>
           </CardHeader>
@@ -68,10 +67,10 @@ const IndependenceDayFooter = () => {
         </Card>
       </div>
 
-      <Separator className="bg-ring"/>
+      <Separator/>
 
       {/* Bottom Bar */}
-      <div className="bg-foreground py-3 text-center text-sm ">
+      <div className="bg-card py-3 text-center text-sm ">
         &copy; {new Date().getFullYear()} PakShop. Made with <HeartIcon
         className={"inline text-primary size-4 mx-0.5"}/> by
         dragondevs.

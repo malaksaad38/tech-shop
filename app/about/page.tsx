@@ -10,7 +10,7 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Banner */}
-      <section className="bg-primary text-primary-foreground text-center py-16 shadow-sm">
+      <section className="bg-primary text-foreground text-center py-14 shadow-sm">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
           About Pakistan Independence Day
         </h1>
