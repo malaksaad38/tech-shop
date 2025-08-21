@@ -9,7 +9,7 @@ import {ShoppingCartIcon, SquareChevronRightIcon, StoreIcon} from "lucide-react"
 export default async function IndependenceDayHeroWithProducts() {
   // Fetch 4 featured products from DB
   await connectDB();
-  const featuredProducts = await Product.find()
+  const featuredProducts = await Product.find().populate("category")
     .sort({createdAt: -1, _id: -1})
     .limit(4)
     .lean();

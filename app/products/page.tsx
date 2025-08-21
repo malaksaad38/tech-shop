@@ -25,49 +25,71 @@ type ProductType = {
   name: string;
   price: number;
   description?: string;
+  category?: {
+    _id: string;
+    name: string;
+    value: string;
+  };
+};
+
+type CategoryType = {
+  _id: string;
+  name: string;
+  value: string;
 };
 
 const Products = () => {
   const independenceDay = isIndependenceDayPK();
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch products from database
+  // UI state
+  const [query, setQuery] = useState("");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [sortBy, setSortBy] = useState("featured");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [visible, setVisible] = useState(8);
+
+  // Fetch products + categories
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get<ProductType[]>("/api/products");
-        setProducts(res.data);
+        const [prodRes, catRes] = await Promise.all([
+          axios.get<ProductType[]>("/api/products"),
+          axios.get<CategoryType[]>("/api/categories"),
+        ]);
+        setProducts(prodRes.data);
+        setCategories(catRes.data);
+
+        // Price range
+        if (prodRes.data.length > 0) {
+          const prices = prodRes.data.map((p) => p.price);
+          setMinPrice(Math.floor(Math.min(...prices)));
+          setMaxPrice(Math.ceil(Math.max(...prices)));
+        }
       } catch (err) {
-        console.error("Error fetching products:", err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchProducts();
+    fetchData();
   }, []);
-
-  // Handle case where no products are loaded yet
-  const prices = products.length > 0 ? products.map((p) => p.price) : [0];
-  const absoluteMin = Math.floor(Math.min(...prices));
-  const absoluteMax = Math.ceil(Math.max(...prices));
-
-  // UI state
-  const [query, setQuery] = useState("");
-  const [minPrice, setMinPrice] = useState(absoluteMin);
-  const [maxPrice, setMaxPrice] = useState(absoluteMax);
-  const [sortBy, setSortBy] = useState("featured");
-  const [visible, setVisible] = useState(8);
 
   // Derived filtered list
   const filtered = useMemo(() => {
     let list = products.filter((p) => {
       const matchesQuery = p.name.toLowerCase().includes(query.toLowerCase());
-      const inRange =
-        p.price >= (Number(minPrice) || absoluteMin) &&
-        p.price <= (Number(maxPrice) || absoluteMax);
-      return matchesQuery && inRange;
+      const inRange = p.price >= minPrice && p.price <= maxPrice;
+      const matchesCategory =
+        selectedCategory === "all" ||
+        p.category?.value === selectedCategory ||
+        p.category?._id === selectedCategory;
+
+      return matchesQuery && inRange && matchesCategory;
     });
 
     switch (sortBy) {
@@ -87,7 +109,7 @@ const Products = () => {
         break; // featured = original order
     }
     return list;
-  }, [query, minPrice, maxPrice, sortBy, products, absoluteMin, absoluteMax]);
+  }, [query, minPrice, maxPrice, sortBy, selectedCategory, products]);
 
   const shown = filtered.slice(0, visible);
 
@@ -97,7 +119,7 @@ const Products = () => {
       {independenceDay && (
         <div className=" text-white text-center p-4 shadow-md">
           <h1 className="text-2xl font-extrabold flex items-center justify-center gap-2">
-            Happy Independence Day Pakistan! 🎉
+            Happy Independence Day Pakistan!
           </h1>
           <p className="text-sm mt-1">
             Celebrating Freedom Since 1947 – Enjoy {DISCOUNT_RATE * 100}% OFF!
@@ -112,7 +134,7 @@ const Products = () => {
             <div className="flex flex-col md:flex-row gap-4 md:items-end">
               {/* Search */}
               <div className="flex-1">
-                <label className="block text-sm font-semibold tebg-primary mb-1">
+                <label className="block text-sm font-semibold mb-1">
                   Search
                 </label>
                 <Input
@@ -120,47 +142,69 @@ const Products = () => {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search products..."
-                  className="border-primary focus-visible:text-primary"
                 />
+              </div>
+
+              {/* Category */}
+              <div>
+                <label className="block text-sm font-semibold mb-1">
+                  Category
+                </label>
+                <Select
+                  value={selectedCategory}
+                  onValueChange={setSelectedCategory}
+                >
+                  <SelectTrigger className="w-48">
+                    <SelectValue placeholder="All categories"/>
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All</SelectItem>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat._id} value={cat.value}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Price Min */}
               <div>
-                <label className="block text-sm font-semibold tebg-primary mb-1">
+                <label className="block text-sm font-semibold mb-1">
                   Min Price
                 </label>
                 <Input
                   type="number"
-                  min={absoluteMin}
+                  min={0}
                   max={maxPrice}
                   value={minPrice}
                   onChange={(e) => setMinPrice(Number(e.target.value))}
-                  className="w-40 border-primary focus-visible:text-primary"
+                  className="w-40"
                 />
               </div>
 
               {/* Price Max */}
               <div>
-                <label className="block text-sm font-semibold tebg-primary mb-1">
+                <label className="block text-sm font-semibold mb-1">
                   Max Price
                 </label>
                 <Input
                   type="number"
                   min={minPrice}
-                  max={absoluteMax}
+                  max={100000}
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-40 border-primary focus-visible:text-primary"
+                  className="w-40"
                 />
               </div>
 
               {/* Sort */}
               <div>
-                <label className="block text-sm font-semibold tebg-primary mb-1">
+                <label className="block text-sm font-semibold mb-1">
                   Sort By
                 </label>
                 <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-48 border-primary focus:text-primary">
+                  <SelectTrigger className="w-48">
                     <SelectValue placeholder="Select sort"/>
                   </SelectTrigger>
                   <SelectContent>
@@ -175,7 +219,7 @@ const Products = () => {
             </div>
 
             {/* Results meta */}
-            <div className="mt-3 text-sm tebg-primary">
+            <div className="mt-3 text-sm">
               {loading
                 ? "Loading products..."
                 : `Showing ${shown.length} of ${filtered.length} item(s)`}
@@ -208,14 +252,13 @@ const Products = () => {
         <div className="container mx-auto px-4 pb-16">
           <Card>
             <CardContent className="text-center p-10">
-              <p className="text-lg tebg-primary font-semibold">
+              <p className="text-lg font-semibold">
                 No products match your filters.
               </p>
               <Button
                 onClick={() => {
                   setQuery("");
-                  setMinPrice(absoluteMin);
-                  setMaxPrice(absoluteMax);
+                  setSelectedCategory("all");
                   setSortBy("featured");
                   setVisible(8);
                 }}

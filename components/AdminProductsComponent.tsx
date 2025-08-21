@@ -7,7 +7,8 @@ import {Button} from "@/components/ui/button"
 import {Input} from "@/components/ui/input"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {Card, CardContent, CardHeader, CardTitle,} from "@/components/ui/card"
-import {ImageIcon, Loader2, Pencil, PlusCircle, Trash2} from "lucide-react"
+import {Grid2X2PlusIcon, ImageIcon, Loader2, PackagePlusIcon, Pencil, Trash2,} from "lucide-react"
+import {Badge} from "@/components/ui/badge"
 
 type ProductType = {
   _id: string
@@ -16,6 +17,9 @@ type ProductType = {
   image?: string
   description?: string
   createdAt: string
+  special?: boolean
+  percentage?: number
+  category?: { _id: string; name: string; value: string } | string
 }
 
 const AdminProductsComponent = () => {
@@ -45,27 +49,24 @@ const AdminProductsComponent = () => {
     if (!confirm("Are you sure you want to delete this product?")) return
     try {
       await axios.delete(`/api/products/${id}`)
-      setProducts(products.filter((p) => p._id !== id)) // remove from state
+      setProducts(products.filter((p) => p._id !== id))
     } catch (err) {
       console.error("Error deleting product:", err)
     }
   }
 
-  // Filtered products by search
   const filteredProducts = useMemo(() => {
     return products.filter((p) =>
       p.name.toLowerCase().includes(search.toLowerCase())
     )
   }, [products, search])
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage)
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   )
 
-  // Reset page when search changes
   useEffect(() => {
     setCurrentPage(1)
   }, [search])
@@ -75,7 +76,6 @@ const AdminProductsComponent = () => {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Manage Products</CardTitle>
-
         </CardHeader>
 
         <CardContent>
@@ -89,11 +89,18 @@ const AdminProductsComponent = () => {
             />
             <div className="text-sm text-muted-foreground flex justify-center items-center gap-6">
               <span>{products?.length} Items</span>
-              <Link href="/admin/products/create">
-                <Button>
-                  <PlusCircle className="mr-2 h-4 w-4"/> Create New
-                </Button>
-              </Link>
+              <div className="flex justify-center items-center gap-2">
+                <Link href="/admin/categories/create">
+                  <Button size="icon" title="Create Category">
+                    <Grid2X2PlusIcon/>
+                  </Button>
+                </Link>
+                <Link href="/admin/products/create">
+                  <Button size="icon" title="Create Product">
+                    <PackagePlusIcon/>
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -108,7 +115,9 @@ const AdminProductsComponent = () => {
                   <TableRow>
                     <TableHead>Image</TableHead>
                     <TableHead>Name</TableHead>
+                    <TableHead>Category</TableHead>
                     <TableHead>Price</TableHead>
+                    <TableHead>Special Offer</TableHead>
                     <TableHead>Created At</TableHead>
                     <TableHead className="text-right"></TableHead>
                   </TableRow>
@@ -125,16 +134,39 @@ const AdminProductsComponent = () => {
                           />
                         ) : (
                           <div
-                            className="flex justify-center items-center border  w-10 h-10 object-cover bg-muted rounded-md">
-                            <ImageIcon className={"size-5"}/>
+                            className="flex justify-center items-center border w-10 h-10 object-cover bg-muted rounded-md">
+                            <ImageIcon className="size-5"/>
                           </div>
                         )}
                       </TableCell>
                       <TableCell>{product.name}</TableCell>
+
+                      {/* ✅ Category */}
+                      <TableCell>
+                        {typeof product.category === "object"
+                          ? product.category.name
+                          : product.category || "-"}
+                      </TableCell>
+
                       <TableCell>${product.price}</TableCell>
+
+                      {/* ✅ Special Offer */}
+                      <TableCell>
+                        {product.special ? (
+                          <Badge variant="destructive">
+                            {product.percentage
+                              ? `${product.percentage}% OFF`
+                              : "Special"}
+                          </Badge>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
+                      </TableCell>
+
                       <TableCell>
                         {new Date(product.createdAt).toLocaleDateString()}
                       </TableCell>
+
                       <TableCell className="text-right space-x-2">
                         <Link href={`/admin/products/edit/${product._id}`}>
                           <Button variant="outline" size="sm">
@@ -153,7 +185,7 @@ const AdminProductsComponent = () => {
                   ))}
                   {filteredProducts.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center py-6">
+                      <TableCell colSpan={7} className="text-center py-6">
                         No products found
                       </TableCell>
                     </TableRow>
@@ -163,7 +195,6 @@ const AdminProductsComponent = () => {
             </div>
           )}
 
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-4 space-x-2">
               <Button

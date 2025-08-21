@@ -17,6 +17,7 @@ type Product = {
   description?: string
   special?: boolean
   percentage?: number
+  category?: { _id: string; name: string; value: string } | string
 }
 
 interface ProductDetailsCardProps {
@@ -64,6 +65,17 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
             <CardTitle className="text-3xl font-bold ">
               {product.name}
             </CardTitle>
+
+            {/* ✅ Category Name */}
+            {product.category ? (
+              <p className="text-sm text-muted-foreground mt-1">
+                Category:{" "}
+                {typeof product.category === "object"
+                  ? product.category.name
+                  : product.category}
+              </p>
+            ) : <p className="text-sm text-muted-foreground mt-1">Category: Other</p>}
+
             {product.description ? (
               <CardDescription className="text-base leading-relaxed ">
                 {product.description}

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {sendWhatsAppMessage} from "../utils/whatsapp";
+import {sendWhatsAppMessage} from "@/utils/whatsapp";
 import Favorite from "@/components/favorite";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
@@ -33,8 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       {/* Ribbon */}
       {hasDiscount && (
-        <div
-          className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-white">
+        <div className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-white">
           SALE {product.percentage}% OFF
         </div>
       )}
@@ -55,40 +54,50 @@ const ProductCard: React.FC<ProductCardProps> = ({
         )}
       </div>
 
-      <CardContent>
-        <Link
-          href={`/products/${product._id}`}
-          className="text-lg font-bold text-foreground hover:underline hover:text-primary"
-        >
-          {product.name}
-        </Link>
-        {/* Price */}
-        <div className="flex items-center gap-2 mt-1">
+      <div className="flex flex-col gap-2">
+        <CardContent>
+          <Link
+            href={`/products/${product._id}`}
+            className="text-lg font-bold text-foreground hover:underline hover:text-primary"
+          >
+            {product.name}
+          </Link>
+
+          {/* ✅ Category Name */}
+          {product.category ? (
+            <p className="text-sm text-muted-foreground mt-1">
+              {typeof product.category === "object"
+                ? product.category.name
+                : product.category}
+            </p>
+          ) : <p className="text-sm text-muted-foreground mt-1">Other</p>}
+
+          {/* Price */}
+          <div className="flex items-center gap-2 mt-1">
           <span className="text-2xl font-extrabold text-primary/80">
             ${formatPrice(discounted)}
           </span>
-          {hasDiscount && (
-            <span className="text-sm font-bold line-through text-muted-foreground">
+            {hasDiscount && (
+              <span className="text-sm font-bold line-through text-muted-foreground">
               ${formatPrice(product.price)}
             </span>
-          )}
-        </div>
-      </CardContent>
+            )}
+          </div>
+        </CardContent>
 
-      <CardFooter className="flex justify-between gap-3">
-        {showBuyNow && (
-          <Button
-            className="flex-1"
-            onClick={() =>
-              sendWhatsAppMessage({...product, price: discounted})
-            }
-            aria-label={`Buy ${product.name} now`}
-          >
-            Buy Now
-          </Button>
-        )}
-        {showFavorite && <Favorite/>}
-      </CardFooter>
+        <CardFooter className="flex justify-between gap-3">
+          {showBuyNow && (
+            <Button
+              className="flex-1"
+              onClick={() => sendWhatsAppMessage({...product, price: discounted})}
+              aria-label={`Buy ${product.name} now`}
+            >
+              Buy Now
+            </Button>
+          )}
+          {showFavorite && <Favorite/>}
+        </CardFooter>
+      </div>
     </Card>
   );
 };

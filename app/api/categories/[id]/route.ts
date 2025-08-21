@@ -1,12 +1,12 @@
 import {NextRequest, NextResponse} from "next/server";
 import {connectDB} from "@/lib/mongodb";
-import Product from "@/models/Product";
+import Category from "@/models/Category";
 import mongoose from "mongoose";
 import {revalidatePath} from "next/cache";
 
 type Params = { params: { id: string } };
 
-// 🟢 GET one product
+// 🟢 GET one category
 export async function GET(_req: NextRequest, {params}: Params) {
   await connectDB();
 
@@ -14,13 +14,13 @@ export async function GET(_req: NextRequest, {params}: Params) {
     return NextResponse.json({error: "Invalid ID format"}, {status: 400});
   }
 
-  const product = await Product.findById(params.id).populate("category");
-  if (!product) return NextResponse.json({error: "Not found"}, {status: 404});
+  const category = await Category.findById(params.id);
+  if (!category) return NextResponse.json({error: "Not found"}, {status: 404});
 
-  return NextResponse.json(product);
+  return NextResponse.json(category);
 }
 
-// 🟢 UPDATE product
+// 🟢 UPDATE category
 export async function PUT(req: NextRequest, {params}: Params) {
   await connectDB();
 
@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest, {params}: Params) {
   }
 
   const body = await req.json();
-  const updated = await Product.findByIdAndUpdate(params.id, body, {new: true});
+  const updated = await Category.findByIdAndUpdate(params.id, body, {new: true});
 
   revalidatePath('/');
   revalidatePath('/special-offers');
@@ -39,7 +39,7 @@ export async function PUT(req: NextRequest, {params}: Params) {
   return NextResponse.json(updated);
 }
 
-// 🟢 DELETE product
+// 🟢 DELETE category
 export async function DELETE(_req: NextRequest, {params}: Params) {
   await connectDB();
 
@@ -47,7 +47,7 @@ export async function DELETE(_req: NextRequest, {params}: Params) {
     return NextResponse.json({error: "Invalid ID format"}, {status: 400});
   }
 
-  await Product.findByIdAndDelete(params.id);
+  await Category.findByIdAndDelete(params.id);
 
   revalidatePath('/');
   revalidatePath('/special-offers');

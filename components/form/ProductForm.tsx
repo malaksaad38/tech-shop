@@ -13,6 +13,10 @@ import {Textarea} from "@/components/ui/textarea"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import {Switch} from "@/components/ui/switch"
+import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem,} from "@/components/ui/command"
+import {Check, ChevronsUpDown} from "lucide-react"
+import {cn} from "@/lib/utils"
 
 const ProductSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,17 +24,14 @@ const ProductSchema = z.object({
     (val) => (typeof val === "string" ? Number(val) : val),
     z.number().positive("Price must be greater than 0")
   ),
-  description: z
-    .string()
-    .max(1000, "Description is too long")
-    .optional()
-    .or(z.literal("")),
+  description: z.string().max(1000, "Description is too long").optional().or(z.literal("")),
   image: z.string().url("Please enter a valid image URL").optional().or(z.literal("")),
   special: z.boolean().optional().default(false),
   percentage: z.preprocess(
     (val) => (val === "" ? 0 : Number(val)),
     z.number().min(1).max(100).default(0)
   ),
+  category: z.string().min(1, "Please select a category"), // ✅ new
 })
 
 type ProductFormValues = z.infer<typeof ProductSchema>
@@ -44,6 +45,7 @@ type ProductFormProps = {
     image?: string
     special?: boolean
     percentage?: number
+    category?: string
   }
 }
 
@@ -58,8 +60,23 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
       image: "",
       special: false,
       percentage: 1,
+      category: "",
     },
   })
+
+  const [categories, setCategories] = React.useState<{ _id: string; name: string }[]>([])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("/api/categories")
+        setCategories(res.data)
+      } catch (err) {
+        console.error("Failed to load categories", err)
+      }
+    }
+    fetchCategories()
+  }, [])
 
   const imageUrl = form.watch("image")
   const hasPreview = useMemo(
@@ -77,6 +94,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
         image: product.image || "",
         special: product.special || false,
         percentage: product.percentage || 0,
+        category: product.category || "",
       })
     }
   }, [product, form])
@@ -90,6 +108,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
         image: values.image?.trim() || undefined,
         special: values.special || false,
         percentage: values.percentage || 0,
+        category: values.category,
       }
 
       if (product?._id) {
@@ -100,8 +119,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
         form.reset()
         router.push("/admin")
       }
-      router.refresh();
-      
+      router.refresh()
     } catch (err: any) {
       console.error(err)
       alert(err?.response?.data?.message || "Failed to save product")
@@ -111,13 +129,12 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
   return (
     <Card className="max-w-2xl mx-auto my-6">
       <CardHeader>
-        <CardTitle>
-          {product ? "Edit Product" : "Create Product"}
-        </CardTitle>
+        <CardTitle>{product ? "Edit Product" : "Create Product"}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+
             {/* Name */}
             <FormField
               control={form.control}
@@ -143,6 +160,59 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
                   <FormControl>
                     <Input type="number" step="0.01" placeholder="0.00" {...field} />
                   </FormControl>
+                  <FormMessage/>
+                </FormItem>
+              )}
+            />
+
+            {/* Category */}
+            <FormField
+              control={form.control}
+              name="category"
+              render={({field}) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Category</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <button
+                          type="button"
+                          className={cn(
+                            "flex w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? categories.find((cat) => cat._id === field.value)?.name
+                            : "Select a category"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50"/>
+                        </button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0">
+                      <Command>
+                        <CommandInput placeholder="Search category..."/>
+                        <CommandEmpty>No category found.</CommandEmpty>
+                        <CommandGroup>
+                          {categories.map((cat) => (
+                            <CommandItem
+                              key={cat._id}
+                              value={cat._id}
+                              onSelect={() => field.onChange(cat._id)}
+                            >
+                              <Check
+                                className={cn(
+                                  "mr-2 h-4 w-4",
+                                  field.value === cat._id ? "opacity-100" : "opacity-0"
+                                )}
+                              />
+                              {cat.name}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage/>
                 </FormItem>
               )}
@@ -197,7 +267,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
               )}
             />
 
-            {/* Special Offer Toggle */}
+            {/* Special Offer */}
             <FormField
               control={form.control}
               name="special"
@@ -216,7 +286,7 @@ const ProductForm: React.FC<ProductFormProps> = ({product}) => {
               )}
             />
 
-            {/* Percentage Discount */}
+            {/* Percentage */}
             {form.watch("special") && (
               <FormField
                 control={form.control}

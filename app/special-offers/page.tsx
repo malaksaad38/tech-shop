@@ -10,11 +10,11 @@ import {ArrowLeft, PartyPopperIcon} from "lucide-react"
 export default async function SpecialOffer() {
   // Connect to DB & fetch products with special = true
   await connectDB()
-  const offerProducts = await Product.find({special: true})
+  const offerProducts = await Product.find({special: true}).populate("category")
     .sort({createdAt: -1, _id: -1})
     .limit(12) // you can change how many to show
     .lean()
-  
+
   return (
     <div className="min-h-screen bg-muted/30 py-10 px-4">
       {/* Special Offer Banner */}
