@@ -5,32 +5,36 @@ import Product from "@/models/Product"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
-import {ArrowLeft, PartyPopperIcon} from "lucide-react"
+import {ArrowLeft, Tag} from "lucide-react"
 
 export default async function SpecialOffer() {
   // Connect to DB & fetch products with special = true
   await connectDB()
-  const offerProducts = await Product.find({special: true}).populate("category")
+  const offerProducts = await Product.find({special: true})
+    .populate("category")
     .sort({createdAt: -1, _id: -1})
-    .limit(12) // you can change how many to show
+    .limit(12)
     .lean()
 
   return (
     <div className="min-h-screen bg-muted/30 py-10 px-4">
-      {/* Special Offer Banner */}
+      {/* TechShop Special Deals Banner */}
       <div className="container mx-auto mb-10">
-        <Card className="bg-primary text-foreground shadow-lg">
+        <Card className="bg-primary/90 text-foreground shadow-lg backdrop-blur-md">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-2 text-3xl font-extrabold">
-              <PartyPopperIcon/> Special Offers <PartyPopperIcon/>
+              <Tag className="h-7 w-7"/> TechShop Deals <Tag className="h-7 w-7"/>
             </CardTitle>
             <CardDescription className="text-lg text-foreground/90 mt-2">
-              Discover our exclusive discounted products!
+              Exclusive discounts on the latest tech products. Upgrade your setup today!
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
-            <Badge variant="secondary" className="text-xl px-6 py-2 font-bold">
-              Limited Time Only!
+            <Badge
+              variant="secondary"
+              className="text-lg px-6 py-2 font-semibold tracking-wide"
+            >
+              Limited Time • Don’t Miss Out!
             </Badge>
           </CardContent>
         </Card>
@@ -47,7 +51,7 @@ export default async function SpecialOffer() {
           ))
         ) : (
           <p className="col-span-full text-center text-muted-foreground text-lg">
-            No special offers available right now. Check back later!
+            No special deals available right now. Please check back soon!
           </p>
         )}
       </div>

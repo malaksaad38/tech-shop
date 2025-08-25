@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {HandCoinsIcon, Home, Info, Menu, Package, Phone, Shield} from "lucide-react";
+import {HandCoinsIcon, Home, Info, Menu, Package, Phone} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,6 +13,7 @@ import {Button} from "@/components/ui/button";
 import {usePathname} from "next/navigation";
 import {cn} from "@/lib/utils";
 import {ModeToggle} from "@/components/ModeToggle";
+import EncryptButton from "@/components/EncryptButton";
 
 const navLinks = [
   {href: "/", label: "Home", icon: Home},
@@ -21,40 +22,44 @@ const navLinks = [
   {href: "/contact", label: "Contact", icon: Phone},
 ];
 
-const IndependenceDayHeader = () => {
+const TechShopHeader = () => {
   const pathname = usePathname();
 
   return (
-    <header className="bg-card text-foreground border-b shadow-md">
-      {/* 🎉 Top Banner */}
-      <div className="bg-primary text-center py-1 text-xs sm:text-sm px-2">
-        14th August — Celebrating Pakistan&apos;s Independence Day!
+    <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b shadow-sm">
+      {/* 🔹 Professional Banner */}
+      <div className="bg-primary/90 backdrop-blur text-center py-1 text-xs sm:text-sm">
+        TechShop — Your Trusted Partner in Technology & Innovation
       </div>
 
       {/* Main Header */}
-      <div className="container mx-auto flex items-center justify-between py-3 px-4">
+      <div className="container mx-auto flex items-center justify-between py-2 px-3">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 font-extrabold text-xl sm:text-2xl"
+          className="flex items-center gap-1 font-extrabold text-lg sm:text-xl"
         >
-          <span className="text-primary">PakShop</span>
+          <span className="text-primary">TechShop</span>
         </Link>
 
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-6 font-medium">
+          <NavigationMenuList className="gap-2 font-medium">
             {navLinks.map(({href, label, icon: Icon}) => (
               <NavigationMenuItem key={href}>
                 <NavigationMenuLink asChild>
                   <Link
                     href={href}
                     className={cn(
-                      "transition hover:text-primary hover:underline hover:underline-offset-4",
-                      pathname === href ? "text-primary underline underline-offset-4" : "text-foreground"
+                      "transition hover:text-primary hover:underline hover:underline-offset-2",
+                      pathname === href
+                        ? "text-primary underline underline-offset-2"
+                        : "text-foreground"
                     )}
                   >
-                    <div className="flex justify-center items-center gap-2"><Icon size={18}/> {label}</div>
+                    <div className="flex items-center gap-1">
+                      <Icon size={16}/> {label}
+                    </div>
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -63,15 +68,9 @@ const IndependenceDayHeader = () => {
         </NavigationMenu>
 
         {/* Desktop Action Buttons */}
-        <div className="hidden md:flex gap-2">
+        <div className="hidden md:flex gap-0">
           <ModeToggle/>
-          <Button asChild variant="destructive">
-            <Link href="/admin">
-              <Shield className="h-4 w-4"/> Admin
-            </Link>
-
-          </Button>
-
+          <EncryptButton link={"/admin"}/>
           <Button asChild>
             <Link href="/special-offers">
               <HandCoinsIcon className="h-4 w-4"/> Special Offers
@@ -79,43 +78,42 @@ const IndependenceDayHeader = () => {
           </Button>
         </div>
 
-
         {/* Mobile Menu */}
         <Sheet>
-          <div className={"space-x-2 block md:hidden"}>
+          <div className="space-x-1 block md:hidden">
             <ModeToggle/>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-foreground">
-                <Menu size={26}/>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-foreground"
+              >
+                <Menu size={22}/>
               </Button>
             </SheetTrigger>
           </div>
 
-          <SheetContent side="right" className="p-6">
-            <nav className="flex flex-col gap-5 mt-4">
-
+          <SheetContent side="right" className="p-4 backdrop-blur-md">
+            <nav className="flex flex-col gap-3 mt-2">
               {navLinks.map(({href, label, icon: Icon}) => (
                 <SheetClose asChild key={href}>
-
                   <Link
                     href={href}
                     className={cn(
-                      "flex items-center gap-2 text-lg transition-colors",
-                      pathname === href ? "text-primary underline" : "text-foreground hover:text-primary"
+                      "flex items-center gap-2 text-base transition-colors",
+                      pathname === href
+                        ? "text-primary underline"
+                        : "text-foreground hover:text-primary"
                     )}
                   >
-                    <Icon size={18}/> {label}
+                    <Icon size={16}/> {label}
                   </Link>
                 </SheetClose>
               ))}
 
               {/* Mobile Buttons */}
-              <div className="flex flex-col gap-3 mt-6">
-                <Button asChild variant="destructive" className="w-full">
-                  <Link href="/admin">
-                    <Shield className="h-4 w-4"/> Admin
-                  </Link>
-                </Button>
+              <div className="flex flex-col gap-2 mt-4">
+                <EncryptButton link={"/admin"}/>
                 <Button asChild>
                   <Link href="/special-offers">
                     <HandCoinsIcon className="h-4 w-4"/> Special Offers
@@ -130,4 +128,4 @@ const IndependenceDayHeader = () => {
   );
 };
 
-export default IndependenceDayHeader;
+export default TechShopHeader;

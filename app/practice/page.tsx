@@ -15,6 +15,7 @@ const Practice = () => {
   return (
     <div>
 
+
       <div className={light ? "bg-yellow-300 p-4" : "bg-gray-700 p-4 text-white"}>Light</div>
       <button onClick={() => setLight(!light)}
               className={"rounded-b-2xl p-3  mb-2 bg-sky-500 hover:bg-sky-700 "}> {!light ? "On" : "Off"}

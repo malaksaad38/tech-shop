@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import {Card, CardContent} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
-import {BookOpen, Flag, Target} from "lucide-react"
+import {BookOpen, Cpu, Target} from "lucide-react"
 
 const About = () => {
   return (
@@ -12,10 +12,10 @@ const About = () => {
       {/* Hero Banner */}
       <section className="bg-primary text-foreground text-center py-14 shadow-sm">
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          About Pakistan Independence Day
+          About TechShop
         </h1>
         <p className="text-base md:text-lg mt-3 opacity-90">
-          Celebrating Freedom Since 14th August 1947
+          Innovating Technology, Empowering Your Future
         </p>
       </section>
 
@@ -29,28 +29,26 @@ const About = () => {
               <h2 className="text-2xl font-bold text-primary">Our Story</h2>
             </div>
             <p className="leading-relaxed text-muted-foreground">
-              On 14th August 1947, Pakistan emerged as an independent nation,
-              marking the end of British colonial rule and the creation of a
-              homeland for Muslims of the Indian subcontinent. This day
-              symbolizes freedom, unity, and the vision of our founding fathers.
-              Every year, Pakistanis across the globe celebrate this day with
-              pride and honor.
+              TechShop was founded with a vision to bring the latest technology
+              products to customers at affordable prices. From computer hardware
+              and accessories to the latest gadgets, we aim to deliver quality,
+              reliability, and innovation all in one place.
             </p>
           </CardContent>
         </Card>
 
-        {/* Why We Celebrate */}
+        {/* What We Do */}
         <Card>
           <CardContent className="p-8 space-y-4">
             <div className="flex items-center gap-3">
-              <Flag className="h-6 w-6 text-primary"/>
-              <h2 className="text-2xl font-bold text-primary">Why We Celebrate</h2>
+              <Cpu className="h-6 w-6 text-primary"/>
+              <h2 className="text-2xl font-bold text-primary">What We Do</h2>
             </div>
             <p className="leading-relaxed text-muted-foreground">
-              Independence Day is a reminder of the sacrifices made by countless
-              individuals for the sake of our freedom. It’s a time to reflect on
-              our achievements, cherish our culture, and strengthen our
-              commitment to making Pakistan a prosperous nation.
+              At TechShop, we provide a wide range of tech products including
+              laptops, PCs, mobile accessories, gaming gear, and more. Our goal
+              is to make technology accessible for everyone – whether you’re a
+              student, professional, gamer, or entrepreneur.
             </p>
           </CardContent>
         </Card>
@@ -63,9 +61,10 @@ const About = () => {
               <h2 className="text-2xl font-bold text-primary">Our Mission</h2>
             </div>
             <p className="leading-relaxed text-muted-foreground">
-              Our mission is to promote patriotism, celebrate Pakistan’s rich
-              heritage, and inspire future generations to contribute positively
-              to our beloved country.
+              Our mission is to empower individuals and businesses by providing
+              cutting-edge technology, excellent customer service, and inspiring
+              innovation in everyday life. We are committed to making TechShop
+              your trusted partner in technology.
             </p>
           </CardContent>
         </Card>
