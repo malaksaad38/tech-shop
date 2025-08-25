@@ -50,7 +50,7 @@ const EncryptButton = ({link = "/", label = "Admin"}) => {
   };
 
   return (
-    <Button onClick={() => router.push(link)} className={"bg-transparent hover:bg-transparent"}>
+    <Button onClick={() => router.push(link)} className={"bg-transparent hover:bg-transparent shadow-transparent"}>
       <motion.div
         whileHover={{
           scale: 1.025,
