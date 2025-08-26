@@ -8,6 +8,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/comp
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
 import {ImageIcon} from "lucide-react"
+import {motion} from "motion/react"
 
 type Product = {
   _id: string | number
@@ -45,11 +46,14 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
           )}
           <div className="w-full md:min-h-[60vh] overflow-hidden border">
             {product.image ? (
-              <img
+              <motion.img
                 src={product.image}
                 alt={product.name}
                 className="w-full md:min-h-[60vh] object-cover"
                 loading="lazy"
+                initial={{scale: 1.05}}
+                animate={{scale: 1}}
+                transition={{duration: 0.8, ease: "easeOut"}}
               />
             ) : (
               <div className="flex justify-center items-center h-48 md:h-[60vh] flex-col">
@@ -60,57 +64,65 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
         </div>
 
         {/* Product Info */}
-        <CardContent className="flex flex-col justify-between h-full p-6">
-          <CardHeader className="p-0 mb-3">
-            <CardTitle className="text-3xl font-bold ">
-              {product.name}
-            </CardTitle>
+        <motion.div
+          initial={{opacity: 0, y: 30}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.6, ease: "easeOut"}}
+        >
+          <CardContent className="flex flex-col justify-between h-full p-6">
 
-            {/* ✅ Category Name */}
-            {product.category ? (
-              <p className="text-sm text-muted-foreground mt-1">
-                Category:{" "}
-                {typeof product.category === "object"
-                  ? product.category.name
-                  : product.category}
-              </p>
-            ) : <p className="text-sm text-muted-foreground mt-1">Category: Other</p>}
+            <CardHeader className="p-0 mb-3">
+              <CardTitle className="text-3xl font-bold ">
+                {product.name}
+              </CardTitle>
 
-            {product.description ? (
-              <CardDescription className="text-base leading-relaxed ">
-                {product.description}
-              </CardDescription>
-            ) : (
-              <CardDescription className="text-base italic leading-relaxed ">
-                No Description...
-              </CardDescription>
-            )}
-          </CardHeader>
+              {/* ✅ Category Name */}
+              {product.category ? (
+                <p className="text-sm text-muted-foreground mt-1">
+                  Category:{" "}
+                  {typeof product.category === "object"
+                    ? product.category.name
+                    : product.category}
+                </p>
+              ) : <p className="text-sm text-muted-foreground mt-1">Category: Other</p>}
 
-          <div>
-            <div className="mb-4">
+              {product.description ? (
+                <CardDescription className="text-base leading-relaxed ">
+                  {product.description}
+                </CardDescription>
+              ) : (
+                <CardDescription className="text-base italic leading-relaxed ">
+                  No Description...
+                </CardDescription>
+              )}
+            </CardHeader>
+
+            <div>
+              <div className="mb-4">
               <span className="text-3xl font-bold text-primary/80">
                 ${formatPrice(discounted)}
               </span>
-              {hasDiscount && (
-                <span className="ml-3 line-through text-muted-foreground">
+                {hasDiscount && (
+                  <span className="ml-3 line-through text-muted-foreground">
                   ${formatPrice(product.price)}
                 </span>
-              )}
+                )}
+              </div>
+              <div className="flex gap-2 justify-center items-center">
+                <Button
+                  className="flex-1"
+                  onClick={() =>
+                    sendWhatsAppMessage({...product, price: discounted})
+                  }
+                >
+                  Buy Now
+                </Button>
+                <Favorite/>
+              </div>
             </div>
-            <div className="flex gap-2 justify-center items-center">
-              <Button
-                className="flex-1"
-                onClick={() =>
-                  sendWhatsAppMessage({...product, price: discounted})
-                }
-              >
-                Buy Now
-              </Button>
-              <Favorite/>
-            </div>
-          </div>
-        </CardContent>
+
+          </CardContent>
+        </motion.div>
       </div>
     </Card>
   )

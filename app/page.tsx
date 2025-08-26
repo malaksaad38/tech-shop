@@ -1,11 +1,13 @@
-import IndependenceDayHero from "@/components/heroSection";
+import TechShopHeroPage from "@/components/heroSection";
+import HeroPageProducts from "@/components/HeroPageProducts";
 
 export default function Home() {
 
   return (
     <div>
+      <TechShopHeroPage/>
+      <HeroPageProducts/>
 
-      <IndependenceDayHero/>
     </div>
   );
 }

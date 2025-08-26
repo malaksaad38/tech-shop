@@ -3,21 +3,12 @@
 import React, {useEffect, useMemo, useState} from "react";
 import ProductCard from "@/components/ProductCard";
 import axios from "axios";
+import {motion} from "framer-motion";
 
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
 import {Card, CardContent} from "@/components/ui/card";
-
-// Discount constants
-const DISCOUNT_RATE = 0.2;
-
-const isIndependenceDayPK = () => {
-  const nowPk = new Date(
-    new Date().toLocaleString("en-US", {timeZone: "Asia/Karachi"})
-  );
-  return nowPk.getMonth() === 7 && nowPk.getDate() === 14; // August = 7
-};
 
 // Product type from MongoDB
 type ProductType = {
@@ -39,7 +30,6 @@ type CategoryType = {
 };
 
 const Products = () => {
-  const independenceDay = isIndependenceDayPK();
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [loading, setLoading] = useState(false);
@@ -64,7 +54,6 @@ const Products = () => {
         setProducts(prodRes.data);
         setCategories(catRes.data);
 
-        // Price range
         if (prodRes.data.length > 0) {
           const prices = prodRes.data.map((p) => p.price);
           setMinPrice(Math.floor(Math.min(...prices)));
@@ -106,7 +95,7 @@ const Products = () => {
         list = [...list].sort((a, b) => b.name.localeCompare(a.name));
         break;
       default:
-        break; // featured = original order
+        break;
     }
     return list;
   }, [query, minPrice, maxPrice, sortBy, selectedCategory, products]);
@@ -114,21 +103,30 @@ const Products = () => {
   const shown = filtered.slice(0, visible);
 
   return (
-    <div className="min-h-screen bg-background ">
-      {/* Independence Day Banner */}
-      {independenceDay && (
-        <div className=" text-white text-center p-4 shadow-md">
-          <h1 className="text-2xl font-extrabold flex items-center justify-center gap-2">
-            Happy Independence Day Pakistan!
-          </h1>
-          <p className="text-sm mt-1">
-            Celebrating Freedom Since 1947 – Enjoy {DISCOUNT_RATE * 100}% OFF!
-          </p>
-        </div>
-      )}
+    <div className="min-h-screen bg-background">
+      {/* Hero Banner */}
+      <motion.section
+        className="bg-primary text-foreground text-center py-14 shadow-sm"
+        initial={{opacity: 0, y: -40}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.6, ease: "easeOut"}}
+      >
+        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+          Explore Our Products
+        </h1>
+        <p className="text-base md:text-lg mt-3 opacity-90">
+          Discover the latest gadgets, accessories, and tech essentials – all in one place.
+        </p>
+      </motion.section>
 
       {/* Controls */}
-      <div className="container mx-auto px-4 pt-8">
+      <motion.div
+        className="container mx-auto px-4 pt-10"
+        initial={{opacity: 0, y: 40}}
+        whileInView={{opacity: 1, y: 0}}
+        viewport={{once: true}}
+        transition={{duration: 0.6, ease: "easeOut"}}
+      >
         <Card>
           <CardContent className="p-4">
             <div className="flex flex-col md:flex-row gap-4 md:items-end">
@@ -226,30 +224,48 @@ const Products = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </motion.div>
 
       {/* Products Grid */}
       <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 container mx-auto mt-6">
-        {shown.map((product) => (
-          <ProductCard key={product._id} product={product}/>
+        {shown.map((product, index) => (
+          <motion.div
+            key={product._id}
+            initial={{opacity: 0, y: 40}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.2}}
+            transition={{duration: 0.5, delay: index * 0.05}}
+          >
+            <ProductCard product={product}/>
+          </motion.div>
         ))}
       </div>
 
       {/* Load More */}
       {visible < filtered.length && (
-        <div className="flex justify-center pb-10">
+        <motion.div
+          className="flex justify-center pb-10"
+          initial={{opacity: 0}}
+          whileInView={{opacity: 1}}
+          transition={{duration: 0.5}}
+        >
           <Button
             onClick={() => setVisible((v) => Math.min(v + 8, filtered.length))}
-            className="bg-primary hover:bg-primary "
+            className="bg-primary hover:bg-primary"
           >
             Load More
           </Button>
-        </div>
+        </motion.div>
       )}
 
       {/* Empty state */}
       {!loading && filtered.length === 0 && (
-        <div className="container mx-auto px-4 pb-16">
+        <motion.div
+          className="container mx-auto px-4 pb-16"
+          initial={{opacity: 0, y: 40}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.6}}
+        >
           <Card>
             <CardContent className="text-center p-10">
               <p className="text-lg font-semibold">
@@ -262,13 +278,13 @@ const Products = () => {
                   setSortBy("featured");
                   setVisible(8);
                 }}
-                className="mt-4 bg-primary hover:bg-primary "
+                className="mt-4 bg-primary hover:bg-primary"
               >
                 Reset Filters
               </Button>
             </CardContent>
           </Card>
-        </div>
+        </motion.div>
       )}
     </div>
   );
