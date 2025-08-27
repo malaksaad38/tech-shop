@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {ImageIcon} from "lucide-react";
+import {ImageIcon, ShoppingCart} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {sendWhatsAppMessage} from "@/utils/whatsapp";
 import {motion} from "framer-motion";
 import {useCart} from "@/store/useCart";
 import FavoriteButton from "@/components/FavoriteButton";
@@ -125,17 +124,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Footer */}
         <motion.div className="flex justify-between gap-3 mt-4">
-          {showBuyNow && (
-            <Button
-              className="flex-1"
-              onClick={() => sendWhatsAppMessage({...product, price: discounted})}
-            >
-              Buy Now
-            </Button>
-          )}
-
           <Button
-            variant="outline"
+            variant="default"
             className="flex-1"
             onClick={() =>
               addToCart({
@@ -146,6 +136,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
               })
             }
           >
+            <ShoppingCart className="w-4 h-4"/>
+
             Add to Cart
           </Button>
 

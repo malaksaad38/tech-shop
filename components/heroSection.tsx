@@ -66,7 +66,7 @@ export default function TechShopHeroPage() {
                   Explore our exclusive deals and upgrade your lifestyle today!
                 </p>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row sm:w-full items-center justify-center gap-4">
                   <Button asChild variant="secondary">
                     <Link href="/products"><LaptopIcon/> Shop Now</Link>
                   </Button>

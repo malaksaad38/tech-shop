@@ -121,6 +121,7 @@ const TechShopHeader = () => {
           <div className="space-x-1 block md:hidden flex items-center">
             <ModeToggle/>
             <CartsPopover/>
+            <FavoritesPopover/>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden text-foreground">
                 <Menu size={22}/>

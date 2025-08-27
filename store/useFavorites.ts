@@ -1,18 +1,19 @@
-"use client"
-import {create} from "zustand"
-import {persist} from "zustand/middleware"
+"use client";
+import {create} from "zustand";
+import {persist} from "zustand/middleware";
 
 interface FavoriteItem {
-  _id: string
-  name: string
-  price: number
-  image?: string
+  _id: string;
+  name: string;
+  price: number;
+  image?: string;
 }
 
 interface FavoritesState {
-  favorites: FavoriteItem[]
-  toggleFavorite: (item: FavoriteItem) => void
-  isFavorite: (id: string) => boolean
+  favorites: FavoriteItem[];
+  toggleFavorite: (item: FavoriteItem) => void;
+  isFavorite: (id: string) => boolean;
+  clearFavorites: () => void; // ✅ new
 }
 
 export const useFavorites = create<FavoritesState>()(
@@ -20,19 +21,18 @@ export const useFavorites = create<FavoritesState>()(
     (set, get) => ({
       favorites: [],
       toggleFavorite: (item) => {
-        const {favorites} = get()
-        const exists = favorites.some((f) => f._id === item._id)
+        const {favorites} = get();
+        const exists = favorites.some((f) => f._id === item._id);
 
         if (exists) {
-          set({favorites: favorites.filter((f) => f._id !== item._id)})
+          set({favorites: favorites.filter((f) => f._id !== item._id)});
         } else {
-          set({favorites: [...favorites, item]})
+          set({favorites: [...favorites, item]});
         }
       },
       isFavorite: (id) => get().favorites.some((f) => f._id === id),
+      clearFavorites: () => set({favorites: []}), // ✅ clear all
     }),
-    {
-      name: "favorites-storage", // 🔒 key in localStorage
-    }
+    {name: "favorites-storage"}
   )
-)
+);

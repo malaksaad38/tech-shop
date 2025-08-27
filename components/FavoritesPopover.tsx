@@ -1,21 +1,22 @@
 "use client";
 
 import * as React from "react";
-import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"; // ✅ your popover component
+import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
 import {useFavorites} from "@/store/useFavorites";
 import {Heart, X} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 
 const FavoritesPopover = () => {
-  const {favorites, toggleFavorite} = useFavorites();
+  const {favorites, toggleFavorite, clearFavorites} = useFavorites();
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size={"icon"}
-                variant={"outline"}
-                className={"relative"}
+        <Button
+          size="icon"
+          variant="outline"
+          className="relative"
         >
           <Heart className="w-6 h-6 text-muted-foreground"/>
           {favorites.length > 0 && (
@@ -31,7 +32,19 @@ const FavoritesPopover = () => {
         align="end"
         className="w-80 p-3 flex flex-col gap-3"
       >
-        <h3 className="font-bold text-lg mb-2">Favorites</h3>
+        <div className="flex items-center justify-between mb-2">
+          <h3 className="font-bold text-lg">Favorites</h3>
+          {favorites.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-red-500 hover:text-red-600"
+              onClick={clearFavorites}
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
 
         {favorites.length === 0 ? (
           <p className="text-sm text-muted-foreground">
@@ -78,8 +91,6 @@ const FavoritesPopover = () => {
             ))}
           </div>
         )}
-        
-
       </PopoverContent>
     </Popover>
   );
