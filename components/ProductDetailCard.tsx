@@ -3,12 +3,12 @@
 import React from "react"
 import {sendWhatsAppMessage} from "../utils/whatsapp"
 import Favorite from "@/components/favorite"
-
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
-import {ImageIcon} from "lucide-react"
+import {ImageIcon, ShoppingCart} from "lucide-react"
 import {motion} from "motion/react"
+import {useCart} from "@/store/useCart";
 
 type Product = {
   _id: string | number
@@ -28,7 +28,9 @@ interface ProductDetailsCardProps {
 const formatPrice = (price: number) => price.toFixed(2)
 
 const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
-  // check for discount from product model
+  const addToCart = useCart((state) => state.addToCart) // ✅ Zustand hook
+
+  // Check for discount
   const hasDiscount = product.special && product.percentage && product.percentage > 0
   const discounted = hasDiscount
     ? product.price * (1 - product.percentage! / 100)
@@ -37,10 +39,10 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
   return (
     <Card className="max-w-4xl w-full h-full min-h-[60vh] mx-auto overflow-hidden py-0">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {/* Product Image */}
+        {/* Image */}
         <div className="relative">
           {hasDiscount && (
-            <Badge className="absolute top-4 left-4 shadow text-white ">
+            <Badge className="absolute top-4 left-4 shadow text-white">
               SALE {product.percentage}% OFF
             </Badge>
           )}
@@ -63,49 +65,38 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
           </div>
         </div>
 
-        {/* Product Info */}
+        {/* Info */}
         <motion.div
           initial={{opacity: 0, y: 30}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.6, ease: "easeOut"}}
         >
           <CardContent className="flex flex-col justify-between h-full p-6">
-
             <CardHeader className="p-0 mb-3">
-              <CardTitle className="text-3xl font-bold ">
+              <CardTitle className="text-3xl font-bold">
                 {product.name}
               </CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">
+                Category:{" "}
+                {typeof product.category === "object"
+                  ? product.category.name
+                  : product.category || "Other"}
+              </p>
 
-              {/* ✅ Category Name */}
-              {product.category ? (
-                <p className="text-sm text-muted-foreground mt-1">
-                  Category:{" "}
-                  {typeof product.category === "object"
-                    ? product.category.name
-                    : product.category}
-                </p>
-              ) : <p className="text-sm text-muted-foreground mt-1">Category: Other</p>}
-
-              {product.description ? (
-                <CardDescription className="text-base leading-relaxed ">
-                  {product.description}
-                </CardDescription>
-              ) : (
-                <CardDescription className="text-base italic leading-relaxed ">
-                  No Description...
-                </CardDescription>
-              )}
+              <CardDescription className="text-base leading-relaxed">
+                {product.description || "No Description..."}
+              </CardDescription>
             </CardHeader>
 
             <div>
               <div className="mb-4">
-              <span className="text-3xl font-bold text-primary/80">
-                ${formatPrice(discounted)}
-              </span>
+                <span className="text-3xl font-bold text-primary/80">
+                  ${formatPrice(discounted)}
+                </span>
                 {hasDiscount && (
                   <span className="ml-3 line-through text-muted-foreground">
-                  ${formatPrice(product.price)}
-                </span>
+                    ${formatPrice(product.price)}
+                  </span>
                 )}
               </div>
               <div className="flex gap-2 justify-center items-center">
@@ -117,10 +108,21 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
                 >
                   Buy Now
                 </Button>
+
+                {/* ✅ Add to Cart button */}
+                <Button
+                  variant="secondary"
+                  className="flex-1 flex items-center gap-2"
+                  onClick={() =>
+                    addToCart({...product, price: discounted})
+                  }
+                >
+                  <ShoppingCart className="w-4 h-4"/> Add to Cart
+                </Button>
+
                 <Favorite/>
               </div>
             </div>
-
           </CardContent>
         </motion.div>
       </div>

@@ -6,12 +6,14 @@ import {ImageIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {sendWhatsAppMessage} from "@/utils/whatsapp";
 import {motion} from "framer-motion";
+import {useCart} from "@/store/useCart";
 
 interface ProductCardProps {
   product: any;
   showFavorite?: boolean;
   showBuyNow?: boolean;
 }
+
 
 const formatPrice = (price: number) => price.toFixed(2);
 
@@ -30,6 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     hidden: {opacity: 0, y: 40, scale: 0.95},
     visible: {opacity: 1, y: 0, scale: 1},
   };
+  const {addToCart} = useCart();
 
   return (
     <motion.div
@@ -37,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       initial="hidden"
       whileInView="visible"
       viewport={{once: true, amount: 0.2}}
-      transition={{duration: 0.6, ease: "easeOut"}}
+      transition={{duration: 0.4, ease: "easeOut"}}
       whileHover={{
         scale: 1.03,
         y: -5,
@@ -121,24 +124,31 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Footer */}
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          whileInView={{opacity: 1, y: 0}}
-          transition={{delay: 0.5, duration: 0.5}}
-          viewport={{once: true}}
-          className="flex justify-between gap-3 mt-4"
-        >
+        <motion.div className="flex justify-between gap-3 mt-4">
           {showBuyNow && (
             <Button
               className="flex-1"
-              onClick={() =>
-                sendWhatsAppMessage({...product, price: discounted})
-              }
-              aria-label={`Buy ${product.name} now`}
+              onClick={() => sendWhatsAppMessage({...product, price: discounted})}
             >
               Buy Now
             </Button>
           )}
+
+          <Button
+            variant="outline"
+            className="flex-1"
+            onClick={() =>
+              addToCart({
+                _id: product._id,
+                name: product.name,
+                price: discounted,
+                image: product.image,
+              })
+            }
+          >
+            Add to Cart
+          </Button>
+
           {showFavorite && <Favorite/>}
         </motion.div>
       </motion.div>

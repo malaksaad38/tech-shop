@@ -1,48 +1,56 @@
-"use client"
+// components/ui/popover.tsx
+"use client";
 
-import * as React from "react"
-import * as PopoverPrimitive from "@radix-ui/react-popover"
+import * as React from "react";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
+import {cn} from "@/lib/utils";
+import {X} from "lucide-react";
 
-import { cn } from "@/lib/utils"
+const Popover = PopoverPrimitive.Root;
+const PopoverTrigger = PopoverPrimitive.Trigger;
 
-function Popover({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />
-}
-
-function PopoverTrigger({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
-  return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
+interface PopoverContentProps extends PopoverPrimitive.PopoverContentProps {
+  className?: string;
+  showCloseButton?: boolean;
 }
 
 function PopoverContent({
-  className,
-  align = "center",
-  sideOffset = 4,
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+                          className,
+                          align = "end",
+                          sideOffset = 6,
+                          children,
+                          showCloseButton = false,
+                          ...props
+                        }: PopoverContentProps) {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
-        data-slot="popover-content"
         align={align}
         sideOffset={sideOffset}
+        {...props}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 w-72 origin-(--radix-popover-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
+          "z-50 w-full max-w-xs sm:max-w-sm md:max-w-md " +
+          "rounded-2xl border border-gray-200 dark:border-gray-700 " +
+          "bg-white/95 dark:bg-gray-900/95 backdrop-blur-md " +
+          "shadow-lg p-4 max-h-[85vh] overflow-y-auto " +
+          "animate-in fade-in-0 zoom-in-95 " +
+          "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           className
         )}
-        {...props}
-      />
+      >
+        {showCloseButton && (
+          <PopoverPrimitive.Close
+            className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+            <X className="w-4 h-4 text-gray-600 dark:text-gray-300"/>
+          </PopoverPrimitive.Close>
+        )}
+        {children}
+      </PopoverPrimitive.Content>
     </PopoverPrimitive.Portal>
-  )
+  );
 }
 
-function PopoverAnchor({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
-  return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />
-}
+const PopoverClose = PopoverPrimitive.Close;
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor }
+export {Popover, PopoverTrigger, PopoverContent, PopoverClose};
+export type {PopoverPrimitive as PopoverPrimitiveTypes};
