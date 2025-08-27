@@ -1,7 +1,8 @@
-'use client'
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import {Minus, Plus, ShoppingCart, Trash2,} from "lucide-react";
+import {DollarSign, FolderOpen, Minus, Package, Plus, ShoppingCart, Trash2,} from "lucide-react"; // ✅ added more icons
 import {Button} from "@/components/ui/button";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {useCart} from "@/store/useCart";
@@ -10,7 +11,10 @@ import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
 const CartsPopover = () => {
   const {cart, removeFromCart, updateQuantity, clearCart} = useCart();
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <Popover>
@@ -27,16 +31,23 @@ const CartsPopover = () => {
 
       <PopoverContent className="w-96 p-4 z-[60]">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold">Shopping Cart</h3>
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <ShoppingCart className="h-5 w-5 text-primary"/> Shopping Cart
+          </h3>
         </div>
 
         {cart.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Your cart is empty 🛒</p>
+          <div className="flex flex-col items-center justify-center text-center gap-2 py-6">
+            <FolderOpen className="h-8 w-8 text-muted-foreground"/>
+            <p className="text-sm text-muted-foreground">
+              Your cart is empty 🛒
+            </p>
+          </div>
         ) : (
           <>
-            <div className="space-y-3 max-h-56 overflow-y-auto pb-2">
+            <div className="space-y-3 max-h-56 overflow-y-auto pb-2 pr-2">
               {cart.map((item) => (
-                <div key={item._id} className="flex items-center gap-3">
+                <div key={item._id} className="flex items-center gap-3 border rounded p-2 px-3">
                   {item.image ? (
                     <img
                       src={item.image}
@@ -45,38 +56,49 @@ const CartsPopover = () => {
                     />
                   ) : (
                     <div className="w-12 h-12 bg-muted/40 rounded flex items-center justify-center">
-                      N/A
+                      <Package className="h-5 w-5 text-muted-foreground"/>
                     </div>
                   )}
 
                   <div className="flex-1">
                     <div className="flex justify-between items-start">
-                      <p className="font-medium text-sm">{item.name}</p>
-                      <p className="text-sm font-semibold">
-                        ${(item.price * item.quantity).toFixed(2)}
+                      <Link href={`/products/${item._id}`}
+                            className="font-medium text-sm hover:underline">{item.name}</Link>
+                      <p className="text-sm font-semibold flex items-center gap-1">
+                        <DollarSign className="h-4 w-4"/>
+                        {(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
 
-                    <div className="mt-1 flex items-center gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => updateQuantity(item._id, item.quantity - 1)}
-                      >
-                        <Minus className="h-4 w-4"/>
-                      </Button>
-                      <span className="text-sm">{item.quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => updateQuantity(item._id, item.quantity + 1)}
-                      >
-                        <Plus className="h-4 w-4"/>
-                      </Button>
+                    <div className="flex justify-between items-end">
+                      <div className="mt-1 flex items-center gap-2">
+                        <Button
+                          className={"rounded-full"}
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            updateQuantity(item._id, item.quantity - 1)
+                          }
+                        >
+                          <Minus className="h-4 w-4 text-yellow-500"/>
+                        </Button>
+                        <span className="text-sm">{item.quantity}</span>
+                        <Button
+                          className={"rounded-full"}
+                          variant="ghost"
+                          size="icon"
+                          onClick={() =>
+                            updateQuantity(item._id, item.quantity + 1)
+                          }
+                        >
+                          <Plus className="h-4 w-4 text-green-500"/>
+                        </Button>
 
+                      </div>
                       <Button
+                        className={"rounded-full"}
                         variant="ghost"
-                        size="sm"
+                        size="icon"
                         onClick={() => removeFromCart(item._id)}
                       >
                         <Trash2 className="h-4 w-4 text-red-500"/>
@@ -89,23 +111,32 @@ const CartsPopover = () => {
 
             <div className="mt-3">
               <div className="flex justify-between font-bold mb-2">
-                <span>Total</span>
+                <span className="flex items-center gap-1">
+                  <DollarSign className="h-4 w-4 text-green-600"/> Total
+                </span>
                 <span>${totalPrice.toFixed(2)}</span>
               </div>
 
               <div className="grid grid-cols-5 gap-2 w-full">
-                <Button variant="outline" className="col-span-1" onClick={() => clearCart()}>
-                  Clear
+                <Button
+                  variant="destructive"
+                  className="col-span-1"
+                  onClick={() => clearCart()}
+                >
+                  <Trash2 className="h-4 w-4"/>
                 </Button>
 
-                <Link href="/cart" className="col-span-2 ">
-                  <Button className="w-full">Go to Cart</Button>
+                <Link href="/cart" className="col-span-2">
+                  <Button className="w-full flex items-center gap-1">
+                    <ShoppingCart className="h-4 w-4"/> Go to Cart
+                  </Button>
                 </Link>
+
                 <Button
-                  className="col-span-2 w-full"
+                  className="col-span-2 w-full flex items-center gap-1"
                   onClick={() => sendCartWhatsAppMessage(cart)}
                 >
-                  Checkout
+                  <DollarSign className="h-4 w-4"/> Checkout
                 </Button>
               </div>
             </div>
@@ -115,4 +146,5 @@ const CartsPopover = () => {
     </Popover>
   );
 };
+
 export default CartsPopover;

@@ -9,6 +9,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
 import {Card, CardContent} from "@/components/ui/card";
+import {ArrowDownAZ, ArrowUpAZ, DollarSign, Filter, Loader2, PlusCircle, RefreshCw, Search, Tag,} from "lucide-react";
 
 // Product type from MongoDB
 type ProductType = {
@@ -132,8 +133,8 @@ const Products = () => {
             <div className="flex flex-col md:flex-row gap-4 md:items-end">
               {/* Search */}
               <div className="flex-1">
-                <label className="block text-sm font-semibold mb-1">
-                  Search
+                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Search className="w-4 h-4"/> Search
                 </label>
                 <Input
                   type="text"
@@ -145,8 +146,8 @@ const Products = () => {
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Category
+                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Tag className="w-4 h-4"/> Category
                 </label>
                 <Select
                   value={selectedCategory}
@@ -168,8 +169,8 @@ const Products = () => {
 
               {/* Price Min */}
               <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Min Price
+                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
+                  <DollarSign className="w-4 h-4"/> Min Price
                 </label>
                 <Input
                   type="number"
@@ -183,8 +184,8 @@ const Products = () => {
 
               {/* Price Max */}
               <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Max Price
+                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
+                  <DollarSign className="w-4 h-4"/> Max Price
                 </label>
                 <Input
                   type="number"
@@ -198,8 +199,8 @@ const Products = () => {
 
               {/* Sort */}
               <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Sort By
+                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Filter className="w-4 h-4"/> Sort By
                 </label>
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-48">
@@ -209,18 +210,39 @@ const Products = () => {
                     <SelectItem value="featured">Featured</SelectItem>
                     <SelectItem value="price-asc">Price: Low to High</SelectItem>
                     <SelectItem value="price-desc">Price: High to Low</SelectItem>
-                    <SelectItem value="name-asc">Name: A → Z</SelectItem>
-                    <SelectItem value="name-desc">Name: Z → A</SelectItem>
+                    <SelectItem value="name-asc">
+                      <ArrowDownAZ className="inline w-4 h-4 mr-1"/> Name: A → Z
+                    </SelectItem>
+                    <SelectItem value="name-desc">
+                      <ArrowUpAZ className="inline w-4 h-4 mr-1"/> Name: Z → A
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
             {/* Results meta */}
-            <div className="mt-3 text-sm">
-              {loading
-                ? "Loading products..."
-                : `Showing ${shown.length} of ${filtered.length} item(s)`}
+            <div className="mt-1 text-sm flex items-center justify-between gap-2">
+              <div className="mt-4 flex items-center gap-2">
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin"/> Loading products...
+                  </>
+                ) : (
+                  `Showing ${shown.length} of ${filtered.length} item(s)`
+                )}
+              </div>
+              <Button
+                onClick={() => {
+                  setQuery("");
+                  setSelectedCategory("all");
+                  setSortBy("featured");
+                  setVisible(8);
+                }}
+                className="mt-4 bg-primary hover:bg-primary flex items-center gap-2"
+              >
+                <RefreshCw className="w-5 h-5"/> Reset Filters
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -250,10 +272,11 @@ const Products = () => {
           transition={{duration: 0.5}}
         >
           <Button
+            size="lg"
             onClick={() => setVisible((v) => Math.min(v + 8, filtered.length))}
-            className="bg-primary hover:bg-primary"
+            className="flex items-center gap-2"
           >
-            Load More
+            <PlusCircle className="w-5 h-5"/> Load More
           </Button>
         </motion.div>
       )}
@@ -267,8 +290,8 @@ const Products = () => {
           transition={{duration: 0.6}}
         >
           <Card>
-            <CardContent className="text-center p-10">
-              <p className="text-lg font-semibold">
+            <CardContent className="flex justify-center items-center flex-col text-center p-10">
+              <p className="text-lg font-semibold ">
                 No products match your filters.
               </p>
               <Button
@@ -278,9 +301,9 @@ const Products = () => {
                   setSortBy("featured");
                   setVisible(8);
                 }}
-                className="mt-4 bg-primary hover:bg-primary"
+                className="mt-4 bg-primary hover:bg-primary flex items-center gap-2"
               >
-                Reset Filters
+                <RefreshCw className="w-5 h-5"/> Reset Filters
               </Button>
             </CardContent>
           </Card>
