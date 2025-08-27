@@ -15,6 +15,7 @@ const CategorySchema = new Schema(
   {
     name: {type: String, required: true},
     value: {type: String, required: false},
+    
   },
   {timestamps: true}
 );

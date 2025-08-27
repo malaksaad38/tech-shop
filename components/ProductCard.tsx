@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import Favorite from "@/components/favorite";
 import {ImageIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {sendWhatsAppMessage} from "@/utils/whatsapp";
 import {motion} from "framer-motion";
 import {useCart} from "@/store/useCart";
+import FavoriteButton from "@/components/FavoriteButton";
 
 interface ProductCardProps {
   product: any;
@@ -149,7 +149,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
             Add to Cart
           </Button>
 
-          {showFavorite && <Favorite/>}
+          {showFavorite && (
+            <FavoriteButton
+              product={{
+                _id: product._id,
+                name: product.name,
+                price: discounted,
+                image: product.image,
+              }}
+            />
+          )}
+
         </motion.div>
       </motion.div>
     </motion.div>

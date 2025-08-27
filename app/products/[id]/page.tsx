@@ -1,7 +1,6 @@
 "use client"
 
 import React, {use, useEffect, useState} from "react"
-import Link from "next/link"
 import axios from "axios"
 import ProductDetailCard from "@/components/ProductDetailCard"
 
@@ -10,6 +9,7 @@ import {Card} from "@/components/ui/card"
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
 import {Skeleton} from "@/components/ui/skeleton"
 import {ArrowLeft, Flag} from "lucide-react"
+import {useRouter} from "next/navigation";
 
 const DISCOUNT_RATE = 0.2
 
@@ -30,6 +30,7 @@ export default function ProductItem({
   const independenceDay = isIndependenceDayPK()
   const [product, setProduct] = useState<any | null>(null)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -63,11 +64,10 @@ export default function ProductItem({
 
       {/* Back Button */}
       <div className="mb-4">
-        <Button variant="default" asChild>
-          <Link href="/products">
-            <ArrowLeft className="h-4 w-4"/>
-            Back to Products
-          </Link>
+        <Button variant="default" onClick={() => router.back()}>
+          <ArrowLeft className="h-4 w-4"/>
+          Back
+
         </Button>
       </div>
 
@@ -94,7 +94,7 @@ export default function ProductItem({
                   <Skeleton className="h-8 w-32 mb-4"/> {/* Price */}
                   <div className="flex gap-4">
                     <Skeleton className="h-12 w-40 rounded-lg"/> {/* Buy button */}
-                    <Skeleton className="h-12 w-12 rounded-full"/> {/* Favorite */}
+                    <Skeleton className="h-12 w-12 rounded-full"/> {/* FavoriteButton */}
                   </div>
                 </div>
               </div>

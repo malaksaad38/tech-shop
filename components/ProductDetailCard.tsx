@@ -2,7 +2,7 @@
 
 import React from "react"
 import {sendWhatsAppMessage} from "../utils/whatsapp"
-import Favorite from "@/components/favorite"
+import FavoriteButton from "@/components/FavoriteButton"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
@@ -120,7 +120,14 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
                   <ShoppingCart className="w-4 h-4"/> Add to Cart
                 </Button>
 
-                <Favorite/>
+                <FavoriteButton
+                  product={{
+                    _id: product._id,
+                    name: product.name,
+                    price: discounted,
+                    image: product.image,
+                  }}
+                />
               </div>
             </div>
           </CardContent>

@@ -50,7 +50,8 @@ const EncryptButton = ({link = "/", label = "Admin"}) => {
   };
 
   return (
-    <Button onClick={() => router.push(link)} className={"bg-transparent hover:bg-transparent shadow-transparent"}>
+    <Button onClick={() => router.push(link)}
+            className={"p-0 m-0 bg-gray-700 text-white hover:bg-gray-900 hover:border"}>
       <motion.div
         whileHover={{
           scale: 1.025,
@@ -60,27 +61,29 @@ const EncryptButton = ({link = "/", label = "Admin"}) => {
         }}
         onMouseEnter={scramble}
         onMouseLeave={stopScramble}
-        className="group relative overflow-hidden rounded-lg text-primary  bg-neutral-700 px-4 py-2  transition-colors hover:text-cyan-500"
+        className=" flex justify-center items-center w-full group relative overflow-hidden rounded-lg  px-4 py-2  transition-colors "
       >
-        <div className="relative z-10 flex items-center gap-2">
+        <div className="relative z-10 flex items-center gap-2 ">
           <LockIcon size={"15"}/>
           <span>{text}</span>
         </div>
         <motion.span
-          initial={{
-            y: "100%",
-          }}
-          animate={{
-            y: "-100%",
-          }}
+          initial={{y: "100%"}}
+          animate={{y: "-100%"}}
           transition={{
             repeat: Infinity,
             repeatType: "mirror",
             duration: 1,
             ease: "linear",
           }}
-          className="duration-300 absolute inset-0 z-0 scale-125 bg-gradient-to-t from-indigo-400/0 from-40% via-indigo-400/100 to-indigo-400/0 to-60% opacity-0 transition-opacity group-hover:opacity-100"
+          whileTap={{opacity: 1}} // 👈 mobile tap effect
+          className="duration-300 w-full absolute inset-0 z-0 scale-125
+             bg-gradient-to-t from-indigo-400/0 from-40%
+             via-indigo-400/100 to-indigo-400/0 to-60%
+             opacity-0 transition-opacity
+             group-hover:opacity-100 group-focus:opacity-100" // 👈 works on tap/focus too
         />
+
       </motion.div>
     </Button>
 
