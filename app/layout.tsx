@@ -16,30 +16,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PakShop | Celebrate Independence Day",
+  title: "TechShop",
   description:
-    "PakShop — A special Independence Day project showcasing products, offers, and a learning journey in Next.js and Tailwind CSS. 🎉",
+    "TechShop — An online project showcasing products, offers, and a learning journey in Next.js and Tailwind CSS.",
   keywords: [
-    "PakShop",
-    "Independence Day Pakistan",
-    "14 August",
+    "TechShop",
+    "E-commerce",
     "Next.js Project",
     "Tailwind CSS",
     "Learning Project",
   ],
-  authors: [{name: "PakShop Team"}],
+  authors: [{name: "TechShop Team"}],
   openGraph: {
-    title: "PakShop | Celebrate Independence Day",
+    title: "TechShop",
     description:
-      "Explore PakShop — A fun learning project built with Next.js to celebrate Pakistan's Independence Day.",
-    url: "https://your-domain.com", // 👈 replace with your real domain
-    siteName: "PakShop",
+      "Explore TechShop — A fun learning project built with Next.js and Tailwind CSS.",
+    url: "https://tech-shop-01.vercel.app/", // 👈 replace with your real domain
+    siteName: "TechShop",
     images: [
       {
-        url: "https://your-domain.com/og-image.png", // 👈 create an OG image
+        url: "https://tech-shop-01.vercel.app//og-image.png", // 👈 create an OG image
         width: 1200,
         height: 630,
-        alt: "PakShop Independence Day",
+        alt: "TechShop",
       },
     ],
     locale: "en_PK",

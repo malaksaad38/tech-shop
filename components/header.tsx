@@ -118,7 +118,7 @@ const TechShopHeader = () => {
 
         {/* Mobile Menu */}
         <Sheet>
-          <div className="space-x-1 block md:hidden flex items-center">
+          <div className="space-x-1 md:hidden flex items-center">
             <ModeToggle/>
             <CartsPopover/>
             <FavoritesPopover/>
