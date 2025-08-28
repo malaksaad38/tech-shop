@@ -2,7 +2,6 @@
 
 import React, {useEffect, useMemo, useState} from "react";
 import ProductCard from "@/components/ProductCard";
-import axios from "axios";
 import {motion} from "framer-motion";
 
 import {Input} from "@/components/ui/input";
@@ -49,19 +48,20 @@ const Products = () => {
       setLoading(true);
       try {
         const [prodRes, catRes] = await Promise.all([
-          axios.get<ProductType[]>("/api/products"),
-          axios.get<CategoryType[]>("/api/categories"),
+          fetch("/api/products").then((res) => res.json()),
+          fetch("/api/categories").then((res) => res.json()),
         ]);
-        setProducts(prodRes.data);
-        setCategories(catRes.data);
 
-        if (prodRes.data.length > 0) {
-          const prices = prodRes.data.map((p) => p.price);
+        setProducts(prodRes);
+        setCategories(catRes);
+
+        if (prodRes.length > 0) {
+          const prices = prodRes.map((p: ProductType) => p.price);
           setMinPrice(Math.floor(Math.min(...prices)));
           setMaxPrice(Math.ceil(Math.max(...prices)));
         }
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("❌ Error fetching data:", err);
       } finally {
         setLoading(false);
       }
@@ -232,17 +232,6 @@ const Products = () => {
                   `Showing ${shown.length} of ${filtered.length} item(s)`
                 )}
               </div>
-              <Button
-                onClick={() => {
-                  setQuery("");
-                  setSelectedCategory("all");
-                  setSortBy("featured");
-                  setVisible(8);
-                }}
-                className="mt-4 bg-primary hover:bg-primary flex items-center gap-2"
-              >
-                <RefreshCw className="w-5 h-5"/> Reset Filters
-              </Button>
             </div>
           </CardContent>
         </Card>

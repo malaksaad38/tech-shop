@@ -1,7 +1,6 @@
 "use client"
 
 import React from "react"
-import {sendWhatsAppMessage} from "../utils/whatsapp"
 import FavoriteButton from "@/components/FavoriteButton"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
@@ -9,6 +8,7 @@ import {Badge} from "@/components/ui/badge"
 import {ImageIcon, ShoppingCart} from "lucide-react"
 import {motion} from "motion/react"
 import {useCart} from "@/store/useCart";
+import {useRouter} from "next/navigation";
 
 type Product = {
   _id: string | number
@@ -29,6 +29,8 @@ const formatPrice = (price: number) => price.toFixed(2)
 
 const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
   const addToCart = useCart((state) => state.addToCart) // ✅ Zustand hook
+
+  const router = useRouter()
 
   // Check for discount
   const hasDiscount = product.special && product.percentage && product.percentage > 0
@@ -102,8 +104,10 @@ const ProductDetailsCard: React.FC<ProductDetailsCardProps> = ({product}) => {
               <div className="flex gap-2 justify-center items-center">
                 <Button
                   className="flex-1"
-                  onClick={() =>
-                    sendWhatsAppMessage({...product, price: discounted})
+                  onClick={() => {
+                    addToCart({...product, price: discounted})
+                    router.push("/checkout")
+                  }
                   }
                 >
                   Buy Now

@@ -7,6 +7,7 @@ import {Button} from "@/components/ui/button";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {useCart} from "@/store/useCart";
 import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
+import {useRouter} from "next/navigation";
 
 const CartsPopover = () => {
   const {cart, removeFromCart, updateQuantity, clearCart} = useCart();
@@ -16,6 +17,7 @@ const CartsPopover = () => {
     0
   );
 
+  const router = useRouter()
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -134,7 +136,8 @@ const CartsPopover = () => {
 
                 <Button
                   className="col-span-2 w-full flex items-center gap-1"
-                  onClick={() => sendCartWhatsAppMessage(cart)}
+                  onClick={() => router.push("/checkout")}
+
                 >
                   <DollarSign className="h-4 w-4"/> Checkout
                 </Button>

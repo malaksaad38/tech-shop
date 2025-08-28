@@ -72,86 +72,165 @@ const AdminProductsComponent = () => {
   }, [search])
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-6 px-3 md:px-0">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Manage Products</CardTitle>
+        <CardHeader className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <CardTitle className="text-lg md:text-xl">Manage Products</CardTitle>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/admin/categories/create">
+              <Button size="icon">
+                <Grid2X2PlusIcon/>
+
+              </Button>
+            </Link>
+            <Link href="/admin/products/create">
+              <Button size="icon">
+                <PackagePlusIcon/>
+              </Button>
+            </Link>
+          </div>
         </CardHeader>
 
         <CardContent>
-          <div className="flex items-center justify-between mb-4 gap-4">
+          {/* Search + Item count */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-3">
             <Input
               type="search"
               placeholder="Search products..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="max-w-sm"
+              className="w-full md:max-w-sm"
             />
-            <div className="text-sm text-muted-foreground flex justify-center items-center gap-6">
-              <span>{products?.length} Items</span>
-              <div className="flex justify-center items-center gap-2">
-                <Link href="/admin/categories/create">
-                  <Button size="icon" title="Create Category">
-                    <Grid2X2PlusIcon/>
-                  </Button>
-                </Link>
-                <Link href="/admin/products/create">
-                  <Button size="icon" title="Create Product">
-                    <PackagePlusIcon/>
-                  </Button>
-                </Link>
-              </div>
-            </div>
+            <span className="text-sm text-muted-foreground">
+              {products?.length} Items
+            </span>
           </div>
 
+          {/* Loading */}
           {loading ? (
             <div className="flex justify-center py-10">
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground"/>
             </div>
           ) : (
-            <div className="rounded-md border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Image</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Category</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Special Offer</TableHead>
-                    <TableHead>Created At</TableHead>
-                    <TableHead className="text-right"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {paginatedProducts.map((product) => (
-                    <TableRow key={product._id}>
-                      <TableCell>
-                        {product.image ? (
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-10 h-10 object-cover rounded-md"
-                          />
-                        ) : (
-                          <div
-                            className="flex justify-center items-center border w-10 h-10 object-cover bg-muted rounded-md">
-                            <ImageIcon className="size-5"/>
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell>{product.name}</TableCell>
+            <>
+              {/* Desktop Table */}
+              <div className="hidden md:block rounded-md border overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Image</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Category</TableHead>
+                      <TableHead>Price</TableHead>
+                      <TableHead>Special Offer</TableHead>
+                      <TableHead>Created At</TableHead>
+                      <TableHead className="text-right"></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {paginatedProducts.map((product) => (
+                      <TableRow key={product._id}>
+                        <TableCell>
+                          {product.image ? (
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-10 h-10 object-cover rounded-md"
+                            />
+                          ) : (
+                            <div className="flex justify-center items-center border w-10 h-10 bg-muted rounded-md">
+                              <ImageIcon className="size-5"/>
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell>{product.name}</TableCell>
 
-                      {/* ✅ Category */}
-                      <TableCell>
-                        {typeof product.category === "object"
-                          ? product.category.name
-                          : product.category || "-"}
-                      </TableCell>
+                        <TableCell>
+                          {typeof product.category === "object"
+                            ? product.category.name
+                            : product.category || "-"}
+                        </TableCell>
 
-                      <TableCell>${product.price}</TableCell>
+                        <TableCell>${product.price}</TableCell>
 
-                      {/* ✅ Special Offer */}
-                      <TableCell>
+                        <TableCell>
+                          {product.special ? (
+                            <Badge variant="destructive">
+                              {product.percentage
+                                ? `${product.percentage}% OFF`
+                                : "Special"}
+                            </Badge>
+                          ) : (
+                            <span className="text-muted-foreground">-</span>
+                          )}
+                        </TableCell>
+
+                        <TableCell>
+                          {new Date(product.createdAt).toLocaleDateString()}
+                        </TableCell>
+
+                        <TableCell className="text-right space-x-2">
+                          <Link href={`/admin/products/edit/${product._id}`}>
+                            <Button variant="outline" size="icon">
+                              <Pencil/>
+                            </Button>
+                          </Link>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            onClick={() => handleDelete(product._id)}
+                          >
+                            <Trash2/>
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {filteredProducts.length === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={7} className="text-center py-6">
+                          No products found
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Card View */}
+              <div className="grid gap-4 md:hidden">
+                {paginatedProducts.map((product) => (
+                  <div
+                    key={product._id}
+                    className="border rounded-lg p-4 flex flex-col gap-3 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      {product.image ? (
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="w-14 h-14 object-cover rounded-md"
+                        />
+                      ) : (
+                        <div className="flex justify-center items-center border w-14 h-14 bg-muted rounded-md">
+                          <ImageIcon className="size-6"/>
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <h3 className="font-semibold">{product.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {typeof product.category === "object"
+                            ? product.category.name
+                            : product.category || "-"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="text-sm flex flex-col gap-1">
+                      <p>
+                        Price:{" "}
+                        <span className="font-semibold">${product.price}</span>
+                      </p>
+                      <p>
                         {product.special ? (
                           <Badge variant="destructive">
                             {product.percentage
@@ -159,42 +238,41 @@ const AdminProductsComponent = () => {
                               : "Special"}
                           </Badge>
                         ) : (
-                          <span className="text-muted-foreground">-</span>
+                          <span className="text-muted-foreground">No Offer</span>
                         )}
-                      </TableCell>
-
-                      <TableCell>
+                      </p>
+                      <p className="text-muted-foreground">
                         {new Date(product.createdAt).toLocaleDateString()}
-                      </TableCell>
+                      </p>
+                    </div>
 
-                      <TableCell className="text-right space-x-2">
-                        <Link href={`/admin/products/edit/${product._id}`}>
-                          <Button variant="outline" size="sm">
-                            <Pencil className="h-4 w-4 mr-1"/> Edit
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleDelete(product._id)}
-                        >
-                          <Trash2 className="h-4 w-4 mr-1"/> Delete
+                    <div className="flex gap-2 justify-end">
+                      <Link href={`/admin/products/edit/${product._id}`}>
+                        <Button variant="outline" size="icon">
+                          <Pencil/>
                         </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {filteredProducts.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={7} className="text-center py-6">
-                        No products found
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </div>
+                      </Link>
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => handleDelete(product._id)}
+                      >
+                        <Trash2/>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+
+                {filteredProducts.length === 0 && (
+                  <p className="text-center text-muted-foreground">
+                    No products found
+                  </p>
+                )}
+              </div>
+            </>
           )}
 
+          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-4 space-x-2">
               <Button

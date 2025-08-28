@@ -12,7 +12,16 @@ interface CartItem {
 
 interface CartState {
   cart: CartItem[];
-  addToCart: (item: Omit<CartItem, "quantity">, qty?: number) => void;
+  addToCart: (item: {
+    _id: string | number;
+    name: string;
+    price: number;
+    image: string;
+    description?: string;
+    special?: boolean;
+    percentage?: number;
+    category?: { _id: string; name: string; value: string } | string
+  }, qty?: number) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, qty: number) => void;
   clearCart: () => void;

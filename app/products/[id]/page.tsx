@@ -67,7 +67,6 @@ export default function ProductItem({
         <Button variant="default" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4"/>
           Back
-
         </Button>
       </div>
 

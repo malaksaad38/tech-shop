@@ -7,11 +7,12 @@ import {DollarSign, FolderOpen, Minus, Package, Plus, ShoppingCart, Trash2,} fro
 import {motion} from "framer-motion";
 import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function CartPage() {
   const {cart, removeFromCart, updateQuantity, clearCart} = useCart();
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
+  const router = useRouter()
   if (cart.length === 0) {
     return (
       <motion.div
@@ -153,7 +154,7 @@ export default function CartPage() {
               </Button>
               <Button
                 className="flex-1 flex items-center gap-2"
-                onClick={() => sendCartWhatsAppMessage(cart)}
+                onClick={() => router.push("/checkout")}
               >
                 <DollarSign className="w-4 h-4"/> Proceed to Checkout
               </Button>
