@@ -66,7 +66,7 @@ export default function CheckoutPage() {
 
       // 3. Clear cart and redirect
       clearCart();
-      router.push("/thank-you");
+      router.push("/checkout/thank-you");
     } catch (err) {
       console.error(err);
       alert("❌ Checkout failed. Please try again.");
