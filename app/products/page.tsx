@@ -3,7 +3,6 @@
 import React, {useEffect, useMemo, useState} from "react";
 import ProductCard from "@/components/ProductCard";
 import {motion} from "framer-motion";
-
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
@@ -43,31 +42,72 @@ const Products = () => {
   const [visible, setVisible] = useState(8);
 
   // Fetch products + categories
+
   useEffect(() => {
+    let isMounted = true; // Prevent state updates if component unmounts
+
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [prodRes, catRes] = await Promise.all([
-          fetch("/api/products").then((res) => res.json()),
-          fetch("/api/categories").then((res) => res.json()),
+        // Use Promise.allSettled to avoid one failed request failing both
+        const [prodRes, catRes] = await Promise.allSettled([
+          fetch("/api/products").then((res) => {
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            return res.json();
+          }),
+          fetch("/api/categories").then((res) => {
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            return res.json();
+          }),
         ]);
 
-        setProducts(prodRes);
-        setCategories(catRes);
+        let products: ProductType[] = [];
+        let categories: CategoryType[] = [];
 
-        if (prodRes.length > 0) {
-          const prices = prodRes.map((p: ProductType) => p.price);
-          setMinPrice(Math.floor(Math.min(...prices)));
-          setMaxPrice(Math.ceil(Math.max(...prices)));
+        // Handle products result
+        if (prodRes.status === "fulfilled") {
+          products = prodRes.value;
+          setProducts(products);
+
+          // Calculate price range only if products exist
+          if (products.length > 0) {
+            const prices = products.map((p) => p.price);
+            const min = Math.floor(Math.min(...prices));
+            const max = Math.ceil(Math.max(...prices));
+            if (isMounted) {
+              setMinPrice(min);
+              setMaxPrice(max);
+            }
+          }
+        } else {
+          console.error("❌ Failed to fetch products:", prodRes.reason);
+        }
+
+        // Handle categories result
+        if (catRes.status === "fulfilled") {
+          categories = catRes.value;
+          setCategories(categories);
+        } else {
+          console.error("❌ Failed to fetch categories:", catRes.reason);
         }
       } catch (err) {
-        console.error("❌ Error fetching data:", err);
+        // This will catch any non-Promise errors (unlikely due to allSettled)
+        console.error("🚨 Unexpected error in fetchData:", err);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
+
     fetchData();
+
+    // Cleanup function to avoid memory leaks
+    return () => {
+      isMounted = false;
+    };
   }, []);
+
 
   // Derived filtered list
   const filtered = useMemo(() => {

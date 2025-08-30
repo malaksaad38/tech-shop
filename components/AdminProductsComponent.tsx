@@ -32,10 +32,17 @@ const AdminProductsComponent = () => {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await axios.get<ProductType[]>("/api/products")
-      setProducts(response.data)
+      const res = await fetch("/api/products")
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch products: ${res.status} ${res.statusText}`)
+      }
+
+      const data: ProductType[] = await res.json()
+      setProducts(data)
     } catch (err) {
       console.error("Error fetching products:", err)
+      setProducts([]) // fallback if error
     } finally {
       setLoading(false)
     }
