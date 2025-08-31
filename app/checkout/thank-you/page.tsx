@@ -5,8 +5,10 @@ import {CheckCircle} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {useSearchParams} from "next/navigation";
+import {Suspense} from "react";
 
-export default function ThankYouPage() {
+function ThankYouContent() {
+
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
 
@@ -55,12 +57,22 @@ export default function ThankYouPage() {
             Continue Shopping
           </Button>
         </Link>
-        <Link href={`/auth/orders/${orderId}`} className="w-full sm:w-auto">
-          <Button variant="outline" className="w-full sm:w-auto rounded-2xl">
-            View My Orders
-          </Button>
-        </Link>
+        {orderId && (
+          <Link href={`/auth/orders/${orderId}`} className="w-full sm:w-auto">
+            <Button variant="outline" className="w-full sm:w-auto rounded-2xl">
+              View My Orders
+            </Button>
+          </Link>
+        )}
       </motion.div>
     </div>
+  );
+}
+
+export default function ThankYouPage() {
+  return (
+    <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+      <ThankYouContent/>
+    </Suspense>
   );
 }
