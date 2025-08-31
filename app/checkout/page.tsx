@@ -1,13 +1,14 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useCart} from "@/store/useCart";
+import {useAuth} from "@/hooks/useAuth";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {Textarea} from "@/components/ui/textarea";
-import {DollarSign, Mail, MapPin, Package, Phone, ShoppingBag, User,} from "lucide-react";
+import {DollarSign, Package, ShoppingBag} from "lucide-react";
 import {motion} from "framer-motion";
 import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
 import Link from "next/link";
@@ -16,7 +17,9 @@ import axios from "axios";
 
 export default function CheckoutPage() {
   const {cart, clearCart} = useCart();
+  const {customer, loading: authLoading} = useAuth(true);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +31,18 @@ export default function CheckoutPage() {
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const router = useRouter();
 
+  // ✅ Prefill customer info once loaded
+  useEffect(() => {
+    if (customer) {
+      setFormData({
+        name: customer.name || "",
+        number: customer.phone || "",
+        email: customer.email || "",
+        address: customer.address || "",
+      });
+    }
+  }, [customer]);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -35,45 +50,42 @@ export default function CheckoutPage() {
   };
 
   const handleCheckout = async () => {
-    // ✅ Required fields check (email optional)
+    setErrorMsg(null);
+
     if (!formData.name || !formData.number || !formData.address) {
-      alert("⚠️ Please fill in Name, Phone Number, and Address before proceeding.");
+      setErrorMsg("⚠️ Please fill in all required fields (Name, Phone, Address).");
       return;
     }
 
     setLoading(true);
     try {
-      // 1. Save order to database
+      console.log(cart)
       const response = await axios.post("/api/orders", {
         products: cart.map((item) => ({
-          product: item._id, // ✅ Use product._id from DB
+          product: item._id,
           quantity: item.quantity,
           price: item.price,
         })),
-        customer: {
-          name: formData.name,
-          phone: formData.number,
-          email: formData.email,
-          address: formData.address,
-        },
+        customer: customer?._id || null,
+        customerInfo: formData, // ✅ always save snapshot
         totalAmount: total,
       });
 
       console.log("✅ Order Saved:", response.data);
 
-      // 2. Send WhatsApp message
+      // Send WhatsApp msg + clear cart + redirect
       sendCartWhatsAppMessage(cart, formData);
-
-      // 3. Clear cart and redirect
       clearCart();
-      router.push("/checkout/thank-you");
-    } catch (err) {
-      console.error(err);
-      alert("❌ Checkout failed. Please try again.");
+      router.push(`/checkout/thank-you?orderId=${response.data._id}`);
+    } catch (err: any) {
+      console.error("❌ Checkout failed:", err);
+      setErrorMsg("❌ Something went wrong while placing your order. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) return <p className="text-center mt-10">Loading...</p>;
 
   if (cart.length === 0) {
     return (
@@ -139,81 +151,73 @@ export default function CheckoutPage() {
         </CardContent>
       </Card>
 
-      {/* Checkout Form */}
+      {/* Customer Info */}
       <Card className="shadow-sm border rounded-2xl">
         <CardContent className="p-6 space-y-6">
           <h2 className="text-xl font-semibold">Customer Information</h2>
           <div className="grid gap-5">
             <div className="space-y-2">
               <Label htmlFor="name">Full Name *</Label>
-              <div className="flex items-center gap-2">
-                <User className="h-5 w-5 text-muted-foreground"/>
-                <Input
-                  id="name"
-                  name="name"
-                  placeholder="Enter your full name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={!!customer?.name} // allow editing if guest
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="number">Phone Number *</Label>
-              <div className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-muted-foreground"/>
-                <Input
-                  id="number"
-                  name="number"
-                  placeholder="03XXXXXXXXX"
-                  value={formData.number}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+              <Input
+                id="number"
+                name="number"
+                value={formData.number}
+                onChange={handleChange}
+                disabled={!!customer?.phone}
+              />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address (Optional)</Label>
-              <div className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-muted-foreground"/>
-                <Input
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={!!customer?.email}
+              />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="address">Delivery Address *</Label>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-muted-foreground mt-2"/>
-                <Textarea
-                  id="address"
-                  name="address"
-                  placeholder="Street, City, Postal Code"
-                  value={formData.address}
-                  onChange={handleChange}
-                  className="min-h-[80px]"
-                  required
-                />
-              </div>
+              <Textarea
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
             </div>
           </div>
+
+          {errorMsg && (
+            <p className="text-red-600 text-sm mt-2">{errorMsg}</p>
+          )}
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <Button
               className="flex-1 flex items-center gap-2"
               onClick={handleCheckout}
-              disabled={loading}
+              disabled={loading || cart.length === 0}
             >
-              {loading ? "Processing..." : <><DollarSign className="w-4 h-4"/> Place Order</>}
+              {loading ? (
+                "Processing..."
+              ) : (
+                <>
+                  <DollarSign className="w-4 h-4"/> Place Order
+                </>
+              )}
             </Button>
             <Link href="/cart" className="flex-1">
               <Button variant="outline" className="w-full">

@@ -8,15 +8,17 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import {Sheet, SheetClose, SheetContent, SheetTrigger} from "@/components/ui/sheet";
+import {Sheet, SheetClose, SheetContent, SheetTrigger,} from "@/components/ui/sheet";
 import {Button} from "@/components/ui/button";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import {cn} from "@/lib/utils";
 import {ModeToggle} from "@/components/ModeToggle";
 import EncryptButton from "@/components/EncryptButton";
 import {motion} from "framer-motion";
 import FavoritesPopover from "@/components/FavoritesPopover";
 import CartsPopover from "@/components/CartsPopover";
+import {useAuth} from "@/hooks/useAuth";
+import ProfilePopover from "@/components/ProfilePopover"; // ✅ custom auth hook
 
 const navLinks = [
   {href: "/", label: "Home", icon: Home},
@@ -25,9 +27,10 @@ const navLinks = [
   {href: "/contact", label: "Contact", icon: Phone},
 ];
 
-
 const TechShopHeader = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const {customer, logout} = useAuth(); // ✅ get both customer + logout
 
   const navVariants = {
     hidden: {opacity: 0, y: -20},
@@ -43,6 +46,11 @@ const TechShopHeader = () => {
     visible: {opacity: 1, y: 0},
   };
 
+  const handleLogout = () => {
+    logout(); // clear customer from context + localStorage
+    router.push("/auth/login"); // redirect to login
+  };
+
   return (
     <motion.header
       variants={navVariants}
@@ -51,6 +59,7 @@ const TechShopHeader = () => {
       viewport={{once: true, amount: 0.2}}
       className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b shadow-sm"
     >
+      {/* Top banner */}
       <motion.div
         variants={itemVariants}
         className="bg-primary/90 text-center py-1 text-xs sm:text-sm"
@@ -59,6 +68,7 @@ const TechShopHeader = () => {
       </motion.div>
 
       <div className="container mx-auto flex items-center justify-between py-2 px-3">
+        {/* Logo */}
         <motion.div variants={itemVariants}>
           <Link
             href="/"
@@ -104,7 +114,10 @@ const TechShopHeader = () => {
         </NavigationMenu>
 
         {/* Desktop Action Buttons */}
-        <motion.div variants={itemVariants} className="hidden md:flex gap-2 items-center">
+        <motion.div
+          variants={itemVariants}
+          className="hidden md:flex gap-2 items-center"
+        >
           <ModeToggle/>
           <CartsPopover/>
           <FavoritesPopover/>
@@ -114,6 +127,16 @@ const TechShopHeader = () => {
               <HandCoinsIcon className="h-4 w-4"/> Special Offers
             </Link>
           </Button>
+
+          {/* 🔥 Auth Buttons */}
+          {customer ? (
+            <ProfilePopover/>
+          ) : (
+            <Link href="/auth/login">
+              <Button size="sm">Login</Button>
+            </Link>
+          )}
+
         </motion.div>
 
         {/* Mobile Menu */}
@@ -122,8 +145,19 @@ const TechShopHeader = () => {
             <ModeToggle/>
             <CartsPopover/>
             <FavoritesPopover/>
+            {customer ? (
+              <ProfilePopover/>
+            ) : (
+              <Link href="/auth/login">
+                <Button size="sm">Login</Button>
+              </Link>
+            )}
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden text-foreground">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-foreground"
+              >
                 <Menu size={22}/>
               </Button>
             </SheetTrigger>
@@ -155,13 +189,18 @@ const TechShopHeader = () => {
                 </motion.div>
               ))}
 
-              <motion.div variants={itemVariants} className="flex flex-col gap-2 mt-4">
+              {/* 🔥 Mobile Auth Toggle */}
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col gap-2 mt-4"
+              >
                 <EncryptButton link={"/admin"}/>
                 <Button asChild>
                   <Link href="/special-offers">
                     <HandCoinsIcon className="h-4 w-4"/> Special Offers
                   </Link>
                 </Button>
+
               </motion.div>
             </motion.nav>
           </SheetContent>

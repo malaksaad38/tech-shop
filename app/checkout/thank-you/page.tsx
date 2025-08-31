@@ -4,8 +4,12 @@ import {motion} from "framer-motion";
 import {CheckCircle} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {useSearchParams} from "next/navigation";
 
 export default function ThankYouPage() {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background px-4 sm:px-6 text-center">
       {/* Icon */}
@@ -51,7 +55,7 @@ export default function ThankYouPage() {
             Continue Shopping
           </Button>
         </Link>
-        <Link href="/checkout/order-details" className="w-full sm:w-auto">
+        <Link href={`/auth/orders/${orderId}`} className="w-full sm:w-auto">
           <Button variant="outline" className="w-full sm:w-auto rounded-2xl">
             View My Orders
           </Button>
