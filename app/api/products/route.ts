@@ -23,6 +23,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   await connectDB();
   const body = await req.json();
+  console.log(body);
   const newProduct = await Product.create(body);
   revalidatePath('/');
   revalidatePath('/special-offers');

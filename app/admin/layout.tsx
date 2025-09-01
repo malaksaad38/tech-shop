@@ -10,6 +10,7 @@ import {
   Home as HomeIcon,
   PackagePlusIcon,
   PlusIcon,
+  User2Icon,
 } from "lucide-react";
 
 export default function AdminLayout({children}: { children: React.ReactNode }) {
@@ -61,7 +62,7 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
         {/* Sidebar Backdrop Overlay (on mobile) */}
         {sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black/50 z-30 md:hidden"
+            className="fixed inset-0 bg-background z-30 md:hidden"
             onClick={() => setSidebarOpen(false)}
             aria-hidden="true"
           />
@@ -87,6 +88,16 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
                 <ClipboardList className="w-4 h-4"/> Orders
               </Button>
             </Link>
+            <Link href="/admin/customers" onClick={() => setSidebarOpen(false)}>
+              <Button
+                variant="ghost"
+                className="justify-start w-full flex items-center gap-2"
+                onClick={() => setSidebarOpen(false)}
+              >
+                <User2Icon className="w-4 h-4"/>
+                Customers
+              </Button>
+            </Link>
 
             <Link href="/admin/categories/create" onClick={() => setSidebarOpen(false)}>
               <Button
@@ -94,6 +105,7 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
                 className="w-full justify-between items-center"
                 onClick={() => setSidebarOpen(false)}
               >
+
             <span className="flex items-center gap-2">
             <Grid2X2PlusIcon className="w-4 h-4"/>
             Categories
@@ -115,6 +127,7 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
                 <PlusIcon className="w-4 h-4"/>
               </Button>
             </Link>
+
           </nav>
         </div>
       </aside>
