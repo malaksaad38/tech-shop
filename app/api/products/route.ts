@@ -6,12 +6,16 @@ import {revalidatePath} from "next/cache";
 
 // Getting all item from the target schema
 export async function GET() {
-  await connectDB();
-  const products = await Product.find().populate("category").sort({
-    createdAt: -1,  // newest first
-    _id: -1         // fallback for docs without createdAt
-  });
-  return NextResponse.json(products);
+  try {
+    await connectDB();
+    const products = await Product.find()
+      .populate("category")
+      .sort({_id: -1});
+    return NextResponse.json(products);
+  } catch (err: any) {
+    console.error("❌ Error fetching products:", err);
+    return NextResponse.json({error: "Failed to fetch products"}, {status: 500});
+  }
 }
 
 
