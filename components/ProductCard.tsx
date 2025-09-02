@@ -137,7 +137,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
             }
           >
             <ShoppingCart className="w-4 h-4"/>
-
             Add to Cart
           </Button>
 

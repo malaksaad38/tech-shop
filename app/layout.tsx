@@ -1,10 +1,10 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
-import IndependenceDayHeader from "@/components/header";
-import IndependenceDayFooter from "@/components/footer";
 import {ThemeProvider} from "next-themes";
 import {AuthProvider} from "@/hooks/useAuth";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,9 +64,9 @@ export default function RootLayout({
       disableTransitionOnChange
     >
       <AuthProvider>
-        <IndependenceDayHeader/>
+        <Header/>
         {children}
-        <IndependenceDayFooter/>
+        <Footer/>
       </AuthProvider>
     </ThemeProvider>
     </body>

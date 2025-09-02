@@ -1,9 +1,9 @@
 "use client"
 import {useRef, useState} from "react";
 import {motion} from "framer-motion";
-import {LockIcon} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
+import {LockIcon} from "lucide-react";
 
 
 const CYCLES_PER_LETTER = 2;
@@ -11,11 +11,11 @@ const SHUFFLE_TIME = 50;
 
 const CHARS = "!@#$%^&*():{};|,.<>/?";
 
-
-const EncryptButton = ({link = "/", label = "Admin"}) => {
+const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>}) => {
   const intervalRef = useRef(null);
   const router = useRouter()
   const [text, setText] = useState(label);
+
 
   const scramble = () => {
     let pos = 0;
@@ -51,7 +51,7 @@ const EncryptButton = ({link = "/", label = "Admin"}) => {
 
   return (
     <Button onClick={() => router.push(link)}
-            className={"p-0 m-0 bg-gray-700 text-white hover:bg-gray-900 hover:border"}>
+            className={"p-0 m-0 bg-primary text-foreground hover:bg-background shadow shadow-accent-foreground/35"}>
       <motion.div
         whileHover={{
           scale: 1.025,
@@ -64,7 +64,7 @@ const EncryptButton = ({link = "/", label = "Admin"}) => {
         className=" flex justify-center items-center w-full group relative overflow-hidden rounded-lg  px-4 py-2  transition-colors "
       >
         <div className="relative z-10 flex items-center gap-2 ">
-          <LockIcon size={"15"}/>
+          {Icon}
           <span>{text}</span>
         </div>
         <motion.span

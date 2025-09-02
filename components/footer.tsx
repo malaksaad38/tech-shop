@@ -6,7 +6,7 @@ import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {FacebookIcon, GithubIcon, HeartIcon, InstagramIcon, LinkedinIcon, TwitterIcon} from "lucide-react";
 
-const TechShopFooter = () => {
+const Footer = () => {
   return (
     <footer className="bg-background text-foreground">
       {/* Professional Banner */}
@@ -74,4 +74,4 @@ const TechShopFooter = () => {
   );
 };
 
-export default TechShopFooter;
+export default Footer;

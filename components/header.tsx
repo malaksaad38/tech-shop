@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {HandCoinsIcon, Home, Info, Menu, Package, Phone,} from "lucide-react";
+import {HandCoinsIcon, Home, Info, LockIcon, Menu, Package, Phone, UserIcon,} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -27,7 +27,7 @@ const navLinks = [
   {href: "/contact", label: "Contact", icon: Phone},
 ];
 
-const TechShopHeader = () => {
+const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const {customer, logout} = useAuth(); // ✅ get both customer + logout
@@ -48,7 +48,7 @@ const TechShopHeader = () => {
 
   const handleLogout = () => {
     logout(); // clear customer from context + localStorage
-    router.push("/auth/login"); // redirect to login
+    router.push("/auth/login");
   };
 
   return (
@@ -121,20 +121,15 @@ const TechShopHeader = () => {
           <ModeToggle/>
           <CartsPopover/>
           <FavoritesPopover/>
-          <EncryptButton link={"/admin"}/>
-          <Button asChild>
-            <Link href="/special-offers">
-              <HandCoinsIcon className="h-4 w-4"/> Special Offers
-            </Link>
-          </Button>
+          <EncryptButton link={"/admin"} label={"Admin"}/>
+          <EncryptButton link={"/special-offers"} label={"Special Offers"}
+                         Icon={<HandCoinsIcon/>}/>
 
           {/* 🔥 Auth Buttons */}
           {customer ? (
             <ProfilePopover/>
           ) : (
-            <Link href="/auth/login">
-              <Button size="sm">Login</Button>
-            </Link>
+            <EncryptButton link={"auth/login"} label={"Login"} Icon={<UserIcon/>}/>
           )}
 
         </motion.div>
@@ -148,9 +143,9 @@ const TechShopHeader = () => {
             {customer ? (
               <ProfilePopover/>
             ) : (
-              <Link href="/auth/login">
-                <Button size="sm">Login</Button>
-              </Link>
+              <div className="pl-1">
+                <EncryptButton link={"auth/login"} label={"Login"} Icon={<UserIcon/>}/>
+              </div>
             )}
             <SheetTrigger asChild>
               <Button
@@ -194,12 +189,9 @@ const TechShopHeader = () => {
                 variants={itemVariants}
                 className="flex flex-col gap-2 mt-4"
               >
-                <EncryptButton link={"/admin"}/>
-                <Button asChild>
-                  <Link href="/special-offers">
-                    <HandCoinsIcon className="h-4 w-4"/> Special Offers
-                  </Link>
-                </Button>
+                <EncryptButton link={"/admin"} label={"Admin"} Icon={<LockIcon/>}/>
+                <EncryptButton link={"/special-offers"} label={"Special Offers"}
+                               Icon={<HandCoinsIcon/>}/>
 
               </motion.div>
             </motion.nav>
@@ -210,4 +202,4 @@ const TechShopHeader = () => {
   );
 };
 
-export default TechShopHeader;
+export default Header;
