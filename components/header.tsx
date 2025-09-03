@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {HandCoinsIcon, Home, Info, LockIcon, Menu, Package, Phone, UserIcon,} from "lucide-react";
+import {HandCoinsIcon, Home, Info, Menu, Package, Phone, UserIcon,} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -24,7 +24,7 @@ import {useCheckedLocale} from "@/lib/client-utils"; // ✅ custom auth hook
 
 
 const Header = () => {
-  const {t} = useCheckedLocale();
+  const {t, dir} = useCheckedLocale();
   const pathname = usePathname();
   const router = useRouter();
   const {customer, logout} = useAuth(); // ✅ get both customer + logout
@@ -149,13 +149,6 @@ const Header = () => {
             <ModeToggle/>
             <LocaleSwitcherToggle/>
 
-            {customer ? (
-              <ProfilePopover/>
-            ) : (
-              <div className="pl-1">
-                <EncryptButton link={"/auth/login"} label={"Login"} Icon={<UserIcon/>}/>
-              </div>
-            )}
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
@@ -167,13 +160,13 @@ const Header = () => {
             </SheetTrigger>
           </div>
 
-          <SheetContent side="right" className="p-4 backdrop-blur-md">
+          <SheetContent side="left" className="p-4 backdrop-blur-md">
             <motion.nav
               variants={navVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{once: true, amount: 0.3}}
-              className="flex flex-col gap-3 mt-2"
+              className="flex flex-col gap-3 mt-8"
             >
               {navLinks.map(({href, label, icon: Icon}) => (
                 <motion.div key={href} variants={itemVariants}>
@@ -198,9 +191,15 @@ const Header = () => {
                 variants={itemVariants}
                 className="flex flex-col gap-2 mt-4"
               >
-                <EncryptButton link={"/admin"} label={"Admin"} Icon={<LockIcon/>}/>
-                <EncryptButton link={"/special-offers"} label={"Special Offers"}
+                <EncryptButton link={"/admin"} label={t('Admin')}/>
+                <EncryptButton link={"/special-offers"} label={t("Special Offers")}
                                Icon={<HandCoinsIcon/>}/>
+
+                {customer ? (
+                  <ProfilePopover/>
+                ) : (
+                  <EncryptButton link={"/auth/login"} label={t("Login")} Icon={<UserIcon/>}/>
+                )}
 
               </motion.div>
             </motion.nav>
