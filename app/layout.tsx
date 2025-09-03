@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import {Geist, Geist_Mono, Noto_Nastaliq_Urdu} from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "next-themes";
 import {AuthProvider} from "@/hooks/useAuth";
@@ -18,6 +18,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const notoNastaliq = Noto_Nastaliq_Urdu({
+  subsets: ["arabic"], // Urdu is part of Arabic subset
+  variable: "--font-noto-nastaliq",
+  weight: ["400", "500", "600", "700"], // available weights
+});
+
 
 export const metadata: Metadata = {
   title: "TechShop",
@@ -62,7 +69,7 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
     <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${notoNastaliq.variable} antialiased`}
     >
     <ThemeProvider
       attribute="class"

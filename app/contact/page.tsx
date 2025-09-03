@@ -2,13 +2,14 @@
 
 import React, {useState} from "react"
 import Link from "next/link"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
 import {Label} from "@/components/ui/label"
 import {Button} from "@/components/ui/button"
-import {ArrowLeft, Mail, MessageCircle, MessageSquare, User,} from "lucide-react"
+import {ArrowLeft, Mail, MessageCircle, MessageSquare, User} from "lucide-react"
 import {motion} from "framer-motion"
+import {useCheckedLocale} from "@/lib/client-utils"
 
 const container = {
   hidden: {opacity: 0},
@@ -29,6 +30,7 @@ const fadeUp = {
 
 const Contact = () => {
   const [form, setForm] = useState({name: "", email: "", message: ""})
+  const {t} = useCheckedLocale()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -39,7 +41,7 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const phoneNumber = "923015488577" // 👈 your WhatsApp number
+    const phoneNumber = "923015488577"
     const text = `📩 New Contact Message\n\n👤 Name: ${form.name}\n📧 Email: ${form.email}\n💬 Message: ${form.message}`
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`
 
@@ -57,11 +59,9 @@ const Contact = () => {
         className="bg-primary text-foreground text-center py-14 shadow-sm"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          Contact Us
+          {t("contactTitle")}
         </h1>
-        <p className="text-base mt-2 opacity-90">
-          We’d love to hear from you on WhatsApp!
-        </p>
+        <p className="text-base mt-2 opacity-90">{t("contactDesc")}</p>
       </motion.section>
 
       {/* Contact Form */}
@@ -77,11 +77,9 @@ const Contact = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <MessageCircle className="h-6 w-6 text-primary"/>
-                Get in Touch
+                {t("getInTouch")}
               </CardTitle>
-              <CardDescription>
-                Fill out the form below and we’ll connect with you on WhatsApp.
-              </CardDescription>
+              <CardDescription>{t("formDesc")}</CardDescription>
             </CardHeader>
             <CardContent className="p-8">
               <motion.form
@@ -95,14 +93,14 @@ const Contact = () => {
                 <motion.div variants={fadeUp} className="space-y-2">
                   <Label htmlFor="name" className="flex items-center gap-2">
                     <User className="h-4 w-4 text-muted-foreground"/>
-                    Your Name
+                    {t("yourName")}
                   </Label>
                   <Input
                     id="name"
                     type="text"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="Enter your name"
+                    placeholder={t("namePlaceholder")}
                     required
                   />
                 </motion.div>
@@ -111,14 +109,14 @@ const Contact = () => {
                 <motion.div variants={fadeUp} className="space-y-2">
                   <Label htmlFor="email" className="flex items-center gap-2">
                     <Mail className="h-4 w-4 text-muted-foreground"/>
-                    Your Email
+                    {t("yourEmail")}
                   </Label>
                   <Input
                     id="email"
                     type="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="Enter your email"
+                    placeholder={t("emailPlaceholder")}
                     required
                   />
                 </motion.div>
@@ -127,13 +125,13 @@ const Contact = () => {
                 <motion.div variants={fadeUp} className="space-y-2">
                   <Label htmlFor="message" className="flex items-center gap-2">
                     <MessageSquare className="h-4 w-4 text-muted-foreground"/>
-                    Your Message
+                    {t("yourMessage")}
                   </Label>
                   <Textarea
                     id="message"
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="Write your message..."
+                    placeholder={t("messagePlaceholder")}
                     rows={5}
                     required
                   />
@@ -147,7 +145,7 @@ const Contact = () => {
                     size="lg"
                   >
                     <MessageCircle className="mr-2 h-5 w-5"/>
-                    Send via WhatsApp
+                    {t("sendWhatsapp")}
                   </Button>
                 </motion.div>
               </motion.form>
@@ -156,14 +154,11 @@ const Contact = () => {
         </motion.div>
 
         {/* Back to Home */}
-        <motion.div
-          variants={fadeUp}
-          className="mt-6 text-center"
-        >
+        <motion.div variants={fadeUp} className="mt-6 text-center">
           <Button asChild variant="default" className="shadow-md hover:shadow-lg">
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4"/>
-              Back to Home
+              {t("backHome")}
             </Link>
           </Button>
         </motion.div>

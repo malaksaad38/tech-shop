@@ -112,22 +112,18 @@
     --sidebar-ring: oklch(0.488 0.243 264.376);
 }
 
+
 @layer base {
     * {
-        @apply border-border outline-ring/50 font-sans;
-
+        @apply border-border outline-ring/50;
     }
 
     body {
         @apply bg-background text-foreground;
+        font-family: Geist, 'Noto Nastaliq Urdu', sans-serif;
     }
-}
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-    }
-  body {
-    @apply bg-background text-foreground;
+    html[lang="ur"] p {
+        @apply leading-loose tracking-wider;
     }
 }

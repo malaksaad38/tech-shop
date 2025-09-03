@@ -1,27 +1,27 @@
 "use client";
 
 import {motion} from "framer-motion";
-import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {Button} from "@/components/ui/button";
 import {LogOut, ShoppingBag, User} from "lucide-react";
 import Link from "next/link";
 import {useAuth} from "@/hooks/useAuth";
 import {useRouter} from "next/navigation";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {useTranslations} from "next-intl";
 
 const ProfilePopover = () => {
   const {customer, logout} = useAuth();
   const router = useRouter();
+  const t = useTranslations("profilePopover");
 
-  if (!customer) return null; // don't render if not logged in
+  if (!customer) return null;
 
   const handleLogout = () => {
     logout();
     router.push("/auth/login");
-
   };
 
-  // Generate initials if no avatar
   const getInitials = (name: string) =>
     name
       .split(" ")
@@ -36,10 +36,9 @@ const ProfilePopover = () => {
           variant="ghost"
           size="icon"
           className="flex items-center gap-2 hover:bg-accent transition-colors px-3"
-          aria-label="Open profile menu"
+          aria-label={t("openMenu")}
         >
           <Avatar className="h-7 w-7">
-            {/* You can add <AvatarImage src={customer.avatarUrl} /> if available */}
             <AvatarFallback>{getInitials(customer.name)}</AvatarFallback>
           </Avatar>
         </Button>
@@ -69,7 +68,7 @@ const ProfilePopover = () => {
             className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             <User className="h-4 w-4"/>
-            <span>Profile</span>
+            <span>{t("profile")}</span>
           </Link>
 
           <Link
@@ -77,7 +76,7 @@ const ProfilePopover = () => {
             className="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             <ShoppingBag className="h-4 w-4"/>
-            <span>Your Orders</span>
+            <span>{t("orders")}</span>
           </Link>
 
           <Button
@@ -87,7 +86,7 @@ const ProfilePopover = () => {
             className="flex items-center gap-2 justify-start px-3 py-2 rounded-md text-sm hover:bg-destructive hover:text-destructive-foreground transition-colors"
           >
             <LogOut className="h-4 w-4"/>
-            <span>Logout</span>
+            <span>{t("logout")}</span>
           </Button>
         </motion.div>
       </PopoverContent>

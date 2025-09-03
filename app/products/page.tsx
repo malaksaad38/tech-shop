@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
 import {Card, CardContent} from "@/components/ui/card";
 import {ArrowDownAZ, ArrowUpAZ, DollarSign, Filter, Loader2, PlusCircle, RefreshCw, Search, Tag,} from "lucide-react";
+import {useCheckedLocale} from "@/lib/client-utils";
 
 // Product type from MongoDB
 type ProductType = {
@@ -29,6 +30,7 @@ type CategoryType = {
 };
 
 const Products = () => {
+  const {t} = useCheckedLocale();
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [loading, setLoading] = useState(false);
@@ -42,14 +44,12 @@ const Products = () => {
   const [visible, setVisible] = useState(8);
 
   // Fetch products + categories
-
   useEffect(() => {
-    let isMounted = true; // Prevent state updates if component unmounts
+    let isMounted = true;
 
     const fetchData = async () => {
       setLoading(true);
       try {
-        // Use Promise.allSettled to avoid one failed request failing both
         const [prodRes, catRes] = await Promise.allSettled([
           fetch("/api/products").then((res) => {
             if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -64,12 +64,10 @@ const Products = () => {
         let products: ProductType[] = [];
         let categories: CategoryType[] = [];
 
-        // Handle products result
         if (prodRes.status === "fulfilled") {
           products = prodRes.value;
           setProducts(products);
 
-          // Calculate price range only if products exist
           if (products.length > 0) {
             const prices = products.map((p) => p.price);
             const min = Math.floor(Math.min(...prices));
@@ -79,19 +77,13 @@ const Products = () => {
               setMaxPrice(max);
             }
           }
-        } else {
-          console.error("❌ Failed to fetch products:", prodRes.reason);
         }
 
-        // Handle categories result
         if (catRes.status === "fulfilled") {
           categories = catRes.value;
           setCategories(categories);
-        } else {
-          console.error("❌ Failed to fetch categories:", catRes.reason);
         }
       } catch (err) {
-        // This will catch any non-Promise errors (unlikely due to allSettled)
         console.error("🚨 Unexpected error in fetchData:", err);
       } finally {
         if (isMounted) {
@@ -101,13 +93,10 @@ const Products = () => {
     };
 
     fetchData();
-
-    // Cleanup function to avoid memory leaks
     return () => {
       isMounted = false;
     };
   }, []);
-
 
   // Derived filtered list
   const filtered = useMemo(() => {
@@ -135,8 +124,6 @@ const Products = () => {
       case "name-desc":
         list = [...list].sort((a, b) => b.name.localeCompare(a.name));
         break;
-      default:
-        break;
     }
     return list;
   }, [query, minPrice, maxPrice, sortBy, selectedCategory, products]);
@@ -153,10 +140,10 @@ const Products = () => {
         transition={{duration: 0.6, ease: "easeOut"}}
       >
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          Explore Our Products
+          {t("explore")}
         </h1>
         <p className="text-base md:text-lg mt-3 opacity-90">
-          Discover the latest gadgets, accessories, and tech essentials – all in one place.
+          {t("exploreDesc")}
         </p>
       </motion.section>
 
@@ -173,21 +160,21 @@ const Products = () => {
             <div className="flex flex-col md:flex-row gap-4 md:items-end">
               {/* Search */}
               <div className="flex-1">
-                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
-                  <Search className="w-4 h-4"/> Search
+                <label className=" text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Search className="w-4 h-4"/> {t("search")}
                 </label>
                 <Input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search products..."
+                  placeholder={t("searchProducts") + "..."}
                 />
               </div>
 
               {/* Category */}
               <div>
-                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
-                  <Tag className="w-4 h-4"/> Category
+                <label className="text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Tag className="w-4 h-4"/> {t("category")}
                 </label>
                 <Select
                   value={selectedCategory}
@@ -197,7 +184,7 @@ const Products = () => {
                     <SelectValue placeholder="All categories"/>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
+                    <SelectItem value="all">{t("all")}</SelectItem>
                     {categories.map((cat) => (
                       <SelectItem key={cat._id} value={cat.value}>
                         {cat.name}
@@ -209,8 +196,8 @@ const Products = () => {
 
               {/* Price Min */}
               <div>
-                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
-                  <DollarSign className="w-4 h-4"/> Min Price
+                <label className="text-sm font-semibold mb-1 flex items-center gap-1">
+                  <DollarSign className="w-4 h-4"/> {t("minPrice")}
                 </label>
                 <Input
                   type="number"
@@ -224,8 +211,8 @@ const Products = () => {
 
               {/* Price Max */}
               <div>
-                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
-                  <DollarSign className="w-4 h-4"/> Max Price
+                <label className="text-sm font-semibold mb-1 flex items-center gap-1">
+                  <DollarSign className="w-4 h-4"/> {t("maxPrice")}
                 </label>
                 <Input
                   type="number"
@@ -239,22 +226,24 @@ const Products = () => {
 
               {/* Sort */}
               <div>
-                <label className="block text-sm font-semibold mb-1 flex items-center gap-1">
-                  <Filter className="w-4 h-4"/> Sort By
+                <label className="text-sm font-semibold mb-1 flex items-center gap-1">
+                  <Filter className="w-4 h-4"/> {t("sortBy")}
                 </label>
                 <Select value={sortBy} onValueChange={setSortBy}>
                   <SelectTrigger className="w-48">
                     <SelectValue placeholder="Select sort"/>
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="featured">Featured</SelectItem>
-                    <SelectItem value="price-asc">Price: Low to High</SelectItem>
-                    <SelectItem value="price-desc">Price: High to Low</SelectItem>
+                    <SelectItem value="featured">{t("featuredLabel")}</SelectItem>
+                    <SelectItem value="price-asc">{t("lowHigh")}</SelectItem>
+                    <SelectItem value="price-desc">{t("highLow")}</SelectItem>
                     <SelectItem value="name-asc">
-                      <ArrowDownAZ className="inline w-4 h-4 mr-1"/> Name: A → Z
+                      <ArrowDownAZ className="inline w-4 h-4 mr-1"/>{" "}
+                      {t("aToZ")}
                     </SelectItem>
                     <SelectItem value="name-desc">
-                      <ArrowUpAZ className="inline w-4 h-4 mr-1"/> Name: Z → A
+                      <ArrowUpAZ className="inline w-4 h-4 mr-1"/>{" "}
+                      {t("zToA")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -266,10 +255,11 @@ const Products = () => {
               <div className="mt-4 flex items-center gap-2">
                 {loading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin"/> Loading products...
+                    <Loader2 className="w-4 h-4 animate-spin"/>
+                    {t("loading")}
                   </>
                 ) : (
-                  `Showing ${shown.length} of ${filtered.length} item(s)`
+                  t("showing", {shown: shown.length, filtered: filtered.length})
                 )}
               </div>
             </div>
@@ -302,7 +292,9 @@ const Products = () => {
         >
           <Button
             size="lg"
-            onClick={() => setVisible((v) => Math.min(v + 8, filtered.length))}
+            onClick={() =>
+              setVisible((v) => Math.min(v + 8, filtered.length))
+            }
             className="flex items-center gap-2"
           >
             <PlusCircle className="w-5 h-5"/> Load More

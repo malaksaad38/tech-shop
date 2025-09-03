@@ -20,17 +20,13 @@ export default function TechShopHeroPage() {
               initial={{opacity: 0, y: -60}}
               animate={{opacity: 1, y: 0}}
               transition={{duration: 0.8, ease: "easeOut"}}
-
               className="text-4xl md:text-6xl font-extrabold flex items-center justify-center gap-2 text-white"
             >
-              {t('title')}
+              {t("title")}
             </motion.h1>
 
             {/* Sparkles */}
-            <div
-              className="md:w-[60rem] w-[40rem] h-40 relative"
-            >
-              {/* Gradients */}
+            <div className="md:w-[60rem] w-[40rem] h-40 relative">
               <div
                 className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4"/>
               <div
@@ -50,8 +46,7 @@ export default function TechShopHeroPage() {
               />
 
               <div
-                className="absolute inset-0 w-full  bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]">
-              </div>
+                className="absolute inset-0 w-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"/>
             </div>
 
             {/* Paragraph + Buttons */}
@@ -59,20 +54,23 @@ export default function TechShopHeroPage() {
               initial={{opacity: 0, y: -40}}
               animate={{opacity: 1, y: 0}}
               transition={{delay: 0.6, duration: 0.8, ease: "easeOut"}}
-              className={"h-2"}
-
+              className="h-2"
             >
               <CardContent className="translate-y-[-120px]">
                 <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-8">
-                  {t('description')}
+                  {t("desc")}
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:w-full items-center justify-center gap-4">
                   <Button asChild variant="secondary">
-                    <Link href="/products"><LaptopIcon/>{t('Shop Now')}</Link>
+                    <Link href="/products">
+                      <LaptopIcon/> {t("shopNow")}
+                    </Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/about"><SquareChevronRightIcon/>{t('Learn More')}</Link>
+                    <Link href="/about">
+                      <SquareChevronRightIcon/> {t("learnMore")}
+                    </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -80,7 +78,6 @@ export default function TechShopHeroPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

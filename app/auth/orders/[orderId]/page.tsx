@@ -7,12 +7,14 @@ import {motion} from "framer-motion";
 import {Activity, Calendar, ClipboardCheck, CreditCard, Mail, MapPin, Phone, ShoppingCart, User} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {useTranslations} from "next-intl";
 
 export default function OrderIdPage() {
   const params = useParams();
   const orderId = params?.orderId;
   const [order, setOrder] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("OrderDetails");
 
   useEffect(() => {
     if (!orderId) return;
@@ -32,8 +34,8 @@ export default function OrderIdPage() {
     fetchOrder();
   }, [orderId]);
 
-  if (loading) return <p className="text-center mt-10">Loading order...</p>;
-  if (!order) return <p className="text-center mt-10">Order not found</p>;
+  if (loading) return <p className="text-center mt-10">{t("loading")}</p>;
+  if (!order) return <p className="text-center mt-10">{t("notFound")}</p>;
 
   return (
     <motion.div
@@ -46,13 +48,17 @@ export default function OrderIdPage() {
       <Card className="mb-6">
         <CardHeader className="flex items-center gap-2">
           <ClipboardCheck className="w-5 h-5 text-primary"/>
-          <CardTitle>Order Details</CardTitle>
+          <CardTitle>{t("orderDetails")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="flex items-center gap-2"><Activity className="w-4 h-4 text-muted-foreground"/>
-            <strong>Status:</strong> {order.status}</p>
-          <p className="flex items-center gap-2"><Calendar className="w-4 h-4 text-muted-foreground"/>
-            <strong>Date:</strong> {new Date(order.createdAt).toLocaleString()}</p>
+          <p className="flex items-center gap-2">
+            <Activity className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("status")}:</strong> {order.status}
+          </p>
+          <p className="flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("date")}:</strong> {new Date(order.createdAt).toLocaleString()}
+          </p>
         </CardContent>
       </Card>
 
@@ -60,17 +66,25 @@ export default function OrderIdPage() {
       <Card className="mb-6">
         <CardHeader className="flex items-center gap-2">
           <User className="w-5 h-5 text-primary"/>
-          <CardTitle>Customer Info</CardTitle>
+          <CardTitle>{t("customerInfo")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="flex items-center gap-2"><User className="w-4 h-4 text-muted-foreground"/>
-            <strong>Name:</strong> {order.customerInfo?.name || "N/A"}</p>
-          <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-muted-foreground"/>
-            <strong>Email:</strong> {order.customerInfo?.email || "N/A"}</p>
-          <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-muted-foreground"/>
-            <strong>Phone:</strong> {order.customerInfo?.phone || "N/A"}</p>
-          <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-muted-foreground"/>
-            <strong>Address:</strong> {order.customerInfo?.address || "N/A"}</p>
+          <p className="flex items-center gap-2">
+            <User className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("name")}:</strong> {order.customerInfo?.name || t("na")}
+          </p>
+          <p className="flex items-center gap-2">
+            <Mail className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("email")}:</strong> {order.customerInfo?.email || t("na")}
+          </p>
+          <p className="flex items-center gap-2">
+            <Phone className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("phone")}:</strong> {order.customerInfo?.phone || t("na")}
+          </p>
+          <p className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-muted-foreground"/>
+            <strong>{t("address")}:</strong> {order.customerInfo?.address || t("na")}
+          </p>
         </CardContent>
       </Card>
 
@@ -78,7 +92,7 @@ export default function OrderIdPage() {
       <Card>
         <CardHeader className="flex items-center gap-2">
           <ShoppingCart className="w-5 h-5 text-primary"/>
-          <CardTitle>Products</CardTitle>
+          <CardTitle>{t("products")}</CardTitle>
         </CardHeader>
         <CardContent>
           <motion.ul
@@ -99,24 +113,25 @@ export default function OrderIdPage() {
                   transition={{duration: 0.3}}
                 >
                   <ShoppingCart className="w-4 h-4 text-muted-foreground"/>
-                  {item.product?.name || "Product"} × {item.quantity || 0} - ${(item.price || 0).toFixed(2)}
+                  {item.product?.name || t("product")} × {item.quantity || 0} - ${(item.price || 0).toFixed(2)}
                 </motion.li>
-
               ))
-
             ) : (
-              <li>No products found</li>
+              <li>{t("noProducts")}</li>
             )}
           </motion.ul>
           <p className="mt-4 font-bold text-lg flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-primary"/> Total Amount: ${(order.totalAmount || 0).toFixed(2)}
+            <CreditCard className="w-5 h-5 text-primary"/>
+            {t("totalAmount")}: ${(order.totalAmount || 0).toFixed(2)}
           </p>
         </CardContent>
       </Card>
-      <Link href={"/auth/orders"}>
-        <Button className={"mt-4"} variant={"default"}>All Orders</Button>
-      </Link>
 
+      <Link href={"/auth/orders"}>
+        <Button className="mt-4" variant="default">
+          {t("allOrders")}
+        </Button>
+      </Link>
     </motion.div>
   );
 }

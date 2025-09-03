@@ -70,7 +70,7 @@ const Header = () => {
         variants={itemVariants}
         className="bg-primary/90 text-center py-1 text-xs sm:text-sm"
       >
-        {t("TechShop — Your Trusted Partner in Technology & Innovation")}
+        {t("tagline")}
       </motion.div>
 
       <div className="container mx-auto flex items-center justify-between py-2 px-3">
@@ -129,15 +129,15 @@ const Header = () => {
           <ModeToggle/>
           <LocaleSwitcherToggle/>
 
-          <EncryptButton link={"/admin"} label={t('Admin')}/>
-          <EncryptButton link={"/special-offers"} label={t("Special Offers")}
+          <EncryptButton link={"/admin"} label={t('admin')}/>
+          <EncryptButton link={"/special-offers"} label={t("offers")}
                          Icon={<HandCoinsIcon/>}/>
 
           {/* 🔥 Auth Buttons */}
           {customer ? (
             <ProfilePopover/>
           ) : (
-            <EncryptButton link={"/auth/login"} label={t("Login")} Icon={<UserIcon/>}/>
+            <EncryptButton link={"/auth/login"} label={t("login")} Icon={<UserIcon/>}/>
           )}
         </motion.div>
 
@@ -191,14 +191,14 @@ const Header = () => {
                 variants={itemVariants}
                 className="flex flex-col gap-2 mt-4"
               >
-                <EncryptButton link={"/admin"} label={t('Admin')}/>
-                <EncryptButton link={"/special-offers"} label={t("Special Offers")}
+                <EncryptButton link={"/admin"} label={t('admin')}/>
+                <EncryptButton link={"/special-offers"} label={t("offers")}
                                Icon={<HandCoinsIcon/>}/>
 
                 {customer ? (
                   <ProfilePopover/>
                 ) : (
-                  <EncryptButton link={"/auth/login"} label={t("Login")} Icon={<UserIcon/>}/>
+                  <EncryptButton link={"/auth/login"} label={t("login")} Icon={<UserIcon/>}/>
                 )}
 
               </motion.div>

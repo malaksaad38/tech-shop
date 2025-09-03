@@ -2,10 +2,11 @@ import Link from "next/link"
 import ProductCard from "@/components/ProductCard"
 import {connectDB} from "@/lib/mongodb"
 import Product from "@/models/Product"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
 import {ArrowLeft, Tag} from "lucide-react"
+import {getCheckedLocale} from "@/lib/server-utils";
 
 export default async function SpecialOffer() {
   // Connect to DB & fetch products with special = true
@@ -16,6 +17,8 @@ export default async function SpecialOffer() {
     .limit(12)
     .lean()
 
+  const {t} = await getCheckedLocale()
+
   return (
     <div className="min-h-screen bg-muted/30 py-6 px-3 sm:py-10 sm:px-4">
       {/* TechShop Special Deals Banner */}
@@ -24,11 +27,11 @@ export default async function SpecialOffer() {
           <CardHeader className="text-center px-4 sm:px-8">
             <CardTitle className="flex flex-wrap items-center justify-center gap-2 text-2xl sm:text-3xl font-extrabold">
               <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
-              TechShop Deals
+              {t("specialDeals")}
               <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
             </CardTitle>
             <CardDescription className="text-base sm:text-lg text-foreground/90 mt-2">
-              Exclusive discounts on the latest tech products. Upgrade your setup today!
+              {t("specialTagline")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
@@ -36,7 +39,7 @@ export default async function SpecialOffer() {
               variant="secondary"
               className="text-sm sm:text-lg px-4 sm:px-6 py-1.5 sm:py-2 font-semibold tracking-wide"
             >
-              Limited Time • Don’t Miss Out!
+              {t("limitedTime")}
             </Badge>
           </CardContent>
         </Card>
@@ -53,7 +56,7 @@ export default async function SpecialOffer() {
           ))
         ) : (
           <p className="col-span-full text-center text-muted-foreground text-base sm:text-lg">
-            No special deals available right now. Please check back soon!
+            {t("noDeals")}
           </p>
         )}
       </div>
@@ -63,7 +66,7 @@ export default async function SpecialOffer() {
         <Button asChild className="px-4 sm:px-6 py-2 text-sm sm:text-base">
           <Link href="/" className="flex items-center justify-center">
             <ArrowLeft className="mr-2 h-4 w-4 sm:h-5 sm:w-5"/>
-            Back to Home
+            {t("backHome")}
           </Link>
         </Button>
       </div>

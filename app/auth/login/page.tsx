@@ -8,8 +8,10 @@ import {Label} from "@/components/ui/label";
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/hooks/useAuth";
 import {Lock, Mail} from "lucide-react";
+import {useTranslations} from "next-intl";
 
 export default function LoginPage() {
+  const t = useTranslations("loginPage");
   const router = useRouter();
   const [form, setForm] = useState({email: "", password: ""});
   const [loading, setLoading] = useState(false);
@@ -34,10 +36,8 @@ export default function LoginPage() {
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.error || t("loginFailed"));
 
-      if (!res.ok) throw new Error(data.error || "Login failed");
-
-      // Save token + customer in localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("customer", JSON.stringify(data.customer));
 
@@ -65,7 +65,7 @@ export default function LoginPage() {
           transition={{delay: 0.2}}
           className="text-3xl font-bold mb-6 text-center text-foreground"
         >
-          Welcome Back
+          {t("welcome")}
         </motion.h1>
 
         {/* Form */}
@@ -77,7 +77,7 @@ export default function LoginPage() {
             transition={{delay: 0.2}}
             className="space-y-1"
           >
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("email")}</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
               <Input
@@ -86,7 +86,7 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                placeholder="you@example.com"
+                placeholder={t("emailPlaceholder")}
                 className="pl-9"
               />
             </div>
@@ -99,7 +99,7 @@ export default function LoginPage() {
             transition={{delay: 0.3}}
             className="space-y-1"
           >
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t("password")}</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
               <Input
@@ -108,7 +108,7 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                placeholder="••••••••"
+                placeholder={t("passwordPlaceholder")}
                 className="pl-9"
               />
             </div>
@@ -132,24 +132,24 @@ export default function LoginPage() {
             transition={{delay: 0.4}}
           >
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
+              {loading ? t("loading") : t("login")}
             </Button>
           </motion.div>
         </form>
 
-        {/* Link */}
+        {/* Register Link */}
         <motion.p
           initial={{opacity: 0}}
           animate={{opacity: 1}}
           transition={{delay: 0.5}}
           className="text-center text-sm mt-6 text-muted-foreground"
         >
-          Don’t have an account?{" "}
+          {t("noAccount")}{" "}
           <a
             href="/auth/register"
             className="text-primary font-medium hover:underline"
           >
-            Register
+            {t("register")}
           </a>
         </motion.p>
       </motion.div>

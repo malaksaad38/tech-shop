@@ -1,14 +1,16 @@
 "use client";
 
 import * as React from "react";
-import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {useFavorites} from "@/store/useFavorites";
 import {Heart, X} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
+import {useTranslations} from "next-intl";
 
 const FavoritesPopover = () => {
   const {favorites, toggleFavorite, clearFavorites} = useFavorites();
+  const t = useTranslations("favoritesPopover");
 
   return (
     <Popover>
@@ -17,11 +19,13 @@ const FavoritesPopover = () => {
           size="icon"
           variant="outline"
           className="relative"
+          aria-label={t("openMenu")}
         >
           <Heart className="w-6 h-6 text-muted-foreground"/>
           {favorites.length > 0 && (
             <span
-              className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
+            >
               {favorites.length}
             </span>
           )}
@@ -33,7 +37,7 @@ const FavoritesPopover = () => {
         className="w-80 p-3 flex flex-col gap-3"
       >
         <div className="flex items-center justify-between mb-2">
-          <h3 className="font-bold text-lg">Favorites</h3>
+          <h3 className="font-bold text-lg">{t("title")}</h3>
           {favorites.length > 0 && (
             <Button
               variant="ghost"
@@ -41,14 +45,14 @@ const FavoritesPopover = () => {
               className="text-xs text-red-500 hover:text-red-600"
               onClick={clearFavorites}
             >
-              Clear All
+              {t("clear")}
             </Button>
           )}
         </div>
 
         {favorites.length === 0 ? (
           <p className="text-sm text-muted-foreground">
-            No favorites yet.
+            {t("empty")}
           </p>
         ) : (
           <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
@@ -84,6 +88,7 @@ const FavoritesPopover = () => {
                 <button
                   onClick={() => toggleFavorite(item)}
                   className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted"
+                  aria-label={t("remove")}
                 >
                   <X className="w-4 h-4 text-muted-foreground"/>
                 </button>

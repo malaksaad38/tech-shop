@@ -14,8 +14,11 @@ import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import axios from "axios";
+import {useTranslations} from "next-intl";
 
 export default function CheckoutPage() {
+  const t = useTranslations("Checkout");
+
   const {cart, clearCart} = useCart();
   const {customer, loading: authLoading} = useAuth(true);
   const [loading, setLoading] = useState(false);
@@ -31,7 +34,7 @@ export default function CheckoutPage() {
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const router = useRouter();
 
-  // ✅ Prefill customer info once loaded
+  // ✅ Prefill customer info
   useEffect(() => {
     if (customer) {
       setFormData({
@@ -53,13 +56,12 @@ export default function CheckoutPage() {
     setErrorMsg(null);
 
     if (!formData.name || !formData.number || !formData.address) {
-      setErrorMsg("⚠️ Please fill in all required fields (Name, Phone, Address).");
+      setErrorMsg(t("requiredFields"));
       return;
     }
 
     setLoading(true);
     try {
-      console.log(cart)
       const response = await axios.post("/api/orders", {
         products: cart.map((item) => ({
           product: item._id,
@@ -67,25 +69,21 @@ export default function CheckoutPage() {
           price: item.price,
         })),
         customer: customer?._id || null,
-        customerInfo: formData, // ✅ always save snapshot
+        customerInfo: formData,
         totalAmount: total,
       });
 
-      console.log("✅ Order Saved:", response.data);
-
-      // Send WhatsApp msg + clear cart + redirect
       sendCartWhatsAppMessage(cart, formData);
       clearCart();
       router.push(`/checkout/thank-you?orderId=${response.data._id}`);
     } catch (err: any) {
-      console.error("❌ Checkout failed:", err);
-      setErrorMsg("❌ Something went wrong while placing your order. Please try again.");
+      setErrorMsg(t("checkoutFailed"));
     } finally {
       setLoading(false);
     }
   };
 
-  if (authLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (authLoading) return <p className="text-center mt-10">{t("loading")}</p>;
 
   if (cart.length === 0) {
     return (
@@ -97,13 +95,13 @@ export default function CheckoutPage() {
       >
         <ShoppingBag className="h-10 w-10 text-muted-foreground mb-3"/>
         <h2 className="text-2xl font-semibold text-muted-foreground">
-          No items for checkout 🛒
+          {t("emptyCartTitle")}
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Go back and add some products first.
+          {t("emptyCartText")}
         </p>
         <Link href="/products">
-          <Button className="mt-4">Go to Products</Button>
+          <Button className="mt-4">{t("goToProducts")}</Button>
         </Link>
       </motion.div>
     );
@@ -119,7 +117,7 @@ export default function CheckoutPage() {
         viewport={{once: true, amount: 0.3}}
       >
         <ShoppingBag className="h-7 w-7 text-primary"/>
-        Checkout
+        {t("checkout")}
       </motion.h1>
 
       {/* Order Summary */}
@@ -127,7 +125,7 @@ export default function CheckoutPage() {
         <CardContent className="p-6 space-y-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <Package className="h-5 w-5 text-primary"/>
-            Your Order
+            {t("yourOrder")}
           </h2>
           <div className="space-y-2">
             {cart.map((item) => (
@@ -144,7 +142,7 @@ export default function CheckoutPage() {
           </div>
           <div className="flex justify-between items-center text-lg sm:text-xl font-bold pt-2">
             <span className="flex items-center gap-1">
-              <DollarSign className="h-5 w-5 text-green-600"/> Total:
+              <DollarSign className="h-5 w-5 text-green-600"/> {t("total")}
             </span>
             <span>${total.toFixed(2)}</span>
           </div>
@@ -154,21 +152,21 @@ export default function CheckoutPage() {
       {/* Customer Info */}
       <Card className="shadow-sm border rounded-2xl">
         <CardContent className="p-6 space-y-6">
-          <h2 className="text-xl font-semibold">Customer Information</h2>
+          <h2 className="text-xl font-semibold">{t("customerInfo")}</h2>
           <div className="grid gap-5">
             <div className="space-y-2">
-              <Label htmlFor="name">Full Name *</Label>
+              <Label htmlFor="name">{t("fullName")}</Label>
               <Input
                 id="name"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                disabled={!!customer?.name} // allow editing if guest
+                disabled={!!customer?.name}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="number">Phone Number *</Label>
+              <Label htmlFor="number">{t("phoneNumber")}</Label>
               <Input
                 id="number"
                 name="number"
@@ -179,7 +177,7 @@ export default function CheckoutPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input
                 id="email"
                 name="email"
@@ -190,7 +188,7 @@ export default function CheckoutPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="address">Delivery Address *</Label>
+              <Label htmlFor="address">{t("deliveryAddress")}</Label>
               <Textarea
                 id="address"
                 name="address"
@@ -211,17 +209,11 @@ export default function CheckoutPage() {
               onClick={handleCheckout}
               disabled={loading || cart.length === 0}
             >
-              {loading ? (
-                "Processing..."
-              ) : (
-                <>
-                  <DollarSign className="w-4 h-4"/> Place Order
-                </>
-              )}
+              {loading ? t("processing") : (<><DollarSign className="w-4 h-4"/> {t("placeOrder")}</>)}
             </Button>
             <Link href="/cart" className="flex-1">
               <Button variant="outline" className="w-full">
-                Back to Cart
+                {t("backToCart")}
               </Button>
             </Link>
           </div>

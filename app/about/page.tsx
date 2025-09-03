@@ -13,9 +13,7 @@ const container = {
   hidden: {opacity: 0},
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2, // delay between child animations
-    },
+    transition: {staggerChildren: 0.2},
   },
 }
 
@@ -42,10 +40,10 @@ const About = () => {
         className="bg-primary text-foreground text-center py-14 shadow-sm"
       >
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
-          {t('About TechShop')}
+          {t("aboutTitle")}
         </h1>
         <p className="text-base md:text-lg mt-3 px-2 opacity-90">
-          {t("Innovating Technology, Empowering Your Future")}
+          {t("missionLine")}
         </p>
       </motion.section>
 
@@ -63,11 +61,9 @@ const About = () => {
             <CardContent className="p-8 space-y-4">
               <div className="flex items-center gap-3">
                 <BookOpen className="h-6 w-6 text-primary"/>
-                <h2 className="text-2xl font-bold text-primary">{t("Our Story")}</h2>
+                <h2 className="text-2xl font-bold text-primary">{t("story")}</h2>
               </div>
-              <p className="leading-relaxed text-muted-foreground">
-                {t("TechShop was founded with a vision to bring the latest technology products to customers at affordable prices From computer hardware and accessories to the latest gadgets, we aim to deliver quality, reliability, and innovation all in one place")}
-              </p>
+              <p className="text-muted-foreground">{t("storyDesc")}</p>
             </CardContent>
           </Card>
         </motion.div>
@@ -78,11 +74,9 @@ const About = () => {
             <CardContent className="p-8 space-y-4">
               <div className="flex items-center gap-3">
                 <Cpu className="h-6 w-6 text-primary"/>
-                <h2 className="text-2xl font-bold text-primary">{t("What We Do")}</h2>
+                <h2 className="text-2xl font-bold text-primary">{t("whatWeDo")}</h2>
               </div>
-              <p className="leading-relaxed text-muted-foreground">
-                {t("At Tech Shop, we provide a wide range of tech products including laptops, PCs, mobile accessories, gaming gear, and more Our goal is to make technology accessible for everyone – whether you’re a student, professional, gamer, or entrepreneur")}
-              </p>
+              <p className="text-muted-foreground">{t("whatWeDoDesc")}</p>
             </CardContent>
           </Card>
         </motion.div>
@@ -93,22 +87,17 @@ const About = () => {
             <CardContent className="p-8 space-y-4">
               <div className="flex items-center gap-3">
                 <Target className="h-6 w-6 text-primary"/>
-                <h2 className="text-2xl font-bold text-primary">Our Mission</h2>
+                <h2 className="text-2xl font-bold text-primary">{t("mission")}</h2>
               </div>
-              <p className="leading-relaxed text-muted-foreground">
-                {t("Our mission is to empower individuals and businesses by providing cutting-edge technology, excellent customer service, and inspiring innovation in everyday life We are committed to making TechShop your trusted partner in technology")}
-              </p>
+              <p className="text-muted-foreground">{t("missionDesc")}</p>
             </CardContent>
           </Card>
         </motion.div>
 
         {/* Back to Home */}
-        <motion.div
-          variants={fadeUp}
-          className="flex justify-center pt-6"
-        >
+        <motion.div variants={fadeUp} className="flex justify-center pt-6">
           <Button asChild size="lg" className="shadow-md hover:shadow-lg">
-            <Link href="/">{t("Back to Home")}</Link>
+            <Link href="/">{t("backHome")}</Link>
           </Button>
         </motion.div>
       </motion.div>

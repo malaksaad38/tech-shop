@@ -6,11 +6,12 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {useSearchParams} from "next/navigation";
 import {Suspense} from "react";
+import {useTranslations} from "next-intl";
 
 function ThankYouContent() {
-
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const t = useTranslations("ThankYou");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background px-4 sm:px-6 text-center">
@@ -31,7 +32,7 @@ function ThankYouContent() {
         animate={{opacity: 1, y: 0}}
         transition={{duration: 0.5}}
       >
-        Thank You for Your Order!
+        {t("title")}
       </motion.h1>
 
       {/* Subtitle */}
@@ -41,8 +42,7 @@ function ThankYouContent() {
         animate={{opacity: 1}}
         transition={{delay: 0.3}}
       >
-        Your order has been placed successfully. We’ll send you a confirmation
-        email shortly with all the details.
+        {t("subtitle")}
       </motion.p>
 
       {/* Buttons */}
@@ -54,13 +54,13 @@ function ThankYouContent() {
       >
         <Link href="/products" className="w-full sm:w-auto">
           <Button className="w-full sm:w-auto rounded-2xl shadow-md">
-            Continue Shopping
+            {t("continueShopping")}
           </Button>
         </Link>
         {orderId && (
           <Link href={`/auth/orders/${orderId}`} className="w-full sm:w-auto">
             <Button variant="outline" className="w-full sm:w-auto rounded-2xl">
-              View My Orders
+              {t("viewOrders")}
             </Button>
           </Link>
         )}
@@ -70,8 +70,10 @@ function ThankYouContent() {
 }
 
 export default function ThankYouPage() {
+  const t = useTranslations("ThankYou");
+
   return (
-    <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+    <Suspense fallback={<div className="text-center p-10">{t("loading")}</div>}>
       <ThankYouContent/>
     </Suspense>
   );

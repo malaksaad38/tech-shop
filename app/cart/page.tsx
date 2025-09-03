@@ -5,14 +5,16 @@ import {Button} from "@/components/ui/button";
 import {Card, CardContent} from "@/components/ui/card";
 import {DollarSign, FolderOpen, Minus, Package, Plus, ShoppingCart, Trash2,} from "lucide-react";
 import {motion} from "framer-motion";
-import {sendCartWhatsAppMessage} from "@/utils/sendCartWhatsAppMessage";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
+import {useTranslations} from "next-intl";
 
 export default function CartPage() {
   const {cart, removeFromCart, updateQuantity, clearCart} = useCart();
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const router = useRouter()
+  const router = useRouter();
+  const t = useTranslations("cartPage");
+
   if (cart.length === 0) {
     return (
       <motion.div
@@ -23,10 +25,10 @@ export default function CartPage() {
       >
         <FolderOpen className="h-10 w-10 text-muted-foreground mb-3"/>
         <h2 className="text-2xl font-semibold text-muted-foreground">
-          Your cart is empty 🛒
+          {t("emptyTitle")}
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          Start shopping and add items to your cart!
+          {t("emptyMessage")}
         </p>
       </motion.div>
     );
@@ -47,7 +49,7 @@ export default function CartPage() {
         viewport={{once: true, amount: 0.3}}
       >
         <ShoppingCart className="h-7 w-7 text-primary"/>
-        Shopping Cart
+        {t("title")}
       </motion.h1>
 
       {/* Cart Items */}
@@ -83,14 +85,14 @@ export default function CartPage() {
                     {item.name}
                   </Link>
                   <p className="text-sm text-muted-foreground flex items-center gap-1">
-                    <DollarSign className="h-4 w-4"/> {item.price.toFixed(2)}{" "}
-                    each
+                    <DollarSign className="h-4 w-4"/> {item.price.toFixed(2)} {t("each")}
                   </p>
 
                   <div className="flex items-center gap-3 mt-2">
                     <Button
                       size="icon"
                       variant="outline"
+                      aria-label={t("decrease")}
                       onClick={() =>
                         updateQuantity(item._id, Math.max(1, item.quantity - 1))
                       }
@@ -103,6 +105,7 @@ export default function CartPage() {
                     <Button
                       size="icon"
                       variant="outline"
+                      aria-label={t("increase")}
                       onClick={() => updateQuantity(item._id, item.quantity + 1)}
                     >
                       <Plus className="w-4 h-4"/>
@@ -118,6 +121,7 @@ export default function CartPage() {
                   <Button
                     variant="destructive"
                     size="icon"
+                    aria-label={t("remove")}
                     onClick={() => removeFromCart(item._id)}
                   >
                     <Trash2 className="w-4 h-4"/>
@@ -140,7 +144,7 @@ export default function CartPage() {
           <CardContent className="p-4 sm:p-6 flex flex-col gap-4">
             <div className="flex justify-between items-center text-lg sm:text-xl font-bold">
               <span className="flex items-center gap-1">
-                <DollarSign className="h-5 w-5 text-green-600"/> Total:
+                <DollarSign className="h-5 w-5 text-green-600"/> {t("total")}
               </span>
               <span>${total.toFixed(2)}</span>
             </div>
@@ -150,13 +154,13 @@ export default function CartPage() {
                 onClick={clearCart}
                 className="flex-1 flex items-center gap-2"
               >
-                <Trash2 className="w-4 h-4"/> Clear Cart
+                <Trash2 className="w-4 h-4"/> {t("clear")}
               </Button>
               <Button
                 className="flex-1 flex items-center gap-2"
                 onClick={() => router.push("/checkout")}
               >
-                <DollarSign className="w-4 h-4"/> Proceed to Checkout
+                <DollarSign className="w-4 h-4"/> {t("checkout")}
               </Button>
             </div>
           </CardContent>

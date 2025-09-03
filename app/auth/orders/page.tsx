@@ -5,10 +5,12 @@ import {motion} from "framer-motion";
 import Link from "next/link";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Calendar, DollarSign, Loader2, Package, Tag} from "lucide-react";
+import {useTranslations} from "next-intl";
 
 export default function MyOrdersPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("MyOrders");
 
   useEffect(() => {
     const customer = localStorage.getItem("customer");
@@ -52,11 +54,11 @@ export default function MyOrdersPage() {
         animate={{opacity: 1, y: 0}}
         className="text-3xl font-bold mb-8 text-center"
       >
-        My Orders
+        {t("title")}
       </motion.h1>
 
       {orders.length === 0 ? (
-        <p className="text-center text-muted-foreground">No orders found.</p>
+        <p className="text-center text-muted-foreground">{t("noOrders")}</p>
       ) : (
         <div className="space-y-4">
           {orders.map((order, i) => (
@@ -74,7 +76,7 @@ export default function MyOrdersPage() {
                       href={`/auth/orders/${order._id}`}
                       className="hover:text-primary hover:underline text-sm md:text-lg"
                     >
-                      Order #{order._id}
+                      {t("order")} #{order._id}
                     </Link>
                   </CardTitle>
                   <Tag className="h-4 w-4 text-muted-foreground"/>
@@ -82,15 +84,15 @@ export default function MyOrdersPage() {
                 <CardContent className="space-y-2 text-sm">
                   <p className="flex items-center gap-2">
                     <DollarSign className="h-4 w-4 text-green-500"/>
-                    <span>Total: ${Number(order.totalAmount).toFixed(2)}</span>
+                    <span>{t("total")}: ${Number(order.totalAmount).toFixed(2)}</span>
                   </p>
                   <p className="flex items-center gap-2">
                     <Tag className="h-4 w-4 text-blue-500"/>
-                    <span>Status: {order.status}</span>
+                    <span>{t("status")}: {order.status}</span>
                   </p>
                   <p className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-muted-foreground"/>
-                    <span>Date: {new Date(order.createdAt).toLocaleDateString()}</span>
+                    <span>{t("date")}: {new Date(order.createdAt).toLocaleDateString()}</span>
                   </p>
                 </CardContent>
               </Card>
