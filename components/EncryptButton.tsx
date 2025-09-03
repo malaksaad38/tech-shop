@@ -11,7 +11,7 @@ const SHUFFLE_TIME = 50;
 
 const CHARS = "!@#$%^&*():{};|,.<>/?";
 
-const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>}) => {
+const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>, className = ""}) => {
   const intervalRef = useRef(null);
   const router = useRouter()
   const [text, setText] = useState(label);
@@ -61,7 +61,7 @@ const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>}) => {
         }}
         onMouseEnter={scramble}
         onMouseLeave={stopScramble}
-        className=" flex justify-center items-center w-full group relative overflow-hidden rounded-lg  px-4 py-2  transition-colors "
+        className=" flex justify-center items-center w-full group relative overflow-hidden rounded-lg  md:px-4 py-2 px-3 transition-colors"
       >
         <div className="relative z-10 flex items-center gap-2 ">
           {Icon}

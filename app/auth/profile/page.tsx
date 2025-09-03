@@ -70,7 +70,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="container mx-auto max-w-md py-10">
+    <div className="container mx-auto max-w-md py-10 px-4">
       <motion.div
         initial={{opacity: 0, y: 10}}
         animate={{opacity: 1, y: 0}}

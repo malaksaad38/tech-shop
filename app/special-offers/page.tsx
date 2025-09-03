@@ -17,22 +17,24 @@ export default async function SpecialOffer() {
     .lean()
 
   return (
-    <div className="min-h-screen bg-muted/30 py-10 px-4">
+    <div className="min-h-screen bg-muted/30 py-6 px-3 sm:py-10 sm:px-4">
       {/* TechShop Special Deals Banner */}
-      <div className="container mx-auto mb-10">
+      <div className="container mx-auto mb-8 sm:mb-10">
         <Card className="bg-primary/90 text-foreground shadow-lg backdrop-blur-md">
-          <CardHeader className="text-center">
-            <CardTitle className="flex items-center justify-center gap-2 text-3xl font-extrabold">
-              <Tag className="h-7 w-7"/> TechShop Deals <Tag className="h-7 w-7"/>
+          <CardHeader className="text-center px-4 sm:px-8">
+            <CardTitle className="flex flex-wrap items-center justify-center gap-2 text-2xl sm:text-3xl font-extrabold">
+              <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
+              TechShop Deals
+              <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
             </CardTitle>
-            <CardDescription className="text-lg text-foreground/90 mt-2">
+            <CardDescription className="text-base sm:text-lg text-foreground/90 mt-2">
               Exclusive discounts on the latest tech products. Upgrade your setup today!
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
             <Badge
               variant="secondary"
-              className="text-lg px-6 py-2 font-semibold tracking-wide"
+              className="text-sm sm:text-lg px-4 sm:px-6 py-1.5 sm:py-2 font-semibold tracking-wide"
             >
               Limited Time • Don’t Miss Out!
             </Badge>
@@ -41,7 +43,7 @@ export default async function SpecialOffer() {
       </div>
 
       {/* Product Grid */}
-      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {offerProducts.length > 0 ? (
           offerProducts.map((product: any) => (
             <ProductCard
@@ -50,17 +52,17 @@ export default async function SpecialOffer() {
             />
           ))
         ) : (
-          <p className="col-span-full text-center text-muted-foreground text-lg">
+          <p className="col-span-full text-center text-muted-foreground text-base sm:text-lg">
             No special deals available right now. Please check back soon!
           </p>
         )}
       </div>
 
       {/* Back to Home */}
-      <div className="mt-10 text-center">
-        <Button asChild>
-          <Link href="/">
-            <ArrowLeft className="mr-2 h-4 w-4"/>
+      <div className="mt-8 sm:mt-10 text-center">
+        <Button asChild className="px-4 sm:px-6 py-2 text-sm sm:text-base">
+          <Link href="/" className="flex items-center justify-center">
+            <ArrowLeft className="mr-2 h-4 w-4 sm:h-5 sm:w-5"/>
             Back to Home
           </Link>
         </Button>

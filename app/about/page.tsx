@@ -41,7 +41,7 @@ const About = () => {
         <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
           About TechShop
         </h1>
-        <p className="text-base md:text-lg mt-3 opacity-90">
+        <p className="text-base md:text-lg mt-3 px-2 opacity-90">
           Innovating Technology, Empowering Your Future
         </p>
       </motion.section>

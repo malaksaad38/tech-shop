@@ -5,6 +5,8 @@ import {useParams} from "next/navigation";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {motion} from "framer-motion";
 import {Activity, Calendar, ClipboardCheck, CreditCard, Mail, MapPin, Phone, ShoppingCart, User} from "lucide-react";
+import Link from "next/link";
+import {Button} from "@/components/ui/button";
 
 export default function OrderIdPage() {
   const params = useParams();
@@ -99,7 +101,9 @@ export default function OrderIdPage() {
                   <ShoppingCart className="w-4 h-4 text-muted-foreground"/>
                   {item.product?.name || "Product"} × {item.quantity || 0} - ${(item.price || 0).toFixed(2)}
                 </motion.li>
+
               ))
+
             ) : (
               <li>No products found</li>
             )}
@@ -109,6 +113,10 @@ export default function OrderIdPage() {
           </p>
         </CardContent>
       </Card>
+      <Link href={"/auth/orders"}>
+        <Button className={"mt-4"} variant={"default"}>All Orders</Button>
+      </Link>
+
     </motion.div>
   );
 }

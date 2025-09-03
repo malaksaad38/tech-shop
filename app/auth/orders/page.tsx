@@ -46,7 +46,7 @@ export default function MyOrdersPage() {
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-10 px-4">
+    <div className="container textsm max-w-3xl mx-auto py-10 px-4">
       <motion.h1
         initial={{opacity: 0, y: -20}}
         animate={{opacity: 1, y: 0}}
@@ -72,7 +72,7 @@ export default function MyOrdersPage() {
                     <Package className="h-5 w-5 text-primary"/>
                     <Link
                       href={`/auth/orders/${order._id}`}
-                      className="hover:text-primary hover:underline"
+                      className="hover:text-primary hover:underline text-sm md:text-lg"
                     >
                       Order #{order._id}
                     </Link>
