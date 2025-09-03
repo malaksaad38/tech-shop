@@ -147,6 +147,7 @@ const Header = () => {
             <CartsPopover/>
             <FavoritesPopover/>
             <ModeToggle/>
+            <LocaleSwitcherToggle/>
 
             {customer ? (
               <ProfilePopover/>
