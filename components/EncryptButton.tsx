@@ -76,12 +76,12 @@ const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>, className = 
             duration: 1,
             ease: "linear",
           }}
-          whileTap={{opacity: 1}} // 👈 mobile tap effect
+
           className="duration-300 w-full absolute inset-0 z-0 scale-125
              bg-gradient-to-t from-indigo-400/0 from-40%
              via-indigo-400/100 to-indigo-400/0 to-60%
              opacity-0 transition-opacity
-             group-hover:opacity-100 group-focus:opacity-100" // 👈 works on tap/focus too
+             group-hover:opacity-100"
         />
 
       </motion.div>

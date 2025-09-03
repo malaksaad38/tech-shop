@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useRouter} from "next/navigation";
+import {Lock, Mail, User} from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -38,34 +39,125 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
+    <div className="flex items-center justify-center min-h-screen px-4 bg-gradient-to-br ">
       <motion.div
-        initial={{opacity: 0, y: 20}}
+        initial={{opacity: 0, y: 40}}
         animate={{opacity: 1, y: 0}}
-        className="w-full max-w-md bg-card p-6 rounded-xl shadow"
+        transition={{duration: 0.5, ease: "easeOut"}}
+        className="w-full max-w-md bg-card p-8 rounded-2xl shadow-xl"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+        <motion.h1
+          initial={{opacity: 0, y: -10}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.2}}
+          className="text-3xl font-bold mb-6 text-center text-foreground"
+        >
+          Create Account
+        </motion.h1>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Name */}
+          <motion.div
+            initial={{opacity: 0, x: -20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{delay: 0.2}}
+            className="space-y-1"
+          >
             <Label htmlFor="name">Name</Label>
-            <Input name="name" value={form.name} onChange={handleChange} required/>
-          </div>
-          <div>
+            <div className="relative">
+              <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+              <Input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                placeholder="John Doe"
+                className="pl-9"
+              />
+            </div>
+          </motion.div>
+
+          {/* Email */}
+          <motion.div
+            initial={{opacity: 0, x: -20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{delay: 0.3}}
+            className="space-y-1"
+          >
             <Label htmlFor="email">Email</Label>
-            <Input type="email" name="email" value={form.email} onChange={handleChange} required/>
-          </div>
-          <div>
+            <div className="relative">
+              <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+              <Input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+                placeholder="you@example.com"
+                className="pl-9"
+              />
+            </div>
+          </motion.div>
+
+          {/* Password */}
+          <motion.div
+            initial={{opacity: 0, x: -20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{delay: 0.4}}
+            className="space-y-1"
+          >
             <Label htmlFor="password">Password</Label>
-            <Input type="password" name="password" value={form.password} onChange={handleChange} required/>
-          </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Registering..." : "Register"}
-          </Button>
+            <div className="relative">
+              <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground"/>
+              <Input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+                placeholder="••••••••"
+                className="pl-9"
+              />
+            </div>
+          </motion.div>
+
+          {/* Error */}
+          {error && (
+            <motion.p
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              className="text-red-500 text-sm"
+            >
+              {error}
+            </motion.p>
+          )}
+
+          {/* Submit */}
+          <motion.div
+            initial={{opacity: 0, y: 10}}
+            animate={{opacity: 1, y: 0}}
+            transition={{delay: 0.5}}
+          >
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Registering..." : "Register"}
+            </Button>
+          </motion.div>
         </form>
-        <p className="text-center text-sm mt-4 text-muted-foreground">
-          Already have an account? <a href="/login" className="text-primary hover:underline">Login</a>
-        </p>
+
+        <motion.p
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          transition={{delay: 0.6}}
+          className="text-center text-sm mt-6 text-muted-foreground"
+        >
+          Already have an account?{" "}
+          <a
+            href="/auth/login"
+            className="text-primary font-medium hover:underline"
+          >
+            Login
+          </a>
+        </motion.p>
       </motion.div>
     </div>
   );

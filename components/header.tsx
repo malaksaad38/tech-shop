@@ -129,7 +129,7 @@ const Header = () => {
           {customer ? (
             <ProfilePopover/>
           ) : (
-            <EncryptButton link={"auth/login"} label={"Login"} Icon={<UserIcon/>}/>
+            <EncryptButton link={"/auth/login"} label={"Login"} Icon={<UserIcon/>}/>
           )}
 
         </motion.div>
@@ -144,7 +144,7 @@ const Header = () => {
               <ProfilePopover/>
             ) : (
               <div className="pl-1">
-                <EncryptButton link={"auth/login"} label={"Login"} Icon={<UserIcon/>}/>
+                <EncryptButton link={"/auth/login"} label={"Login"} Icon={<UserIcon/>}/>
               </div>
             )}
             <SheetTrigger asChild>
