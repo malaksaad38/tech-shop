@@ -5,13 +5,15 @@ import {Separator} from "@/components/ui/separator";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {FacebookIcon, GithubIcon, HeartIcon, InstagramIcon, LinkedinIcon, TwitterIcon} from "lucide-react";
+import {useCheckedLocale} from "@/lib/client-utils";
 
 const Footer = () => {
+  const {t, isRTL, dir} = useCheckedLocale()
   return (
-    <footer className="bg-background text-foreground">
+    <footer dir={dir} className="bg-background text-foreground">
       {/* Professional Banner */}
       <div className="bg-primary py-2 text-center text-sm font-medium">
-        TechShop — Powering Innovation, Technology, and Growth
+        {t("TechShop — Powering Innovation, Technology, and Growth")}
       </div>
 
       {/* Footer Content */}
@@ -19,41 +21,51 @@ const Footer = () => {
         {/* About Section */}
         <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0 mb-1">
-            <CardTitle className="text-lg font-bold">TechShop</CardTitle>
+            <CardTitle className="text-lg font-bold">
+              {t('logo')}
+            </CardTitle>
           </CardHeader>
           <CardContent className="p-0 text-sm leading-snug">
-            Your one-stop destination for the latest gadgets, electronics, and accessories.
-            At TechShop, we bring technology closer to you — with pride and innovation!
+            {t('Your one-stop destination for the latest gadgets, electronics, and accessories At TechShop, we bring technology closer to you — with pride and innovation!')}
           </CardContent>
         </Card>
 
         {/* Links */}
-        <Card className="bg-transparent border-0 shadow-none text-foreground">
+        <Card dir={dir} className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0 mb-1">
-            <CardTitle className="text-lg font-bold">Quick Links</CardTitle>
+            <CardTitle className="text-lg font-bold">{t('Quick Links')}</CardTitle>
           </CardHeader>
-          <CardContent className="p-0 flex flex-col items-center md:items-start space-y-1">
+          <CardContent
+            className={`p-0 flex flex-col space-y-1 ${
+              isRTL ? "items-end" : "items-start"
+            }`}
+          >
             <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary">
-              <Link href="/">Home</Link>
+              <Link href="/">{t('home')}</Link>
             </Button>
             <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary">
-              <Link href="/products">Products</Link>
+              <Link href="/products">{t('products')}</Link>
             </Button>
             <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary">
-              <Link href="/about">About</Link>
+              <Link href="/about">{t('about')}</Link>
             </Button>
             <Button asChild variant="link" className="p-0 h-auto text-foreground hover:text-primary">
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">{t('contact')}</Link>
             </Button>
           </CardContent>
         </Card>
 
+
         {/* Social */}
         <Card className="bg-transparent border-0 shadow-none text-foreground">
           <CardHeader className="p-0 mb-1">
-            <CardTitle className="text-lg font-bold">Follow Us</CardTitle>
+            <CardTitle className="text-lg font-bold">{t('Follow Us')}</CardTitle>
           </CardHeader>
-          <CardContent className="p-0 flex justify-center md:justify-start gap-3 text-lg">
+          <CardContent
+            className={`p-0 flex gap-3 text-lg ${
+              isRTL ? "justify-end md:justify-end" : "justify-start md:justify-start"
+            }`}
+          >
             <a href="#" className="hover:text-primary transition"><InstagramIcon/></a>
             <a href="#" className="hover:text-primary transition"><TwitterIcon/></a>
             <a href="#" className="hover:text-primary transition"><FacebookIcon/></a>
@@ -61,14 +73,16 @@ const Footer = () => {
             <a href="#" className="hover:text-primary transition"><GithubIcon/></a>
           </CardContent>
         </Card>
+
+
       </div>
 
       <Separator/>
 
       {/* Bottom Bar */}
       <div className="bg-card py-3 text-center text-sm">
-        &copy; {new Date().getFullYear()} TechShop. Made with{" "}
-        <HeartIcon className="inline text-primary size-4 mx-1"/> by dragondevs.
+        &copy; {new Date().getFullYear()} {t("TechShop Made with")}{" "}
+        <HeartIcon className="inline text-primary size-4 mx-1"/> {t("by Dragondevs")}
       </div>
     </footer>
   );

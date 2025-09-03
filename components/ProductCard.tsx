@@ -54,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           whileInView={{opacity: 1, y: 0}}
           transition={{delay: 0.2, duration: 0.4}}
           viewport={{once: true}}
-          className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-white z-20"
+          className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-foreground z-20"
         >
           SALE {product.percentage}% OFF
         </motion.div>

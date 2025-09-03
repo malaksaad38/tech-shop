@@ -5,6 +5,9 @@ import {ThemeProvider} from "next-themes";
 import {AuthProvider} from "@/hooks/useAuth";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import {IntlProviderWrapper} from "@/providers/intl-provider-wrapper";
+import {getMessages} from "next-intl/server";
+import {getCheckedLocale} from "@/lib/server-utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,13 +50,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-                                     children,
-                                   }: Readonly<{
+export default async function RootLayout({
+                                           children,
+                                         }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const messages = await getMessages();
+  const {dir, locale} = await getCheckedLocale();
+
   return (
-    <html lang="en">
+    <html lang={locale} dir={dir} suppressHydrationWarning>
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
@@ -63,11 +70,13 @@ export default function RootLayout({
       enableSystem
       disableTransitionOnChange
     >
-      <AuthProvider>
-        <Header/>
-        {children}
-        <Footer/>
-      </AuthProvider>
+      <IntlProviderWrapper locale={locale} messages={messages}>
+        <AuthProvider>
+          <Header/>
+          {children}
+          <Footer/>
+        </AuthProvider>
+      </IntlProviderWrapper>
     </ThemeProvider>
     </body>
     </html>

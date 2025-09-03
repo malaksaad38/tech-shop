@@ -18,19 +18,24 @@ import {motion} from "framer-motion";
 import FavoritesPopover from "@/components/FavoritesPopover";
 import CartsPopover from "@/components/CartsPopover";
 import {useAuth} from "@/hooks/useAuth";
-import ProfilePopover from "@/components/ProfilePopover"; // ✅ custom auth hook
+import ProfilePopover from "@/components/ProfilePopover";
+import {LocaleSwitcherToggle} from "@/components/LanguageSwitcher";
+import {useCheckedLocale} from "@/lib/client-utils"; // ✅ custom auth hook
 
-const navLinks = [
-  {href: "/", label: "Home", icon: Home},
-  {href: "/products", label: "Products", icon: Package},
-  {href: "/about", label: "About", icon: Info},
-  {href: "/contact", label: "Contact", icon: Phone},
-];
 
 const Header = () => {
+  const {t} = useCheckedLocale();
   const pathname = usePathname();
   const router = useRouter();
   const {customer, logout} = useAuth(); // ✅ get both customer + logout
+
+
+  const navLinks = [
+    {href: "/", label: `${t('home')}`, icon: Home},
+    {href: "/products", label: `${t('products')}`, icon: Package},
+    {href: "/about", label: `${t('about')}`, icon: Info},
+    {href: "/contact", label: `${t('contact')}`, icon: Phone},
+  ];
 
   const navVariants = {
     hidden: {opacity: 0, y: -20},
@@ -51,6 +56,7 @@ const Header = () => {
     router.push("/auth/login");
   };
 
+
   return (
     <motion.header
       variants={navVariants}
@@ -64,7 +70,7 @@ const Header = () => {
         variants={itemVariants}
         className="bg-primary/90 text-center py-1 text-xs sm:text-sm"
       >
-        TechShop — Your Trusted Partner in Technology & Innovation
+        {t("TechShop — Your Trusted Partner in Technology & Innovation")}
       </motion.div>
 
       <div className="container mx-auto flex items-center justify-between py-2 px-3">
@@ -74,7 +80,7 @@ const Header = () => {
             href="/"
             className="flex items-center gap-1 font-extrabold text-lg sm:text-xl"
           >
-            <span className="text-primary">TechShop</span>
+            <span className="text-primary">{t('logo')}</span>
           </Link>
         </motion.div>
 
@@ -118,28 +124,30 @@ const Header = () => {
           variants={itemVariants}
           className="hidden md:flex gap-2 items-center"
         >
-          <ModeToggle/>
           <CartsPopover/>
           <FavoritesPopover/>
-          <EncryptButton link={"/admin"} label={"Admin"}/>
-          <EncryptButton link={"/special-offers"} label={"Special Offers"}
+          <ModeToggle/>
+          <LocaleSwitcherToggle/>
+
+          <EncryptButton link={"/admin"} label={t('Admin')}/>
+          <EncryptButton link={"/special-offers"} label={t("Special Offers")}
                          Icon={<HandCoinsIcon/>}/>
 
           {/* 🔥 Auth Buttons */}
           {customer ? (
             <ProfilePopover/>
           ) : (
-            <EncryptButton link={"/auth/login"} label={"Login"} Icon={<UserIcon/>}/>
+            <EncryptButton link={"/auth/login"} label={t("Login")} Icon={<UserIcon/>}/>
           )}
-
         </motion.div>
 
         {/* Mobile Menu */}
         <Sheet>
           <div className="space-x-1 md:hidden flex items-center">
-            <ModeToggle/>
             <CartsPopover/>
             <FavoritesPopover/>
+            <ModeToggle/>
+
             {customer ? (
               <ProfilePopover/>
             ) : (

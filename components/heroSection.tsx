@@ -5,8 +5,10 @@ import {CardContent} from "@/components/ui/card";
 import {LaptopIcon, SquareChevronRightIcon} from "lucide-react";
 import {SparklesCore} from "@/components/ui/sparkles";
 import {motion} from "motion/react";
+import {useCheckedLocale} from "@/lib/client-utils";
 
 export default function TechShopHeroPage() {
+  const {t} = useCheckedLocale();
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -21,7 +23,7 @@ export default function TechShopHeroPage() {
 
               className="text-4xl md:text-6xl font-extrabold flex items-center justify-center gap-2 text-white"
             >
-              Welcome to TechShop
+              {t('title')}
             </motion.h1>
 
             {/* Sparkles */}
@@ -62,16 +64,15 @@ export default function TechShopHeroPage() {
             >
               <CardContent className="translate-y-[-120px]">
                 <p className="text-lg md:text-xl text-white max-w-2xl mx-auto mb-8">
-                  Your one-stop destination for the latest gadgets, electronics, and smart tech.
-                  Explore our exclusive deals and upgrade your lifestyle today!
+                  {t('description')}
                 </p>
 
                 <div className="flex flex-col sm:flex-row sm:w-full items-center justify-center gap-4">
                   <Button asChild variant="secondary">
-                    <Link href="/products"><LaptopIcon/> Shop Now</Link>
+                    <Link href="/products"><LaptopIcon/>{t('Shop Now')}</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/about"><SquareChevronRightIcon/> Learn More</Link>
+                    <Link href="/about"><SquareChevronRightIcon/>{t('Learn More')}</Link>
                   </Button>
                 </div>
               </CardContent>
