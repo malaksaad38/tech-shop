@@ -187,6 +187,13 @@
     "noProducts": "No products found",
     "totalAmount": "Total Amount",
     "allOrders": "All Orders"
+  },
+  "ProductCard": {
+    "sale": "SALE",
+    "off": "OFF",
+    "noImage": "No Image",
+    "other": "Other",
+    "addToCart": "Add to Cart"
   }
 }
 

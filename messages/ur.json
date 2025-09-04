@@ -187,5 +187,12 @@
     "noProducts": "کوئی پروڈکٹس نہیں ملے",
     "totalAmount": "کل رقم",
     "allOrders": "تمام آرڈرز"
+  },
+  "ProductCard": {
+    "sale": "سیل",
+    "off": "چھوٹ",
+    "noImage": "کوئی تصویر نہیں",
+    "other": "دیگر",
+    "addToCart": "کارٹ میں شامل کریں"
   }
 }

@@ -2,17 +2,17 @@
 import React from "react";
 import Link from "next/link";
 import {ImageIcon, ShoppingCart} from "lucide-react";
-import {Button} from "@/components/ui/button";
 import {motion} from "framer-motion";
 import {useCart} from "@/store/useCart";
 import FavoriteButton from "@/components/FavoriteButton";
+import {Button} from "@/components/ui/button";
+import {useTranslations} from "next-intl";
 
 interface ProductCardProps {
   product: any;
   showFavorite?: boolean;
   showBuyNow?: boolean;
 }
-
 
 const formatPrice = (price: number) => price.toFixed(2);
 
@@ -21,12 +21,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
                                                    showFavorite = true,
                                                    showBuyNow = true,
                                                  }) => {
+  const t = useTranslations("ProductCard");
   const hasDiscount = product.special && product.percentage > 0;
   const discounted = hasDiscount
     ? product.price * (1 - product.percentage / 100)
     : product.price;
 
-  // card entrance animation
   const cardVariants = {
     hidden: {opacity: 0, y: 40, scale: 0.95},
     visible: {opacity: 1, y: 0, scale: 1},
@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           viewport={{once: true}}
           className="absolute -right-12 top-5 rotate-45 text-xs font-bold px-10 py-1 shadow bg-primary text-foreground z-20"
         >
-          SALE {product.percentage}% OFF
+          {t("sale")} {product.percentage}% {t("off")}
         </motion.div>
       )}
 
@@ -79,7 +79,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           />
         ) : (
           <div className="flex justify-center items-center h-48 flex-col">
-            <ImageIcon className="size-20"/> No Image
+            <ImageIcon className="size-20"/> {t("noImage")}
           </div>
         )}
       </motion.div>
@@ -107,7 +107,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               : product.category}
           </p>
         ) : (
-          <p className="text-sm text-muted-foreground mt-1">Other</p>
+          <p className="text-sm text-muted-foreground mt-1">{t("other")}</p>
         )}
 
         {/* Price */}
@@ -125,7 +125,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Footer */}
         <motion.div className="flex justify-between gap-3 mt-4">
           <Button
-            variant="default"
             className="flex-1"
             onClick={() =>
               addToCart({
@@ -137,7 +136,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             }
           >
             <ShoppingCart className="w-4 h-4"/>
-            Add to Cart
+            {t("addToCart")}
           </Button>
 
           {showFavorite && (
@@ -150,7 +149,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               }}
             />
           )}
-
         </motion.div>
       </motion.div>
     </motion.div>

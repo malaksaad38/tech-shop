@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import {HandCoinsIcon, Home, Info, Menu, Package, Phone, UserIcon,} from "lucide-react";
+import {HandCoinsIcon, Home, Info, LockIcon, LogInIcon, Menu, Package, Phone, UserIcon,} from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -13,14 +13,14 @@ import {Button} from "@/components/ui/button";
 import {usePathname, useRouter} from "next/navigation";
 import {cn} from "@/lib/utils";
 import {ModeToggle} from "@/components/ModeToggle";
-import EncryptButton from "@/components/EncryptButton";
 import {motion} from "framer-motion";
 import FavoritesPopover from "@/components/FavoritesPopover";
 import CartsPopover from "@/components/CartsPopover";
 import {useAuth} from "@/hooks/useAuth";
 import ProfilePopover from "@/components/ProfilePopover";
 import {LocaleSwitcherToggle} from "@/components/LanguageSwitcher";
-import {useCheckedLocale} from "@/lib/client-utils"; // ✅ custom auth hook
+import {useCheckedLocale} from "@/lib/client-utils";
+import GradientButton from "@/components/GradientButton"; // ✅ custom auth hook
 
 
 const Header = () => {
@@ -86,7 +86,7 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-2 font-medium">
+          <NavigationMenuList className="gap-2 font-medium" dir={dir}>
             <motion.div
               variants={navVariants}
               initial="hidden"
@@ -129,25 +129,30 @@ const Header = () => {
           <ModeToggle/>
           <LocaleSwitcherToggle/>
 
-          <EncryptButton link={"/admin"} label={t('admin')}/>
-          <EncryptButton link={"/special-offers"} label={t("offers")}
-                         Icon={<HandCoinsIcon/>}/>
+          <GradientButton className={"bg-rose-700"} link={"/admin"} icon={<LockIcon/>} label={t('admin')}/>
+          <GradientButton link={"/special-offers"} label={t('offers')} icon={<HandCoinsIcon/>}/>
 
           {/* 🔥 Auth Buttons */}
           {customer ? (
             <ProfilePopover/>
           ) : (
-            <EncryptButton link={"/auth/login"} label={t("login")} Icon={<UserIcon/>}/>
+            <GradientButton link={"/auth/login"} label={t("login")} icon={<UserIcon/>}/>
           )}
         </motion.div>
 
         {/* Mobile Menu */}
         <Sheet>
           <div className="space-x-1 md:hidden flex items-center">
+            <LocaleSwitcherToggle/>
+            <ModeToggle/>
             <CartsPopover/>
             <FavoritesPopover/>
-            <ModeToggle/>
-            <LocaleSwitcherToggle/>
+            {customer ? (
+              <ProfilePopover/>
+            ) : (
+              <Button variant={"outline"} size={"icon"}><Link href={"/auth/login"}> <LogInIcon/></Link></Button>
+            )}
+
 
             <SheetTrigger asChild>
               <Button
@@ -191,15 +196,8 @@ const Header = () => {
                 variants={itemVariants}
                 className="flex flex-col gap-2 mt-4"
               >
-                <EncryptButton link={"/admin"} label={t('admin')}/>
-                <EncryptButton link={"/special-offers"} label={t("offers")}
-                               Icon={<HandCoinsIcon/>}/>
-
-                {customer ? (
-                  <ProfilePopover/>
-                ) : (
-                  <EncryptButton link={"/auth/login"} label={t("login")} Icon={<UserIcon/>}/>
-                )}
+                <GradientButton className={"bg-rose-700"} link={"/admin"} icon={<LockIcon/>} label={t('admin')}/>
+                <GradientButton link={"/special-offers"} label={t('offers')} icon={<HandCoinsIcon/>}/>
 
               </motion.div>
             </motion.nav>

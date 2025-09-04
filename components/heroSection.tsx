@@ -1,11 +1,11 @@
 "use client";
-import Link from "next/link";
-import {Button} from "@/components/ui/button";
 import {CardContent} from "@/components/ui/card";
 import {LaptopIcon, SquareChevronRightIcon} from "lucide-react";
 import {SparklesCore} from "@/components/ui/sparkles";
 import {motion} from "motion/react";
 import {useCheckedLocale} from "@/lib/client-utils";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
 
 export default function TechShopHeroPage() {
   const {t} = useCheckedLocale();

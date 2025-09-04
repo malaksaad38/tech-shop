@@ -1,36 +1,44 @@
-"use client"
-import {useRef, useState} from "react";
+"use client";
+
+import {ReactNode, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
-import {LockIcon} from "lucide-react";
-
+import {cn} from "@/lib/utils";
 
 const CYCLES_PER_LETTER = 2;
 const SHUFFLE_TIME = 50;
-
 const CHARS = "!@#$%^&*():{};|,.<>/?";
 
-const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>, className = ""}) => {
-  const intervalRef = useRef(null);
-  const router = useRouter()
-  const [text, setText] = useState(label);
+interface EncryptButtonProps {
+  link?: string;
+  label: string;
+  icon?: ReactNode;
+  className?: string;
+}
 
+export default function EncryptButton({
+                                        link = "/",
+                                        label,
+                                        icon,
+                                        className,
+                                      }: EncryptButtonProps) {
+  const router = useRouter();
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const [text, setText] = useState(label);
 
   const scramble = () => {
     let pos = 0;
 
     intervalRef.current = setInterval(() => {
-      const scrambled = label.split("")
+      const scrambled = label
+        .split("")
         .map((char, index) => {
           if (pos / CYCLES_PER_LETTER > index) {
             return char;
           }
-
           const randomCharIndex = Math.floor(Math.random() * CHARS.length);
-          const randomChar = CHARS[randomCharIndex];
-
-          return randomChar;
+          return CHARS[randomCharIndex];
         })
         .join("");
 
@@ -44,29 +52,32 @@ const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>, className = 
   };
 
   const stopScramble = () => {
-    clearInterval(intervalRef.current || undefined);
-
+    if (intervalRef.current) clearInterval(intervalRef.current);
     setText(label);
   };
 
   return (
-    <Button onClick={() => router.push(link)}
-            className={"p-0 m-0 bg-primary text-foreground hover:bg-background shadow shadow-accent-foreground/35"}>
+    <Button
+      onClick={() => router.push(link)}
+      className={cn(
+        "relative overflow-hidden group text-white hover:bg-gray-800",
+        className
+      )}
+    >
+      {/* Content wrapper */}
       <motion.div
-        whileHover={{
-          scale: 1.025,
-        }}
-        whileTap={{
-          scale: 0.975,
-        }}
+        whileHover={{scale: 1.025}}
+        whileTap={{scale: 0.975}}
         onMouseEnter={scramble}
         onMouseLeave={stopScramble}
-        className=" flex justify-center items-center w-full group relative overflow-hidden rounded-lg  md:px-4 py-2 px-3 transition-colors"
+        className="relative flex items-center gap-2 px-3 py-2 md:px-4 rounded-lg"
       >
-        <div className="relative z-10 flex items-center gap-2 ">
-          {Icon}
-          <span>{text}</span>
-        </div>
+        <span className="relative z-10 flex items-center gap-2">
+          {icon}
+          {text}
+        </span>
+
+        {/* gradient animation */}
         <motion.span
           initial={{y: "100%"}}
           animate={{y: "-100%"}}
@@ -76,18 +87,13 @@ const EncryptButton = ({link = "/", label = "", Icon = <LockIcon/>, className = 
             duration: 1,
             ease: "linear",
           }}
-
-          className="duration-300 w-full absolute inset-0 z-0 scale-125
-             bg-gradient-to-t from-indigo-400/0 from-40%
-             via-indigo-400/100 to-indigo-400/0 to-60%
-             opacity-0 transition-opacity
-             group-hover:opacity-100"
+          className="absolute inset-0 z-0 w-full scale-125
+            bg-gradient-to-t from-indigo-400/0 from-40%
+            via-indigo-400/100 to-indigo-400/0 to-60%
+            opacity-0 transition-opacity duration-300
+            group-hover:opacity-100"
         />
-
       </motion.div>
     </Button>
-
   );
-};
-
-export default EncryptButton;
+}

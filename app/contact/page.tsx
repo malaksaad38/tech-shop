@@ -30,7 +30,7 @@ const fadeUp = {
 
 const Contact = () => {
   const [form, setForm] = useState({name: "", email: "", message: ""})
-  const {t} = useCheckedLocale()
+  const {t, dir} = useCheckedLocale()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -157,7 +157,7 @@ const Contact = () => {
         <motion.div variants={fadeUp} className="mt-6 text-center">
           <Button asChild variant="default" className="shadow-md hover:shadow-lg">
             <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4"/>
+              <ArrowLeft/>
               {t("backHome")}
             </Link>
           </Button>

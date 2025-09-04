@@ -35,7 +35,7 @@ const ProfilePopover = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="flex items-center gap-2 hover:bg-accent transition-colors px-3"
+          className="flex items-center gap-2 hover:bg-accent rounded-full transition-colors px-3"
           aria-label={t("openMenu")}
         >
           <Avatar className="h-7 w-7">

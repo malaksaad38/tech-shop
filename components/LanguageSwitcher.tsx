@@ -3,6 +3,7 @@
 import {useRouter} from 'next/navigation'
 import {useEffect, useState} from 'react'
 import {Globe} from 'lucide-react'
+import {Button} from "@/components/ui/button";
 
 export function LocaleSwitcherToggle() {
   const router = useRouter()
@@ -21,10 +22,11 @@ export function LocaleSwitcherToggle() {
   }
 
   return (
-    <button
-      onClick={toggleLocale}
-      aria-label="Toggle language"
-      className="group relative hover:scale-105 transition-all min-w-8 flex justify-center items-center size-8 rounded-full md:border overflow-hidden"
+    <Button variant={'outline'}
+            size={"icon"}
+            onClick={toggleLocale}
+            aria-label="Toggle language"
+            className="group relative hover:scale-105 transition-all min-w-8 flex justify-center items-center  md:border overflow-hidden"
     >
       {/* Globe icon (visible by default, hidden on hover) */}
       <span className="block group-hover:hidden">
@@ -39,7 +41,7 @@ export function LocaleSwitcherToggle() {
       <span className="sr-only">
 		    Toggle locale to {currentLocale === 'en' ? 'Urdu' : 'English'}
 		  </span>
-    </button>
+    </Button>
 
   )
 }
