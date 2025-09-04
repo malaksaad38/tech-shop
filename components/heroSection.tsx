@@ -20,7 +20,7 @@ export default function TechShopHeroPage() {
               initial={{opacity: 0, y: -60}}
               animate={{opacity: 1, y: 0}}
               transition={{duration: 0.8, ease: "easeOut"}}
-              className="text-4xl md:text-6xl font-extrabold flex items-center justify-center gap-2 text-white"
+              className="px-4 text-4xl md:text-6xl font-extrabold flex items-center justify-center gap-2 text-white"
             >
               {t("title")}
             </motion.h1>
