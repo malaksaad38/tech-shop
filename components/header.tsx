@@ -24,7 +24,7 @@ import GradientButton from "@/components/GradientButton"; // ✅ custom auth hoo
 
 
 const Header = () => {
-  const {t, dir} = useCheckedLocale();
+  const {t, isRTL} = useCheckedLocale();
   const pathname = usePathname();
   const router = useRouter();
   const {customer, logout} = useAuth(); // ✅ get both customer + logout
@@ -86,7 +86,7 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList className="gap-2 font-medium" dir={dir}>
+          <NavigationMenuList className="gap-2 font-medium">
             <motion.div
               variants={navVariants}
               initial="hidden"
@@ -165,7 +165,7 @@ const Header = () => {
             </SheetTrigger>
           </div>
 
-          <SheetContent side="left" className="p-4 backdrop-blur-md">
+          <SheetContent side={isRTL ? "right" : "left"} className="p-4 backdrop-blur-md">
             <motion.nav
               variants={navVariants}
               initial="hidden"

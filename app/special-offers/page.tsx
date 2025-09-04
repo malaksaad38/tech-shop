@@ -65,7 +65,7 @@ export default async function SpecialOffer() {
       <div className="mt-8 sm:mt-10 text-center">
         <Button asChild className="px-4 sm:px-6 py-2 text-sm sm:text-base">
           <Link href="/" className="flex items-center justify-center">
-            <ArrowLeft className="mr-2 h-4 w-4 sm:h-5 sm:w-5"/>
+            <ArrowLeft/>
             {t("backHome")}
           </Link>
         </Button>
