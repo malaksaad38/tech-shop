@@ -7,7 +7,18 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
 import {Card, CardContent} from "@/components/ui/card";
-import {ArrowDownAZ, ArrowUpAZ, DollarSign, Filter, Loader2, PlusCircle, RefreshCw, Search, Tag,} from "lucide-react";
+import {
+  AlertCircle,
+  ArrowDownAZ,
+  ArrowUpAZ,
+  DollarSign,
+  Filter,
+  Loader2,
+  PlusCircle,
+  RefreshCw,
+  Search,
+  Tag,
+} from "lucide-react";
 import {useCheckedLocale} from "@/lib/client-utils";
 
 // Product type from MongoDB
@@ -42,6 +53,8 @@ const Products = () => {
   const [sortBy, setSortBy] = useState("featured");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [visible, setVisible] = useState(8);
+  const [error, setError] = useState<string | null>(null);
+
 
   // Fetch products + categories
   useEffect(() => {
@@ -49,46 +62,44 @@ const Products = () => {
 
     const fetchData = async () => {
       setLoading(true);
+      setError(null); // reset error before fetching
       try {
         const [prodRes, catRes] = await Promise.allSettled([
           fetch("/api/products").then((res) => {
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            if (!res.ok) throw new Error(`Products fetch failed: ${res.status}`);
             return res.json();
           }),
           fetch("/api/categories").then((res) => {
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            if (!res.ok) throw new Error(`Categories fetch failed: ${res.status}`);
             return res.json();
           }),
         ]);
 
-        let products: ProductType[] = [];
-        let categories: CategoryType[] = [];
-
         if (prodRes.status === "fulfilled") {
-          products = prodRes.value;
+          const products = prodRes.value;
           setProducts(products);
 
           if (products.length > 0) {
-            const prices = products.map((p) => p.price);
-            const min = Math.floor(Math.min(...prices));
-            const max = Math.ceil(Math.max(...prices));
-            if (isMounted) {
-              setMinPrice(min);
-              setMaxPrice(max);
-            }
+            const prices = products.map((p: ProductType) => p.price);
+            setMinPrice(Math.floor(Math.min(...prices)));
+            setMaxPrice(Math.ceil(Math.max(...prices)));
           }
+        } else {
+          console.error("❌ Products fetch failed:", prodRes.reason);
+          setError("Failed to load products. Please try again.");
         }
 
         if (catRes.status === "fulfilled") {
-          categories = catRes.value;
-          setCategories(categories);
+          setCategories(catRes.value);
+        } else {
+          console.error("❌ Categories fetch failed:", catRes.reason);
+          // categories failing is not fatal, so we won’t setError here
         }
       } catch (err) {
         console.error("🚨 Unexpected error in fetchData:", err);
+        setError("Something went wrong while loading data.");
       } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
@@ -302,8 +313,8 @@ const Products = () => {
         </motion.div>
       )}
 
-      {/* Empty state */}
-      {!loading && filtered.length === 0 && (
+
+      {!loading && error && (
         <motion.div
           className="container mx-auto px-4 pb-16"
           initial={{opacity: 0, y: 40}}
@@ -311,9 +322,44 @@ const Products = () => {
           transition={{duration: 0.6}}
         >
           <Card>
-            <CardContent className="flex justify-center items-center flex-col text-center p-10">
-              <p className="text-lg font-semibold ">
-                No products match your filters.
+            <CardContent className="flex flex-col items-center justify-center text-center p-12 space-y-4">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-red-100">
+                <AlertCircle className="w-8 h-8 text-red-600"/>
+              </div>
+              <h2 className="text-xl font-bold text-red-600">
+                {t("errorState_title")}
+              </h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                {t("errorState_message")}
+              </p>
+              <Button
+                onClick={() => window.location.reload()}
+                variant="destructive"
+                size="lg"
+                className="flex items-center gap-2"
+              >
+                <RefreshCw className="w-5 h-5"/> {t("errorState_retryButton")}
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
+      {!loading && !error && filtered.length === 0 && (
+        <motion.div
+          className="container mx-auto px-4 pb-16"
+          initial={{opacity: 0, y: 40}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.6}}
+        >
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center text-center p-12 space-y-4">
+              <div className="flex items-center justify-center w-16 h-16 rounded-full bg-muted">
+                <Search className="w-8 h-8 text-muted-foreground"/>
+              </div>
+              <h2 className="text-xl font-bold">{t("emptyState_title")}</h2>
+              <p className="text-sm text-muted-foreground max-w-md">
+                {t("emptyState_message")}
               </p>
               <Button
                 onClick={() => {
@@ -322,14 +368,18 @@ const Products = () => {
                   setSortBy("featured");
                   setVisible(8);
                 }}
-                className="mt-4 bg-primary hover:bg-primary flex items-center gap-2"
+                variant="default"
+                size="lg"
+                className="flex items-center gap-2"
               >
-                <RefreshCw className="w-5 h-5"/> Reset Filters
+                <RefreshCw className="w-5 h-5"/> {t("emptyState_resetButton")}
               </Button>
             </CardContent>
           </Card>
         </motion.div>
       )}
+
+
     </div>
   );
 };

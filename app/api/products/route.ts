@@ -3,11 +3,13 @@ import {NextRequest, NextResponse} from "next/server";
 import {connectDB} from "@/lib/mongodb";
 import Product from "@/models/Product";
 import {revalidatePath} from "next/cache";
+import Category from "@/models/Category";
 
 // Getting all item from the target schema
 export async function GET() {
   try {
     await connectDB();
+    await Category.find();
     const products = await Product.find()
       .populate("category")
       .sort({_id: -1});

@@ -1,11 +1,10 @@
 import React from 'react';
 
-const MyComponent = () => {
+const ProductPage = () => {
   return (
     <div>
-
     </div>
   );
 };
 
-export default MyComponent;
+export default ProductPage;
