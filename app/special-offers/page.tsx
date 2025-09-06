@@ -13,7 +13,7 @@ export default async function SpecialOffer() {
   await connectDB()
   const offerProducts = await Product.find({special: true})
     .populate("category")
-    .sort({createdAt: -1, _id: -1})
+    .sort({_id: -1})
     .limit(12)
     .lean()
 
