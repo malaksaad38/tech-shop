@@ -7,10 +7,12 @@ import {Button} from "@/components/ui/button"
 import {Badge} from "@/components/ui/badge"
 import {ArrowLeft, Tag} from "lucide-react"
 import {getCheckedLocale} from "@/lib/server-utils";
+import Category from "@/models/Category";
 
 export default async function SpecialOffer() {
   // Connect to DB & fetch products with special = true
   await connectDB()
+  await Category.find()
   const offerProducts = await Product.find({special: true})
     .populate("category")
     .sort({_id: -1})
