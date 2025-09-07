@@ -1,6 +1,7 @@
 "use client"
 import React, {useEffect, useRef, useState} from 'react';
 import {motion} from "motion/react"
+import ElectricBorder from "@/components/ElectricBorder";
 
 const Practice = () => {
   const [light, setLight] = useState(false);
@@ -35,11 +36,24 @@ const Practice = () => {
   }
 
   return (
-    <div>
+    <div className={"min-w-32 min-h-32 m-10 mx-10"}>
+      <ElectricBorder
+        color="#7df9ff"
+        speed={0.5}
+        chaos={0.5}
+        thickness={2}
+        style={{borderRadius: 16}}
+      >
+        <div className={"w-32 h-32 m-10 mx-10"}>
+          <p style={{margin: '6px 0 0', opacity: 0.8}}>
+            A glowing, animated border wrapper.
+          </p>
+        </div>
+      </ElectricBorder>
       <div className="h-screen">
         <motion.div ref={constraintsRef} style={constraints}>
           <motion.div
-        
+
             drag
             dragConstraints={constraintsRef}
             dragElastic={0.2}

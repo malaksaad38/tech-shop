@@ -7,6 +7,7 @@ import {Heart, X} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
+import ClickSpark from "@/components/ClickSpark";
 
 const FavoritesPopover = () => {
   const {favorites, toggleFavorite, clearFavorites} = useFavorites();
@@ -14,7 +15,9 @@ const FavoritesPopover = () => {
 
   return (
     <Popover>
+
       <PopoverTrigger asChild>
+
         <Button
           size="icon"
           variant="outline"
@@ -36,66 +39,75 @@ const FavoritesPopover = () => {
         align="end"
         className="w-80 p-3 flex flex-col gap-3"
       >
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="font-bold text-lg">{t("title")}</h3>
-          {favorites.length > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs text-red-500 hover:text-red-600"
-              onClick={clearFavorites}
-            >
-              {t("clear")}
-            </Button>
-          )}
-        </div>
-
-        {favorites.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            {t("empty")}
-          </p>
-        ) : (
-          <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
-            {favorites.map((item) => (
-              <div
-                key={item._id}
-                className="flex items-center gap-3 border rounded-lg p-2 relative"
+        <ClickSpark
+          sparkColor='blue'
+          sparkSize={10}
+          sparkRadius={30}
+          sparkCount={8}
+          duration={800}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-bold text-lg">{t("title")}</h3>
+            {favorites.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs text-red-500 hover:text-red-600"
+                onClick={clearFavorites}
               >
-                {item.image ? (
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-12 h-12 rounded object-cover"
-                  />
-                ) : (
-                  <div className="w-12 h-12 bg-muted flex items-center justify-center rounded">
-                    <Heart className="w-5 h-5 text-muted-foreground"/>
-                  </div>
-                )}
-
-                <div className="flex-1">
-                  <Link
-                    href={`/products/${item._id}`}
-                    className="text-sm font-medium hover:underline"
-                  >
-                    {item.name}
-                  </Link>
-                  <p className="text-xs text-muted-foreground">
-                    ${item.price.toFixed(2)}
-                  </p>
-                </div>
-
-                <button
-                  onClick={() => toggleFavorite(item)}
-                  className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted"
-                  aria-label={t("remove")}
-                >
-                  <X className="w-4 h-4 text-muted-foreground"/>
-                </button>
-              </div>
-            ))}
+                {t("clear")}
+              </Button>
+            )}
           </div>
-        )}
+
+          {favorites.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              {t("empty")}
+            </p>
+          ) : (
+            <div className="flex flex-col gap-3 max-h-64 overflow-y-auto">
+              {favorites.map((item) => (
+                <div
+                  key={item._id}
+                  className="flex items-center gap-3 border rounded-lg p-2 relative"
+                >
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-12 h-12 rounded object-cover"
+                    />
+                  ) : (
+                    <div className="w-12 h-12 bg-muted flex items-center justify-center rounded">
+                      <Heart className="w-5 h-5 text-muted-foreground"/>
+                    </div>
+                  )}
+
+                  <div className="flex-1">
+                    <Link
+                      href={`/products/${item._id}`}
+                      className="text-sm font-medium hover:underline"
+                    >
+                      {item.name}
+                    </Link>
+                    <p className="text-xs text-muted-foreground">
+                      ${item.price.toFixed(2)}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => toggleFavorite(item)}
+                    className="absolute top-2 right-2 p-1 rounded-full hover:bg-muted"
+                    aria-label={t("remove")}
+                  >
+                    <X className="w-4 h-4 text-muted-foreground"/>
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </ClickSpark>
+
       </PopoverContent>
     </Popover>
   );

@@ -23,11 +23,15 @@ export default async function SpecialOffer() {
 
   return (
     <div className="min-h-screen bg-muted/30 py-6 px-3 sm:py-10 sm:px-4">
+
       {/* TechShop Special Deals Banner */}
       <div className="container mx-auto mb-8 sm:mb-10">
-        <Card className="bg-primary/90 text-foreground shadow-lg backdrop-blur-md">
+
+        <Card className="bg-primary/90 text-foreground shadow-lg ">
+
           <CardHeader className="text-center px-4 sm:px-8">
-            <CardTitle className="flex flex-wrap items-center justify-center gap-2 text-2xl sm:text-3xl font-extrabold">
+            <CardTitle
+              className="flex flex-wrap items-center justify-center gap-2 text-2xl sm:text-3xl font-extrabold">
               <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
               {t("specialDeals")}
               <Tag className="h-6 w-6 sm:h-7 sm:w-7"/>
@@ -44,7 +48,9 @@ export default async function SpecialOffer() {
               {t("limitedTime")}
             </Badge>
           </CardContent>
+
         </Card>
+
       </div>
 
       {/* Product Grid */}

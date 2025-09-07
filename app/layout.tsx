@@ -8,6 +8,7 @@ import Footer from "@/components/footer";
 import {IntlProviderWrapper} from "@/providers/intl-provider-wrapper";
 import {getMessages} from "next-intl/server";
 import {getCheckedLocale} from "@/lib/server-utils";
+import ClickSpark from "@/components/ClickSpark";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -79,9 +80,17 @@ export default async function RootLayout({
     >
       <IntlProviderWrapper locale={locale} messages={messages}>
         <AuthProvider>
-          <Header/>
-          {children}
-          <Footer/>
+          <ClickSpark
+            sparkColor='blue'
+            sparkSize={10}
+            sparkRadius={30}
+            sparkCount={8}
+            duration={800}
+          >
+            <Header/>
+            {children}
+            <Footer/>
+          </ClickSpark>
         </AuthProvider>
       </IntlProviderWrapper>
     </ThemeProvider>
