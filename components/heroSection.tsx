@@ -17,11 +17,11 @@ export default function TechShopHeroPage() {
       <section className="relative bg-background">
         <div className="relative mx-auto text-center">
           <ClickSpark
-            sparkColor='blue'
+            sparkColor='cyan'
             sparkSize={10}
-            sparkRadius={30}
-            sparkCount={8}
-            duration={800}
+            sparkRadius={25}
+            sparkCount={20}
+            duration={500}
           >
             <div className="h-[88vh] w-full bg-black flex flex-col items-center justify-center overflow-hidden">
 

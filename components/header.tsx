@@ -68,11 +68,11 @@ const Header = () => {
       className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b shadow-sm"
     >
       <ClickSpark
-        sparkColor='blue'
+        sparkColor="lime"
         sparkSize={10}
-        sparkRadius={30}
-        sparkCount={8}
-        duration={800}
+        sparkRadius={25}
+        sparkCount={20}
+        duration={500}
       >
         {/* Top banner */}
         <motion.div
@@ -97,7 +97,7 @@ const Header = () => {
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList className="gap-2 font-medium" dir={dir}>
               <motion.div
-                
+
                 variants={navVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -176,41 +176,51 @@ const Header = () => {
             </div>
 
             <SheetContent side={isRTL ? "right" : "left"} className="p-4 backdrop-blur-md">
-              <motion.nav
-                variants={navVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{once: true, amount: 0.3}}
-                className="flex flex-col gap-3 mt-8"
+              <ClickSpark
+                sparkColor="lime"
+                sparkSize={10}
+                sparkRadius={25}
+                sparkCount={20}
+                duration={500}
               >
-                {navLinks.map(({href, label, icon: Icon}) => (
-                  <motion.div key={href} variants={itemVariants}>
-                    <SheetClose asChild>
-                      <Link
-                        href={href}
-                        className={cn(
-                          "flex items-center gap-2 text-base transition-colors",
-                          pathname === href
-                            ? "text-primary underline"
-                            : "text-foreground hover:text-primary"
-                        )}
-                      >
-                        <Icon size={16}/> {label}
-                      </Link>
-                    </SheetClose>
-                  </motion.div>
-                ))}
-
-                {/* 🔥 Mobile Auth Toggle */}
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-col gap-2 mt-4"
+                <motion.nav
+                  variants={navVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{once: true, amount: 0.3}}
+                  className="flex flex-col gap-3 mt-8"
                 >
-                  <GradientButton className={"bg-rose-700"} link={"/admin"} icon={<LockIcon/>} label={t('admin')}/>
-                  <GradientButton link={"/special-offers"} label={t('offers')} icon={<HandCoinsIcon/>}/>
+                  {navLinks.map(({href, label, icon: Icon}) => (
+                    <motion.div key={href} variants={itemVariants}>
+                      <SheetClose asChild>
+                        <Link
+                          href={href}
+                          className={cn(
+                            "flex items-center gap-2 text-base transition-colors",
+                            pathname === href
+                              ? "text-primary underline"
+                              : "text-foreground hover:text-primary"
+                          )}
+                        >
+                          <Icon size={16}/> {label}
+                        </Link>
+                      </SheetClose>
+                    </motion.div>
+                  ))}
 
-                </motion.div>
-              </motion.nav>
+                  {/* 🔥 Mobile Auth Toggle */}
+                  <motion.div
+                    variants={itemVariants}
+                    className="flex flex-col gap-2 mt-4"
+                  >
+                    <GradientButton className={"bg-rose-700 text-center"} link={"/admin"} icon={<LockIcon/>}
+                                    label={t('admin')}/>
+                    <GradientButton link={"/special-offers"} label={t('offers')} icon={<HandCoinsIcon/>}/>
+
+                  </motion.div>
+                </motion.nav>
+              </ClickSpark>
+
             </SheetContent>
           </Sheet>
         </div>

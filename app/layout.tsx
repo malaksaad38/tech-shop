@@ -66,7 +66,6 @@ export default async function RootLayout({
 
   const messages = await getMessages();
   const {dir, locale} = await getCheckedLocale();
-
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
     <body
@@ -81,11 +80,11 @@ export default async function RootLayout({
       <IntlProviderWrapper locale={locale} messages={messages}>
         <AuthProvider>
           <ClickSpark
-            sparkColor='blue'
+            sparkColor="blue"
             sparkSize={10}
-            sparkRadius={30}
-            sparkCount={8}
-            duration={800}
+            sparkRadius={25}
+            sparkCount={20}
+            duration={500}
           >
             <Header/>
             {children}

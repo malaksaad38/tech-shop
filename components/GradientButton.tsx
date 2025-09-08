@@ -41,16 +41,17 @@ export default function GradientButton({
 
       {/* content wrapper */}
       <span className="relative z-10 flex items-center gap-2">
-        {icon}
-        {label}
+        {icon} {label}
       </span>
     </>
   );
 
   if (link) {
     return (
+
       <Button
         asChild
+        onClick={onClick}
         className={cn(
           "relative overflow-hidden group text-white hover:bg-gray-800",
           className
@@ -61,15 +62,4 @@ export default function GradientButton({
     );
   }
 
-  return (
-    <Button
-      onClick={onClick}
-      className={cn(
-        "relative overflow-hidden group text-white hover:bg-gray-800",
-        className
-      )}
-    >
-      {content}
-    </Button>
-  );
 }

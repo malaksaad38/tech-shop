@@ -50,11 +50,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       className="relative rounded-3xl cursor-pointer bg-background shadow-sm border flex flex-col h-full overflow-hidden hover:border hover:border-primary"
     >
       <ClickSpark
-        sparkColor='blue'
+        sparkColor="aqua"
         sparkSize={10}
-        sparkRadius={30}
-        sparkCount={8}
-        duration={800}
+        sparkRadius={25}
+        sparkCount={20}
+        duration={500}
       >
         {/* SALE Ribbon */}
         {hasDiscount && (
