@@ -40,7 +40,7 @@ export default function CustomersPage() {
 
   return (
     <AdminControl>
-      <div className="container mx-auto py-6 px-4">
+      <div className="container mx-auto py-6 px-4 pl-8">
         <h1 className="flex items-center gap-2 text-2xl font-bold mb-4">
           <User className="w-6 h-6 text-primary"/>
           Customers
@@ -52,7 +52,7 @@ export default function CustomersPage() {
         ) : (<div>{customers.length === 0 ? (
           <p>No customers found.</p>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ">
             {customers.map((customer, index) => (
               <Card key={customer.id ?? index} className="rounded-2xl shadow-sm">
                 <CardContent className="p-4 space-y-2">

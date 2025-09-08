@@ -36,7 +36,7 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen bg-background">
       {/* Mobile Hamburger Button */}
       {!sidebarOpen && (
         <div className="md:hidden fixed inset-y-0 left-0 z-40 w-1">
@@ -71,12 +71,12 @@ export default function AdminLayout({children}: { children: React.ReactNode }) {
         {/* Sidebar Content */}
         <div className="relative z-40 flex flex-col w-full h-full">
           {/* Logo/Header */}
-          <div className="px-6 py-6 text-lg font-bold flex items-center gap-2 border-b bg-background mt-[81px] md:mt-0">
+          <div className="px-6 py-4 text-lg font-bold flex items-center gap-2 border-b bg-background mt-[81px] md:mt-0">
             <HomeIcon className="w-5 h-5 text-primary"/> Admin Panel
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-1">
+          <nav className="flex-1 px-4 py-4 space-y-1">
             <Link href="/admin" onClick={() => setSidebarOpen(false)}>
               <Button variant="ghost" className="justify-start w-full flex items-center gap-2">
                 <HomeIcon className="w-4 h-4"/> Dashboard

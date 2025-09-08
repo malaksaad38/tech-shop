@@ -79,7 +79,7 @@ const AdminProductsComponent = () => {
   }, [search])
 
   return (
-    <div className="container mx-auto py-6 px-3 md:px-0">
+    <div className="container mx-auto  px-3 md:px-0 pl-8">
       <Card>
         <CardHeader className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <CardTitle className="text-lg md:text-xl">Manage Products</CardTitle>
