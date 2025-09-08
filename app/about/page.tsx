@@ -4,7 +4,7 @@ import React from "react"
 import Link from "next/link"
 import {Card, CardContent} from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
-import {BookOpen, Cpu, Target} from "lucide-react"
+import {ArrowLeft, BookOpen, Cpu, Target} from "lucide-react"
 import {useCheckedLocale} from "@/lib/client-utils";
 
 
@@ -63,7 +63,8 @@ const About = () => {
         {/* Back to Home */}
 
         <Button asChild size="lg" className="shadow-md hover:shadow-lg">
-          <Link href="/">{t("backHome")}</Link>
+          <Link href="/"> <ArrowLeft/>
+            {t("backHome")}</Link>
         </Button>
       </div>
     </div>

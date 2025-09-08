@@ -9,6 +9,7 @@ import {IntlProviderWrapper} from "@/providers/intl-provider-wrapper";
 import {getMessages} from "next-intl/server";
 import {getCheckedLocale} from "@/lib/server-utils";
 import ClickSpark from "@/components/ClickSpark";
+import TargetCursor from "@/components/TargetCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -79,6 +80,10 @@ export default async function RootLayout({
     >
       <IntlProviderWrapper locale={locale} messages={messages}>
         <AuthProvider>
+          <TargetCursor
+            spinDuration={3}
+            hideDefaultCursor={true}
+          />
           <ClickSpark
             sparkColor="blue"
             sparkSize={10}

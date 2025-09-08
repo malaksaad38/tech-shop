@@ -89,7 +89,7 @@ const Header = () => {
               href="/"
               className="flex items-center gap-1 font-extrabold text-lg sm:text-xl"
             >
-              <span className="text-primary">{t('logo')}</span>
+              <span className="text-primary cursor-target">{t('logo')}</span>
             </Link>
           </motion.div>
 
@@ -111,7 +111,7 @@ const Header = () => {
                         <Link
                           href={href}
                           className={cn(
-                            "transition hover:text-primary hover:underline hover:underline-offset-2",
+                            "transition hover:text-primary hover:underline hover:underline-offset-2 cursor-target",
                             pathname === href
                               ? "text-primary underline underline-offset-2"
                               : "text-foreground"

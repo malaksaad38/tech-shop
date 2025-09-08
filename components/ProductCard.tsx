@@ -47,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         y: -5,
         boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
       }}
-      className="relative rounded-3xl cursor-pointer bg-background shadow-sm border flex flex-col h-full overflow-hidden hover:border hover:border-primary"
+      className="cursor-target relative rounded-3xl cursor-pointer bg-background shadow-sm border flex flex-col h-full overflow-hidden hover:border hover:border-primary"
     >
       <ClickSpark
         sparkColor="aqua"

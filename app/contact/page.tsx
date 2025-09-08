@@ -128,6 +128,7 @@ const Contact = () => {
                     {t("yourMessage")}
                   </Label>
                   <Textarea
+                    className={"cursor-target"}
                     id="message"
                     value={form.message}
                     onChange={handleChange}
