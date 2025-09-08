@@ -37,11 +37,11 @@ const CartsPopover = () => {
 
       <PopoverContent className="w-96 p-4 z-[60]">
         <ClickSpark
-          sparkColor='blue'
+          sparkColor="blue"
           sparkSize={10}
-          sparkRadius={30}
-          sparkCount={8}
-          duration={800}
+          sparkRadius={25}
+          sparkCount={20}
+          duration={500}
         >
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold flex items-center gap-2">

@@ -141,6 +141,7 @@ const Products = () => {
 
   const shown = filtered.slice(0, visible);
 
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Banner */}
@@ -278,20 +279,30 @@ const Products = () => {
         </Card>
       </motion.div>
 
+
       {/* Products Grid */}
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 container mx-auto mt-6">
-        {shown.map((product, index) => (
-          <motion.div
-            key={product._id}
-            initial={{opacity: 0, y: 40}}
-            whileInView={{opacity: 1, y: 0}}
-            viewport={{once: true, amount: 0.2}}
-            transition={{duration: 0.5, delay: index * 0.05}}
-          >
-            <ProductCard product={product}/>
-          </motion.div>
-        ))}
-      </div>
+      {loading ?
+        (
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="animate-spin h-8 w-8 text-muted-foreground"/>
+          </div>
+        ) :
+        <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 container mx-auto mt-6">
+
+          {shown.map((product, index) => (
+            <motion.div
+              key={product._id}
+              initial={{opacity: 0, y: 40}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true, amount: 0.2}}
+              transition={{duration: 0.5, delay: index * 0.05}}
+            >
+              <ProductCard product={product}/>
+            </motion.div>
+          ))}
+        </div>
+      }
+
 
       {/* Load More */}
       {visible < filtered.length && (

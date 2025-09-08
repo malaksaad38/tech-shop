@@ -4,7 +4,18 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {motion} from "framer-motion";
-import {Activity, Calendar, ClipboardCheck, CreditCard, Mail, MapPin, Phone, ShoppingCart, User} from "lucide-react";
+import {
+  Activity,
+  Calendar,
+  ClipboardCheck,
+  CreditCard,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+  ShoppingCart,
+  User
+} from "lucide-react";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {useTranslations} from "next-intl";
@@ -34,7 +45,13 @@ export default function OrderIdPage() {
     fetchOrder();
   }, [orderId]);
 
-  if (loading) return <p className="text-center mt-10">{t("loading")}</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="animate-spin h-8 w-8 text-muted-foreground"/>
+      </div>
+    );
+  }
   if (!order) return <p className="text-center mt-10">{t("notFound")}</p>;
 
   return (

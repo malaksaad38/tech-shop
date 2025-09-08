@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {Calendar, Mail, MapPin, Phone, User} from "lucide-react";
+import {Calendar, Loader2, Mail, MapPin, Phone, User} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -38,19 +38,18 @@ export default function CustomersPage() {
       .catch(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return <div className="p-4">Loading customers...</div>;
-  }
-
   return (
     <AdminControl>
       <div className="container mx-auto py-6 px-4">
-        <h1 className="flex items-center gap-2 text-2xl font-bold">
-          <User className="w-6 h-6 text-muted-foreground"/>
+        <h1 className="flex items-center gap-2 text-2xl font-bold mb-4">
+          <User className="w-6 h-6 text-primary"/>
           Customers
         </h1>
-
-        {customers.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="animate-spin h-8 w-8 text-muted-foreground"/>
+          </div>
+        ) : (<div>{customers.length === 0 ? (
           <p>No customers found.</p>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -77,6 +76,7 @@ export default function CustomersPage() {
             ))}
           </div>
         )}
+        </div>)}
 
         {/* Dialog for customer details */}
         <Dialog open={!!selectedCustomer} onOpenChange={() => setSelectedCustomer(null)}>

@@ -42,7 +42,8 @@ export default function LoginPage() {
       localStorage.setItem("customer", JSON.stringify(data.customer));
 
       refresh();
-      router.push("/auth/profile");
+      router.back()
+      
     } catch (err: any) {
       setError(err.message);
     } finally {

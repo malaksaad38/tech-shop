@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Badge} from "@/components/ui/badge";
-import {Calendar, ClipboardList, DollarSign, Mail, MapPin, Phone, User} from "lucide-react";
+import {Calendar, ClipboardList, DollarSign, Loader2, Mail, MapPin, Phone, User} from "lucide-react";
 import {motion} from "framer-motion";
 import AdminControl from "@/components/AdminControl";
 
@@ -45,7 +45,9 @@ export default function AdminOrdersPage() {
 
         {/* Loading State */}
         {loading ? (
-          <div className="text-center py-10 text-muted-foreground">Loading orders...</div>
+          <div className="flex justify-center items-center h-64">
+            <Loader2 className="animate-spin h-8 w-8 text-muted-foreground"/>
+          </div>
         ) : (
           <>
             {/* Desktop Table */}

@@ -50,11 +50,11 @@ const ProfilePopover = () => {
         align="end"
       >
         <ClickSpark
-          sparkColor='blue'
+          sparkColor="blue"
           sparkSize={10}
-          sparkRadius={30}
-          sparkCount={8}
-          duration={800}
+          sparkRadius={25}
+          sparkCount={20}
+          duration={500}
         >
           <motion.div
             initial={{opacity: 0, y: -5}}

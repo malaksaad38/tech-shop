@@ -40,11 +40,11 @@ const FavoritesPopover = () => {
         className="w-80 p-3 flex flex-col gap-3"
       >
         <ClickSpark
-          sparkColor='blue'
+          sparkColor="blue"
           sparkSize={10}
-          sparkRadius={30}
-          sparkCount={8}
-          duration={800}
+          sparkRadius={25}
+          sparkCount={20}
+          duration={500}
         >
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-bold text-lg">{t("title")}</h3>
