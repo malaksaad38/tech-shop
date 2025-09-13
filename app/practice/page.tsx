@@ -1,7 +1,6 @@
 "use client"
 import React, {useEffect, useRef, useState} from 'react';
 import {motion} from "motion/react"
-import ElectricBorder from "@/components/ElectricBorder";
 
 const Practice = () => {
   const [light, setLight] = useState(false);
@@ -29,27 +28,27 @@ const Practice = () => {
 
   }
   const constraints = {
-    width: "100vw",
-    height: "100vh",
+    width: "90vw",
+    height: "80vh",
     backgroundColor: "lightblue",
     borderRadius: 10,
   }
 
   return (
-    <div className={"min-w-32 min-h-32 m-10 mx-10"}>
-      <ElectricBorder
-        color="#7df9ff"
-        speed={0.5}
-        chaos={0.5}
-        thickness={2}
-        style={{borderRadius: 16}}
-      >
-        <div className={"w-32 h-32 m-10 mx-10"}>
-          <p style={{margin: '6px 0 0', opacity: 0.8}}>
-            A glowing, animated border wrapper.
-          </p>
-        </div>
-      </ElectricBorder>
+    <div>
+      {/*<ElectricBorder*/}
+      {/*  color="#7df9ff"*/}
+      {/*  speed={0.5}*/}
+      {/*  chaos={0.5}*/}
+      {/*  thickness={2}*/}
+      {/*  style={{borderRadius: 16}}*/}
+      {/*>*/}
+      {/*  <div className={"w-32 h-32 m-10 mx-10"}>*/}
+      {/*    <p style={{margin: '6px 0 0', opacity: 0.8}}>*/}
+      {/*      A glowing, animated border wrapper.*/}
+      {/*    </p>*/}
+      {/*  </div>*/}
+      {/*</ElectricBorder>*/}
       <div className="h-screen">
         <motion.div ref={constraintsRef} style={constraints}>
           <motion.div
@@ -122,6 +121,17 @@ const Practice = () => {
               className={"bg-green-500 hover:bg-green-700 p-2 rounded-b-2xl"}>Count
       </button>
       <button onClick={() => setCount(0)} className={"inline bg-red-700 rounded-b-2xl p-2 ml-2"}>Reset</button>
+
+
+      {/*<Globe autoRotateSpeed={0.05} zoom*/}
+      {/*  // pins={[{*/}
+      {/*  //   lon: 72.8,*/}
+      {/*  //   lat: 34,*/}
+      {/*  //   name: "Pakistan",*/}
+      {/*  //   address: "KPK, Peshawar. Street 88.",*/}
+      {/*  //   phone: "+92301493453"*/}
+      {/*  // }]}*/}
+      {/*/>*/}
 
     </div>
   );

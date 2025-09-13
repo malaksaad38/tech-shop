@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="bg-background text-foreground">
       {/* Professional Banner */}
       <div className="bg-primary py-2 text-center text-sm font-medium">
-        {t("tagline")}
+        {t("taglineB")}
       </div>
 
       {/* Footer Content */}

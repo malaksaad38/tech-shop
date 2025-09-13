@@ -2,14 +2,15 @@
 
 import React, {useState} from "react"
 import Link from "next/link"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle,} from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
 import {Label} from "@/components/ui/label"
 import {Button} from "@/components/ui/button"
-import {ArrowLeft, Mail, MessageCircle, MessageSquare, User} from "lucide-react"
+import {ArrowLeft, Mail, MessageCircle, MessageSquare, User,} from "lucide-react"
 import {motion} from "framer-motion"
 import {useCheckedLocale} from "@/lib/client-utils"
+import Globe from "@/components/Globe";
 
 const container = {
   hidden: {opacity: 0},
@@ -30,7 +31,7 @@ const fadeUp = {
 
 const Contact = () => {
   const [form, setForm] = useState({name: "", email: "", message: ""})
-  const {t, dir} = useCheckedLocale()
+  const {t} = useCheckedLocale()
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -162,6 +163,87 @@ const Contact = () => {
               {t("backHome")}
             </Link>
           </Button>
+        </motion.div>
+
+        {/* Contact Info Cards */}
+        <motion.div variants={fadeUp} className="grid md:grid-cols-3 gap-6 mt-12">
+          <Card className="shadow-md hover:shadow-lg transition-all text-center">
+            <CardContent className="p-6 flex flex-col items-center">
+              <Mail className="h-8 w-8 text-primary mb-3"/>
+              <h3 className="font-semibold">{t("emailUs")}</h3>
+              <p className="text-sm text-muted-foreground">{t("emailValue")}</p>
+            </CardContent>
+          </Card>
+          <Card className="shadow-md hover:shadow-lg transition-all text-center">
+            <CardContent className="p-6 flex flex-col items-center">
+              <MessageCircle className="h-8 w-8 text-primary mb-3"/>
+              <h3 className="font-semibold">{t("whatsapp")}</h3>
+              <p className="text-sm text-muted-foreground">{t("whatsappValue")}</p>
+            </CardContent>
+          </Card>
+          <Card className="shadow-md hover:shadow-lg transition-all text-center">
+            <CardContent className="p-6 flex flex-col items-center">
+              <User className="h-8 w-8 text-primary mb-3"/>
+              <h3 className="font-semibold">{t("office")}</h3>
+              <p className="text-sm text-muted-foreground">{t("officeValue")}</p>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+
+        {/* Google Map */}
+        <motion.div variants={fadeUp} className="mt-12 ">
+          <h2 className="text-xl font-semibold mb-4">{t("findUs")}</h2>
+          <div className="w-full h-64 rounded-xl overflow-hidden bg-black">
+            {/*<iframe*/}
+            {/*  src="https://www.google.com/maps/embed?pb=..."*/}
+            {/*  width="100%"*/}
+            {/*  height="100%"*/}
+            {/*  style={{border: 0}}*/}
+            {/*  allowFullScreen*/}
+            {/*  loading="lazy"*/}
+            {/*></iframe>*/}
+            <Globe autoRotateSpeed={0.05} zoom
+                   pins={[{
+                     lon: 72.8,
+                     lat: 34,
+                     name: "Pakistan",
+                     address: "KPK, Peshawar. Street 88.",
+                     phone: "+92301493453"
+                   }]}
+            />
+          </div>
+        </motion.div>
+
+        {/* FAQ Section */}
+        <motion.div variants={fadeUp} className="mt-16">
+          <h2 className="text-2xl font-bold mb-6">{t("faqTitle")}</h2>
+          <div className="space-y-4">
+            <div className="border p-4 rounded-lg">
+              <h3 className="font-semibold">{t("faqQ1")}</h3>
+              <p className="text-sm text-muted-foreground">{t("faqA1")}</p>
+            </div>
+            <div className="border p-4 rounded-lg">
+              <h3 className="font-semibold">{t("faqQ2")}</h3>
+              <p className="text-sm text-muted-foreground">{t("faqA2")}</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Newsletter Subscription */}
+        <motion.div variants={fadeUp} className="mt-16 text-center">
+          <h2 className="text-2xl font-bold">{t("newsletterTitle")}</h2>
+          <p className="text-sm text-muted-foreground mb-4">{t("newsletterDesc")}</p>
+          <form className="flex flex-col md:flex-row gap-3 justify-center">
+            <Input
+              type="email"
+              placeholder={t("newsletterPlaceholder")}
+              className="max-w-sm"
+            />
+            <Button type="submit" className="shadow-md hover:shadow-lg">
+              {t("subscribe")}
+            </Button>
+          </form>
         </motion.div>
       </motion.div>
     </div>
