@@ -61,13 +61,13 @@ const DEFAULT_PROPS: Globe_PinsProps = {
       address: "London, Borton str. 88",
       phone: "+44 20 7946 0958",
     },
-    {
-      lon: 72.8,
-      lat: 34,
-      name: "Pakistan",
-      address: "KPK, Peshawar.str. 88",
-      phone: "+924579460958",
-    }
+    // {
+    //   lon: 72.8,
+    //   lat: 34,
+    //   name: "Pakistan",
+    //   address: "KPK, Peshawar.str. 88",
+    //   phone: "+924579460958",
+    // }
     ,
   ],
   pointColor: "#7AE1FF",
