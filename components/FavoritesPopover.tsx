@@ -20,11 +20,11 @@ const FavoritesPopover = () => {
 
         <Button
           size="icon"
-          variant="outline"
-          className="relative"
+          variant="ghost"
+          className="relative md:border"
           aria-label={t("openMenu")}
         >
-          <Heart className="w-6 h-6 text-muted-foreground"/>
+          <Heart className="w-6 h-6 text-foreground"/>
           {favorites.length > 0 && (
             <span
               className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"

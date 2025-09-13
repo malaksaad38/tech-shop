@@ -14,10 +14,10 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className={"md:border md:bg-background bg-none "}
+      className={"md:border  md:rounded-none"}
     >
       <Sun className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden"/>
       <Moon className="h-[1.2rem] w-[1.2rem] hidden dark:block"/>

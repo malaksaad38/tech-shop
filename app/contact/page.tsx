@@ -194,7 +194,7 @@ const Contact = () => {
         {/* Google Map */}
         <motion.div variants={fadeUp} className="mt-12 ">
           <h2 className="text-xl font-semibold mb-4">{t("findUs")}</h2>
-          <div className="w-full h-64 rounded-xl overflow-hidden bg-black">
+          <div className="w-full h-64 rounded-xl overflow-hidden bg-background">
             <Globe autoRotateSpeed={0.05} zoom
                    pins={[{
                      lon: 72.8,

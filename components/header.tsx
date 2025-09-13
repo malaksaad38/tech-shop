@@ -160,7 +160,7 @@ const Header = () => {
               {customer ? (
                 <ProfilePopover/>
               ) : (
-                <Button variant={"outline"} size={"icon"}><Link href={"/auth/login"}> <LogInIcon/></Link></Button>
+                <Button variant={"ghost"} size={"icon"}><Link href={"/auth/login"}> <LogInIcon/></Link></Button>
               )}
 
 

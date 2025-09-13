@@ -24,7 +24,7 @@ const CartsPopover = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="relative" aria-label={t("openMenu")}>
+        <Button variant="ghost" size="icon" className="relative md:border" aria-label={t("openMenu")}>
           <ShoppingCart className="h-5 w-5"/>
           {totalItems > 0 && (
             <span

@@ -22,7 +22,7 @@ export function LocaleSwitcherToggle() {
   }
 
   return (
-    <Button variant={'outline'}
+    <Button variant={'ghost'}
             size={"icon"}
             onClick={toggleLocale}
             aria-label="Toggle language"
