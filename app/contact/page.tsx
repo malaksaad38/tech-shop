@@ -195,14 +195,6 @@ const Contact = () => {
         <motion.div variants={fadeUp} className="mt-12 ">
           <h2 className="text-xl font-semibold mb-4">{t("findUs")}</h2>
           <div className="w-full h-64 rounded-xl overflow-hidden bg-black">
-            {/*<iframe*/}
-            {/*  src="https://www.google.com/maps/embed?pb=..."*/}
-            {/*  width="100%"*/}
-            {/*  height="100%"*/}
-            {/*  style={{border: 0}}*/}
-            {/*  allowFullScreen*/}
-            {/*  loading="lazy"*/}
-            {/*></iframe>*/}
             <Globe autoRotateSpeed={0.05} zoom
                    pins={[{
                      lon: 72.8,
