@@ -84,12 +84,12 @@ const Header = () => {
 
         <div className="container mx-auto flex items-center justify-between py-2 px-3">
           {/* Logo */}
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className={"md:block hidden"}>
             <Link
               href="/"
-              className="flex items-center gap-1 font-extrabold text-lg sm:text-xl"
+              className="flex flex-row items-center gap-1 font-extrabold text-lg sm:text-xl"
             >
-              <span className="text-primary cursor-target">{t('logo')}</span>
+              <span className="text-primary cursor-target ">{t('logo')}</span>
             </Link>
           </motion.div>
 
@@ -152,6 +152,24 @@ const Header = () => {
 
           {/* Mobile Menu */}
           <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden text-foreground"
+              >
+                <Menu size={22}/>
+              </Button>
+            </SheetTrigger>
+            <motion.div className={"md:hidden"}>
+              <Link
+                href="/"
+                className="flex flex-row items-center gap-1 font-extrabold text-lg sm:text-xl"
+              >
+                <span className="text-primary cursor-target ">{t('logo')}</span>
+              </Link>
+            </motion.div>
+
             <div className="space-x-1 md:hidden flex items-center">
               <LocaleSwitcherToggle/>
               <ModeToggle/>
@@ -163,18 +181,7 @@ const Header = () => {
                 <Button variant={"ghost"} size={"icon"}><Link href={"/auth/login"}> <LogInIcon/></Link></Button>
               )}
 
-
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="md:hidden text-foreground"
-                >
-                  <Menu size={22}/>
-                </Button>
-              </SheetTrigger>
             </div>
-
             <SheetContent side={isRTL ? "right" : "left"} className="p-4 backdrop-blur-md">
               <ClickSpark
                 sparkColor="lime"
